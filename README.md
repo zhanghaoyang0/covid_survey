@@ -249,6 +249,8 @@ for (i in c('age', 'sex')){
 }
 res 
 ```
+![image](https://github.com/covid_survey/plot/dist/age.png)
+![image](https://github.com/covid_survey/plot/dist/sex.png)
 
 Plot region distribution
 ```
@@ -287,7 +289,7 @@ for (group in groups){
 
 res # score
 ```
-
+![image](https://github.com/covid_survey/plot/dist/all_score.png)
 
 # Acknowledgement
 Study design and data collection: [木森](https://www.zhihu.com/people/mooseOS) and [易楚](https://www.zhihu.com/people/kwindva).
