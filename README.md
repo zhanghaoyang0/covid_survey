@@ -38,7 +38,7 @@ get = function(key, vector, exact=F, v=F){
 }
 ```
 
-load data and clean: 
+load data and clean
 ```
 df = read.xlsx('data/covid_survey.xlsx', sheet=1) 
 # drop unused col
@@ -77,7 +77,7 @@ is.na(df[,symptom_cols]) # number of NA
 df[,symptom_cols][is.na(df[,symptom_cols])] = 0        
 ```
 
-Age and sex:
+Age and sex
 ```
 df = df%>%mutate(age=gsub('岁', '', age))%>%
     mutate(age=ifelse(age%in%c('41-50', '51-60', '61-70'), '>40', age))%>%
@@ -88,7 +88,7 @@ table(df$age)
 table(df$sex)
 ```
 
-Score of sympton group:
+Score of sympton group
 ```
 groups = c('oral', 'eye_nose_tongue', 'digestive', 'nerve', 'organ', 'wholebody', 'all')
 for (group in groups){
@@ -100,7 +100,7 @@ for (group in groups){
 }
 ```
 
-Vaccination:
+Vaccination
 ```
 df = df%>%mutate(n_vaccine=ifelse(n_vaccine%in%c(3, 4), '>3', n_vaccine))%>%
     mutate(n_vaccine=factor(n_vaccine, levels=c('0', '1', '2', '>3')))
@@ -112,7 +112,7 @@ table(df$n_vaccine)
 table(df$howlong_lastvac)
 ```
 
-Covid duration:
+Covid duration
 ```
 df = df%>%mutate(disease_duration=ifelse(disease_duration%in%c('7~10天', '10天以上'), '>7 day', disease_duration))%>%
     mutate(disease_duration=ifelse(disease_duration%in%c('', '小于3天'), '<3 day', disease_duration))%>%
@@ -122,7 +122,7 @@ df = df%>%mutate(disease_duration=ifelse(disease_duration%in%c('7~10天', '10天
 table(df$disease_duration)
 ```
 
-Infected way:
+Infected way
 ```
 df = df%>%mutate(
     infect_entertainment=factor(as.numeric(grepl('消费', infect_way))), 
@@ -137,7 +137,7 @@ for (i in c('infect_entertainment', 'infect_work', 'infect_family', 'infect_traf
 }
 ```
 
-Region:
+Region
 ```
 df$region = gsub('维吾尔|壮族', '', df$region)
 provs = citys = c()
