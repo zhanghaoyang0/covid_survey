@@ -2,7 +2,8 @@
 # About covid_survey
 In 2022 Dec, we conducted a online survey to investigate the characteristics, symptoms, and response of Chinese COVID patients after the ending restriction.  
 
-The question of our questionaire can be seen at [here](https://f.wps.cn/ksform/w/write/E1GHTEmC#routePromt). The filled questionaire can be seen in the `covid_survey.csv` of `data` fold.
+The question of our questionaire can be seen at [here](https://f.wps.cn/ksform/w/write/E1GHTEmC#routePromt). The filled questionaire can be seen in the `covid_survey.csv` of `data` fold. Initial risk report can be seen at [here](
+https://mp.weixin.qq.com/s?__biz=MzI3MTMwMTgyOQ==&mid=2247483999&idx=1&sn=77ec35ced8c1ee71e4074dd011cf92e0&chksm=eac2aff5ddb526e3214ee7c67054003c8a90798550c1be791787a4e6425cc5c330bc63ccd5df&mpshare=1&scene=1&srcid=1229rBurrSSnF8e7SpwjuY7g&sharer_sharetime=1672327541176&sharer_shareid=a71cc24f8a748dc08f84fd7448a9b921&key=eb16c4aa1548428cc2864686ff55985b6bdacc09b5e9af4bdc3fa28ea05692eac471c3de2fa1f038d20f3cd04c4bead15782692f6b852b37098b6bbf50cd5472e6508afeb6894e748e67aad45719f5e74738f91d7dfaec79331cebf8bd9c357330ca3bd24d35879f97e48869d0beab0c765d2b844997c20e7805a62a363ac3da&ascene=1&uin=ODIxMDA3NjMw&devicetype=Windows+10+x64&version=6308011a&lang=zh_CN&exportkey=n_ChQIAhIQj4SybjXHsHdWixuO5hHN1RL0AQIE97dBBAEAAAAAAN5bAxvn4nQAAAAOpnltbLcz9gKNyK89dVj05wKGNYlFwq81hG9YdA6ucXSVna%2FoMqV2F9HXeJK9XpYMpea%2Btj4LPLYqrbE2Bh7OoFygNDZfaf%2FJKYbgMNnbrqMMn5ZbQ2ejoLj2IXhx%2BUEgZy9Oa6QMB6SrPTrK9vAeojyQndZ%2FVirDUDz2TDhU1ycPLUh2bE5Dk5NkWU8%2BeE05%2FEyER8NI4M1DBodLJxJxghvNx04oZuCnLn4agTWzJGI3o%2BLGHF2iRFvo0rAS%2FzCKfJwl7mwakH6l4gt3nzENXTfmZOq%2BrZZEhRog%2BYU%3D&acctmode=0&pass_ticket=dJ%2B6e5CP3ph7Q5iB1StMGqZb3%2FQ%2FSl1AGdQOaeLLx2ZpvHLd%2BKZm63IAkHLklHs41Tf%2Bi7USFkLNVD1F9eFZ3g%3D%3D&wx_header=1&)fontgear=2
 
 Below is our analysis code.
 
