@@ -198,14 +198,14 @@ Medication:
 
 .. code-block:: python
 
-# the 'drug_use' have been grouped to four groups, by hand
-drugs = c('ibuprofen_use', 'acetaminophen_use', 'chnmed_usd')
-df[, drugs][is.na(df[, drugs])] = 0
-for (drug in drugs){
-    print(drug)
-    get_prop(df, drug)
-    df[,drug] = as.factor(df[,drug])
-}
+   # the 'drug_use' have been grouped to four groups, by hand
+   drugs = c('ibuprofen_use', 'acetaminophen_use', 'chnmed_usd')
+   df[, drugs][is.na(df[, drugs])] = 0
+   for (drug in drugs){
+      print(drug)
+      get_prop(df, drug)
+      df[,drug] = as.factor(df[,drug])
+   }
 
 
 Calculate syndrome score with symptom score, normalize to 0-1:
@@ -263,7 +263,7 @@ Analysis: regression
 We used regression to measure the association between symptoms and population characteris, vaccination, and medication.
 
 .. code-block:: python
-   
+
    # we use linear regression to test if syndrome score varired in different population
    # we use logistic regression to test if symptom varired in different population
    # in each regression, we add age and sex as covariate
