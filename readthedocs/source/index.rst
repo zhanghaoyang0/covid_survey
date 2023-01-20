@@ -43,8 +43,9 @@ The data is in Chinese. Please see our code about how to clean this data.
 You can download the data at `here <https://github.com/zhanghaoyang0/covid_survey/raw/master/data/covid_survey.xlsx>`_.
 
 
-Code
+Contents
 =======================
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
