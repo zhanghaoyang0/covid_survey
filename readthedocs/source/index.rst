@@ -86,6 +86,7 @@ We conducted data cleaning by translating Chinese to English, combining groups w
 Description was also performed.
 
 Load data and clean:
+
 .. code-block:: python
 
    ## questionaire data
@@ -110,6 +111,7 @@ Load data and clean:
    
 
 Age and sex:
+
 .. code-block:: python
 
    df = df%>%mutate(age=gsub('岁', '', age))%>%
@@ -121,7 +123,49 @@ Age and sex:
    get_prop(df, 'age')
 
 
+Disease duration:
+
+.. code-block:: python
+
+   # assume interval is left closed and right open, modify to reduce confusing
+   df$infect_duration[df$infect_duration=='3～5天'] = '3~4天' 
+   df$infect_duration[df$infect_duration=='5~7天'] = '5~6天'
+   df$infect_duration[df$infect_duration=='7~10天'] = '7~9天'
+
+   df = df%>%mutate(infect_duration=ifelse(infect_duration%in%c('7~9天', '10天以上'), '>7 day', infect_duration))%>%
+      mutate(infect_duration=ifelse(infect_duration%in%c('', '小于3天'), '<3 day', infect_duration))%>%
+      mutate(infect_duration=gsub('天', ' day', infect_duration))%>%
+      mutate(infect_duration=gsub('~', '-', infect_duration))%>%
+      mutate(infect_duration=factor(infect_duration, levels=c('<3 day', '3-4 day', '5-6 day', '>7 day')))
+   get_prop(df, 'infect_duration')
+   # trim fever_duration
+   df$fever_duration = sapply(df$fever_duration, function(x){strsplit(x, '[(]')[[1]][1]})
+   df = df%>%mutate(fever_duration=ifelse(is.na(fever_duration), 'no reply', fever_duration))%>%
+      mutate(fever_duration=gsub('天', ' day', fever_duration))%>%
+      mutate(fever_duration=ifelse(fever_duration%in%c('1 day', '<1 day'), '≤1 day', fever_duration))%>%
+      mutate(fever_duration=factor(fever_duration, levels=c('no reply', '≤1 day', '2 day', '3 day', '>3 day')))
+   get_prop(df, 'fever_duration')
+
+
+Infect route
+
+.. code-block:: python
+
+df = df%>%mutate(
+    infectway_entertainment=factor(as.numeric(grepl('消费场所', infect_way))), 
+    infectway_work=factor(as.numeric(grepl('工作场所', infect_way))), 
+    infectway_family=factor(as.numeric(grepl('在家被家人传染', infect_way))), 
+    infectway_traffic=factor(as.numeric(grepl('公共交通', infect_way))), 
+    infectway_hosp=factor(as.numeric(grepl('医疗场所', infect_way))))
+for (i in c('infectway_entertainment', 'infectway_work', 'infectway_family', 'infectway_traffic', 'infectway_hosp')){
+    print(i)
+    get_prop(df, i)
+}
+
+
+
 Vaccination:
+
 .. code-block:: python
    df[df$how_long_lastvac=='', 'n_vac'] = '0' # if a person report n_vac but not how_long_lastvac, treat n_vac as NA
    df = df%>%mutate(n_vac=ifelse(n_vac%in%c(3, 4), '≥3', n_vac))%>%
@@ -134,6 +178,72 @@ Vaccination:
 
    get_prop(df, 'n_vac')
    get_prop(df, 'how_long_lastvac')
+
+
+Medication:
+
+.. code-block:: python
+
+# the 'drug_use' have been grouped to four groups, by hand
+drugs = c('ibuprofen_use', 'acetaminophen_use', 'chnmed_usd')
+df[, drugs][is.na(df[, drugs])] = 0
+for (drug in drugs){
+    print(drug)
+    get_prop(df, drug)
+    df[,drug] = as.factor(df[,drug])
+}
+
+
+Calculate syndrome score with symptom score, normalize to 0-1:
+
+.. code-block:: python
+
+   ## calculate syndrome score with symptom score, normalize to 0-1
+   syndromes = unique(dict2$syndrome)
+   symptoms = list()
+   for (i in syndromes){
+      symptoms[[i]] = dict2%>%filter(syndrome==i)%>%pull(item_eng)
+   }
+   print(symptoms)
+   print(sum(is.na(df[,unlist(symptoms)]))) # number of NA
+   for (syndrome in syndromes){
+      score = rowSums(df[,symptoms[[syndrome]]])/length(symptoms[[syndrome]])/3 # normalize to 0-1
+      df[,paste0(syndrome, '_score')] = score
+   }
+
+
+Region:
+
+.. code-block:: python
+
+   ## region
+   df$region = gsub('维吾尔|壮族', '', df$region)
+   regions = c()
+   for (i in 1:nrow(df)){
+      item = df[i, 'region']
+      item1 = strsplit(item, '自治区|自治州|特别行政区|省|市')[[1]][1]
+      regions = c(regions, item1)
+   }
+   df$region = regions
+   # replace chn with pinyin
+   data(china)
+   china = china%>%mutate(region=gsub('省|市|回族|壮族|维吾尔|特别行政区|自治区', '', Name_Province))
+   china = china%>%group_by(region)%>%dplyr::summarise(geometry=st_union(geometry))
+   replace = data.frame(region=china$region, 
+   region1 = c('Shanghai', 'Yunnan', 'Neimenggu', 'Beijing', 'Taiwan', 'Jilin', 'Sichuan', 'Tianji', 
+   'Ningxia', 'Anhui', 'Shandong', 'Shānxi', 'Guangdong', 'Guangxi', 'Xinjiang', 'Jiangsu', 'Jiangxi', 'Hebei', 
+   'Henan', 'Zhejiang', 'Hainan', 'Hubei', 'Hunan', 'Macau', 'Gansu', 'Fujian', 'Tibet', 'Guizhou', 'Liaoning', 
+   'Chongqing', 'Shǎnxi', 'Qinghai', 'Hong Kong', 'Heilongjiang'))
+   china = china%>%merge(replace, 'region')%>%select(-region)%>%rename(region=region1)
+   df = df%>%merge(replace, 'region')%>%select(-region)%>%rename(region=region1)
+   print(table(df$region))
+   # sample size for each region
+   tab = table(df$region)
+   tab = data.frame(cbind(names(tab), tab))
+   pop_tab = tab%>%rename(n=tab, region=V1)%>%mutate(n=as.numeric(n))%>%arrange(n)
+   print(pop_tab)
+
+
 
 Comments and feedbacks
 =======================
