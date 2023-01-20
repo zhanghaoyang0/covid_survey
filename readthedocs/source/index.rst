@@ -1,8 +1,9 @@
-A COVID-19 survey in China after ending of restriction.
+A COVID-19 survey in China
 =============================================
 In Dec 2022, the COVID-19 restriction was end.
 
 We conduct this on-line survey to measure the characteristics to measure the characteristics of COVID-19 patients in China. 
+We investigate: 
 
 Symptom spectrum of COVID-19:
 
@@ -24,14 +25,9 @@ Regional distribution of COVID-19 symptoms:
 .. image:: fig4.png
    :width: 600
 
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+And, measure the association between COVID-19 symptoms and population characteristics, vaccination, and medication.
 
 
-
-Data and code
 =======================
 Our questionaire data is available and the analysis code is also provied. 
 .. toctree::
