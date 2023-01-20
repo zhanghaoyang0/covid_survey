@@ -31,40 +31,11 @@ Regional distribution of COVID-19 symptoms:
 And, measure the association between COVID-19 symptoms and population characteristics, vaccination, and medication.
 
 
-Questionnaire Data
-=======================
-The questionnaire was open for around 3 weeks, from 22th Dec 2022 to 17th Jan 2023.
-
-552 questionnaires were collected.  
-
-The data is in Chinese. Please see our code about how to clean this data.  
-
-
-You can download the data at `here <https://github.com/zhanghaoyang0/covid_survey/raw/master/data/covid_survey.xlsx>`_.
-
-
-Contents
-=======================
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-
-   Analysis_code/index
-   temp
-
-
-It's recommended to create a separate conda environment for running STAligner:
-
-.. code-block:: python
-
-   #create an environment called env_STAligner
-   conda create -n env_STAligner python=3.8
-
-   #activate your environment
-   conda activate env_STAligner
-
-
+   data
+   code
 
 
 
