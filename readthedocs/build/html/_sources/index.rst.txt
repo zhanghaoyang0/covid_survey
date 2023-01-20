@@ -25,7 +25,6 @@ Regional distribution of COVID-19 symptoms:
 .. image:: fig4.png
    :width: 600
 
-And, measure the association between COVID-19 symptoms and population characteristics, vaccination, and medication.
 
 
 =======================
@@ -34,6 +33,8 @@ Our questionaire data is available and the analysis code is also provied.
    :maxdepth: 1
    Data
    Code
+
+And, measure the association between COVID-19 symptoms and population characteristics, vaccination, and medication.
 
 
 Comments and feedbacks
