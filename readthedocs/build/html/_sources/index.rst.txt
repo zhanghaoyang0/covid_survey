@@ -4,6 +4,7 @@ A COVID-19 survey in China
 In Dec 2022, the COVID-19 restriction was end.
 
 We conduct this 3-weeks on-line survey to measure the characteristics to measure the characteristics of COVID-19 patients in China. 
+
 We investigate: 
 
 Symptom spectrum of COVID-19:
@@ -27,15 +28,34 @@ Regional distribution of COVID-19 symptoms:
    :width: 600
 
 
-
-=======================
-Our questionaire data is available and the analysis code is also provied. 
-.. toctree::
-   :maxdepth: 1
-   Data
-   Code
-
 And, measure the association between COVID-19 symptoms and population characteristics, vaccination, and medication.
+
+Questionnaire Data
+=======================
+The questionnaire was open for around 3 weeks, from 22th Dec 2022 to 17th Jan 2023.
+
+552 questionnaires were collected.  
+
+The data is in Chinese. Please see our code about how to clean this data.  
+
+
+You can download the data via `github_link <https://github.com/zhanghaoyang0/covid_survey/raw/master/data/covid_survey.xlsx>`_.
+
+
+Analysis code
+=======================
+It's recommended to create a separate conda environment for running STAligner:
+
+.. code-block:: python
+
+   #create an environment called env_STAligner
+   conda create -n env_STAligner python=3.8
+
+   #activate your environment
+   conda activate env_STAligner
+
+
+
 
 
 Comments and feedbacks

@@ -81,6 +81,8 @@
               <!-- Local TOC -->
               <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">A COVID-19 survey in China</a></li>
+<li><a class="reference internal" href="#questionnaire-data">Questionnaire Data</a></li>
+<li><a class="reference internal" href="#analysis-code">Analysis code</a></li>
 <li><a class="reference internal" href="#comments-and-feedbacks">Comments and feedbacks</a></li>
 </ul>
 </div>
@@ -149,8 +151,8 @@
   <div class="section" id="a-covid-19-survey-in-china">
 <h1>A COVID-19 survey in China<a class="headerlink" href="#a-covid-19-survey-in-china" title="Permalink to this heading">¶</a></h1>
 <p>In Dec 2022, the COVID-19 restriction was end.</p>
-<p>We conduct this on-line survey to measure the characteristics to measure the characteristics of COVID-19 patients in China.
-We investigate:</p>
+<p>We conduct this 3-weeks on-line survey to measure the characteristics to measure the characteristics of COVID-19 patients in China.</p>
+<p>We investigate:</p>
 <p>Symptom spectrum of COVID-19:</p>
 <a class="reference internal image-reference" href="_images/fig1.png"><img alt="_images/fig1.png" src="_images/fig1.png" style="width: 600px;" /></a>
 <p>Cluster of COVID-19 symptoms:</p>
@@ -160,15 +162,24 @@ We investigate:</p>
 <p>Regional distribution of COVID-19 symptoms:</p>
 <a class="reference internal image-reference" href="_images/fig4.png"><img alt="_images/fig4.png" src="_images/fig4.png" style="width: 600px;" /></a>
 <p>And, measure the association between COVID-19 symptoms and population characteristics, vaccination, and medication.</p>
-<blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">maxdepth</dt>
-<dd class="field-odd"><p>1</p>
-</dd>
-</dl>
-<p>Data
-Code</p>
-</div></blockquote>
+</div>
+<div class="section" id="questionnaire-data">
+<h1>Questionnaire Data<a class="headerlink" href="#questionnaire-data" title="Permalink to this heading">¶</a></h1>
+<p>The questionnaire was open for around 3 weeks, from 22th Dec 2022 to 17th Jan 2023.</p>
+<p>552 questionnaires were collected.</p>
+<p>The data is in Chinese. Please see our code about how to clean this data.</p>
+<p>You can download the data via <a class="reference external" href="https://github.com/zhanghaoyang0/covid_survey/raw/master/data/covid_survey.xlsx">github_link</a>.</p>
+</div>
+<div class="section" id="analysis-code">
+<h1>Analysis code<a class="headerlink" href="#analysis-code" title="Permalink to this heading">¶</a></h1>
+<p>It’s recommended to create a separate conda environment for running STAligner:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#create an environment called env_STAligner</span>
+<span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">env_STAligner</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.8</span>
+
+<span class="c1">#activate your environment</span>
+<span class="n">conda</span> <span class="n">activate</span> <span class="n">env_STAligner</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="comments-and-feedbacks">
 <h1>Comments and feedbacks<a class="headerlink" href="#comments-and-feedbacks" title="Permalink to this heading">¶</a></h1>
