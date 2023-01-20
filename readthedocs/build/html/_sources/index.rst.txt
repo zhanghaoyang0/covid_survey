@@ -30,12 +30,6 @@ Regional distribution of COVID-19 symptoms:
 
 And, measure the association between COVID-19 symptoms and population characteristics, vaccination, and medication.
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-   Analysis_code/index
-
 
 Questionnaire Data
 =======================
@@ -49,8 +43,15 @@ The data is in Chinese. Please see our code about how to clean this data.
 You can download the data via `github_link <https://github.com/zhanghaoyang0/covid_survey/raw/master/data/covid_survey.xlsx>`_.
 
 
-Analysis code
+Questionnaire Data
 =======================
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   Analysis_code/index
+
+
 It's recommended to create a separate conda environment for running STAligner:
 
 .. code-block:: python
