@@ -30,6 +30,9 @@ Regional distribution of COVID-19 symptoms:
 
 And, measure the association between COVID-19 symptoms and population characteristics, vaccination, and medication.
 
+Contents
+=======================
+
 
 .. toctree::
    :maxdepth: 2
