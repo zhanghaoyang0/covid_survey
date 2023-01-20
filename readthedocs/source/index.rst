@@ -11,21 +11,25 @@ Symptom spectrum of COVID-19:
 
 .. image:: fig1.png
    :width: 600
+   :align: center
 
 Cluster of COVID-19 symptoms:
 
 .. image:: fig2.png
    :width: 600
+   :align: center
 
 Regional distribution of COVID-19 syndromes:
 
 .. image:: fig3.png
    :width: 600
+   :align: center
 
 Regional distribution of COVID-19 symptoms:
 
 .. image:: fig4.png
    :width: 600
+   :align: center
 
 
 And, measure the association between COVID-19 symptoms and population characteristics, vaccination, and medication.
@@ -84,6 +88,15 @@ Analysis code: data cleaning and description
 =============================================
 We conducted data cleaning by translating Chinese to English, combining groups with small samples, etc.
 Description was also performed.
+
+You may clone our repository, which contains our data, results, and plots: 
+
+.. code-block:: python
+
+   git clone https://github.com/zhanghaoyang0/covid_survey.git
+   cd covid_survey
+
+Or you can just download our data and performed the below analysis. If you do so, pleasue change the path in the code. 
 
 Load data and clean:
 
@@ -325,6 +338,7 @@ Bar plot for servere of sympytoms:
 
 .. image:: fig1.png
    :width: 600
+   :align: center
 
 .. code-block:: python
 
@@ -372,8 +386,10 @@ Dendrogram for sympytoms clustering:
 
 .. image:: fig2.png
    :width: 600
+   :align: center
 
 .. code-block:: python
+
    path_out = './plot/hclust/'
    df_p = t(df[, unlist(symptoms)])
    # repalce symptoms with their formal names
@@ -401,6 +417,7 @@ Heatmap for regional distribution of symptoms:
 
 .. image:: fig3.png
    :width: 600
+   :align: center
 
 .. code-block:: python
 
@@ -436,6 +453,7 @@ Map for regional distribution of syndromes:
 
 .. image:: fig4.png
    :width: 600
+   :align: center
 
 .. code-block:: python
 

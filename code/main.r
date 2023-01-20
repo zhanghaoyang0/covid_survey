@@ -72,6 +72,38 @@ table(df$sex)
 get_prop(df, 'age')
 
 
+## duration
+# assume interval is left closed and right open, modify to reduce confusing
+df$infect_duration[df$infect_duration=='3～5天'] = '3~4天' 
+df$infect_duration[df$infect_duration=='5~7天'] = '5~6天'
+df$infect_duration[df$infect_duration=='7~10天'] = '7~9天'
+
+df = df%>%mutate(infect_duration=ifelse(infect_duration%in%c('7~9天', '10天以上'), '>7 day', infect_duration))%>%
+    mutate(infect_duration=ifelse(infect_duration%in%c('', '小于3天'), '<3 day', infect_duration))%>%
+    mutate(infect_duration=gsub('天', ' day', infect_duration))%>%
+    mutate(infect_duration=gsub('~', '-', infect_duration))%>%
+    mutate(infect_duration=factor(infect_duration, levels=c('<3 day', '3-4 day', '5-6 day', '>7 day')))
+get_prop(df, 'infect_duration')
+# trim fever_duration
+df$fever_duration = sapply(df$fever_duration, function(x){strsplit(x, '[(]')[[1]][1]})
+df = df%>%mutate(fever_duration=ifelse(is.na(fever_duration), 'no reply', fever_duration))%>%
+    mutate(fever_duration=gsub('天', ' day', fever_duration))%>%
+    mutate(fever_duration=ifelse(fever_duration%in%c('1 day', '<1 day'), '≤1 day', fever_duration))%>%
+    mutate(fever_duration=factor(fever_duration, levels=c('no reply', '≤1 day', '2 day', '3 day', '>3 day')))
+get_prop(df, 'fever_duration')
+
+## infect way
+df = df%>%mutate(
+    infectway_entertainment=factor(as.numeric(grepl('消费场所', infect_way))), 
+    infectway_work=factor(as.numeric(grepl('工作场所', infect_way))), 
+    infectway_family=factor(as.numeric(grepl('在家被家人传染', infect_way))), 
+    infectway_traffic=factor(as.numeric(grepl('公共交通', infect_way))), 
+    infectway_hosp=factor(as.numeric(grepl('医疗场所', infect_way))))
+for (i in c('infectway_entertainment', 'infectway_work', 'infectway_family', 'infectway_traffic', 'infectway_hosp')){
+    print(i)
+    get_prop(df, i)
+}
+
 ## vaccination
 df[df$how_long_lastvac=='', 'n_vac'] = '0' # if a person report n_vac but not how_long_lastvac, treat n_vac as NA
 df = df%>%mutate(n_vac=ifelse(n_vac%in%c(3, 4), '≥3', n_vac))%>%
@@ -110,38 +142,6 @@ for (syndrome in syndromes){
     df[,paste0(syndrome, '_score')] = score
 }
 
-
-## duration
-# assume interval is left closed and right open, modify to reduce confusing
-df$infect_duration[df$infect_duration=='3～5天'] = '3~4天' 
-df$infect_duration[df$infect_duration=='5~7天'] = '5~6天'
-df$infect_duration[df$infect_duration=='7~10天'] = '7~9天'
-
-df = df%>%mutate(infect_duration=ifelse(infect_duration%in%c('7~9天', '10天以上'), '>7 day', infect_duration))%>%
-    mutate(infect_duration=ifelse(infect_duration%in%c('', '小于3天'), '<3 day', infect_duration))%>%
-    mutate(infect_duration=gsub('天', ' day', infect_duration))%>%
-    mutate(infect_duration=gsub('~', '-', infect_duration))%>%
-    mutate(infect_duration=factor(infect_duration, levels=c('<3 day', '3-4 day', '5-6 day', '>7 day')))
-get_prop(df, 'infect_duration')
-# trim fever_duration
-df$fever_duration = sapply(df$fever_duration, function(x){strsplit(x, '[(]')[[1]][1]})
-df = df%>%mutate(fever_duration=ifelse(is.na(fever_duration), 'no reply', fever_duration))%>%
-    mutate(fever_duration=gsub('天', ' day', fever_duration))%>%
-    mutate(fever_duration=ifelse(fever_duration%in%c('1 day', '<1 day'), '≤1 day', fever_duration))%>%
-    mutate(fever_duration=factor(fever_duration, levels=c('no reply', '≤1 day', '2 day', '3 day', '>3 day')))
-get_prop(df, 'fever_duration')
-
-## infect way
-df = df%>%mutate(
-    infectway_entertainment=factor(as.numeric(grepl('消费场所', infect_way))), 
-    infectway_work=factor(as.numeric(grepl('工作场所', infect_way))), 
-    infectway_family=factor(as.numeric(grepl('在家被家人传染', infect_way))), 
-    infectway_traffic=factor(as.numeric(grepl('公共交通', infect_way))), 
-    infectway_hosp=factor(as.numeric(grepl('医疗场所', infect_way))))
-for (i in c('infectway_entertainment', 'infectway_work', 'infectway_family', 'infectway_traffic', 'infectway_hosp')){
-    print(i)
-    get_prop(df, i)
-}
 
 
 ## region
@@ -186,6 +186,7 @@ test_vars = c('agesex', 'how_long_lastvac', 'n_vac',
     'ibuprofen_use', 'acetaminophen_use', 'chnmed_usd', 'lianhua_use') # the first mean we only include age and sex in reg
 outcomes = c(paste0(c('Respiratory', 'Neurological', 'Digestive', 'Other'), '_score'), unlist(symptoms))
 out = c()
+
 for (test_var in test_vars){
     if (test_var=='agesex'){formula = formula('y~age+sex')}else{
         formula = formula(paste0('y~age+sex+', test_var))}
@@ -221,7 +222,7 @@ for (test_var in test_vars){
                     d2 = paste0(sum(temp==0), ' (', round(sum(temp==0)/length(temp)*100,2), '%)')
                 } else {d3 = paste0(sprintf('%.2f',mean(temp)), '±', sprintf('%.2f',sd(temp)))}
                 # formal name
-                if (grepl('score', outcome)){outcome1 = gsub('_', '', outcome)}else{
+                if (grepl('score', outcome)){outcome1 = gsub('_', ' ', outcome)}else{
                     outcome1 = dict2%>%filter(item_eng==outcome)%>%pull(item_eng1) 
                 }
                 out = c(out, outcome1, test_var, reg_var, group, d1, d2, d3, unlist(coef1))
@@ -247,7 +248,7 @@ for (test_var1 in test_vars){
 }
 
 
-write.csv(res1, '../temp.csv', quote=F)
+write.csv(res, '../temp.csv', quote=F)
 
 #=====================================================================================
 # plot: sympytom hclst
@@ -273,7 +274,7 @@ fviz_dend(fit, k=3, rect =F, rect_fill = T, palette='aaas', cex = 0.6,
 dev.off()
 
 
- 
+
 #=====================================================================================
 # plot: sympytom bar
 #=====================================================================================
@@ -380,7 +381,6 @@ tab = table(res1$region, res1$symptom)
 # plot: heatmap show top symptoms by region 
 # https://towardsdatascience.com/customizable-correlation-plots-in-r-b1d2856a4b05
 #=====================================================================================
-# top sympton with prevalence > 0.8
 res = data.frame()
 provs =  names(rev(sort(table(df$region)))) # sort by n
 for (prov in provs){
@@ -410,8 +410,6 @@ png(file_out, height=1000, width=800, res=150)
 print(p)
 dev.off()
 
-
-# 
 
 #=====================================================================================
 # plot: map 
@@ -459,32 +457,3 @@ print(p1)
 dev.off()
 
 res # average score
-
-# #=====================================================================================
-# # forest plot, drop
-# #=====================================================================================
-# library(forestplot)
-# library(dplyr)
-# path_out = '/home/yanglab_data/user/zhanghy/gwas/summary/test/covid/plot/forest/'
-
-# reg = res 
-# reg[reg=='Ref.'] = NA
-# reg = reg%>%mutate(beta=as.numeric(beta), se=as.numeric(se))
-# reg = reg%>%mutate(or=exp(beta), or_l=exp(beta-1.96*se), or_u=exp(beta+1.96*se))
-# groups = c('agesex', 'how_long_lastvac', 'n_vac', 'infect')
-
-# for (i in groups){
-#     sub = reg%>%filter(grepl(i, add_var))
-#     tabletext = rep(list(NA),nrow(sub))
-#     p = forestplot(tabletext,
-#         mean  = sub$or, lower = sub$or_l, upper =  sub$or_u,
-#         new_page = T, boxsize=0.4, line.margin=0.1, cex=11.5, vertices = T, xlog=T, zero=1, xlab=" ",
-#         lwd.zero = 2,
-#         xticks = c(0.25, 0.5, 1, 2, 4, 8), 
-#         clip=c(0.25, 8),
-#         col=fpColors(line="black", summary="black"),
-#         txt_gp = fpTxtGp(ticks = gpar(fontfamily = "", cex=1)))
-#     png(paste0(path_out, i, '_forest.png'))
-#     print(p)
-#     dev.off()
-# }
