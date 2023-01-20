@@ -1,13 +1,9 @@
-.. image:: fig1.png
-   :width: 600
-=============================================
-
 
 A COVID-19 survey in China
 =============================================
 In Dec 2022, the COVID-19 restriction was end.
 
-We conduct this on-line survey to measure the characteristics to measure the characteristics of COVID-19 patients in China. 
+We conduct this 3-weeks on-line survey to measure the characteristics to measure the characteristics of COVID-19 patients in China. 
 We investigate: 
 
 Symptom spectrum of COVID-19:
