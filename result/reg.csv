@@ -1,93 +1,237 @@
-add_var,sympton,var,group,ncase,nctrl,beta,se,p
-agesex,oral_throat_dryitchy,age,<24,38 (84.44%),7 (15.56%),Ref.,NA,NA
-agesex,oral_throat_dryitchy,age,24-30,70 (87.5%),10 (12.5%),0.26031504744551,0.537589108595023,0.628224927378006
-agesex,oral_throat_dryitchy,age,31-40,104 (81.89%),23 (18.11%),-0.259974232983217,0.477688508357123,0.586280594121609
-agesex,oral_throat_dryitchy,age,>40,54 (81.82%),12 (18.18%),-0.1726009927771,0.526293275687088,0.742944995488977
-agesex,oral_throat_dryitchy,sex,female,198 (86.84%),30 (13.16%),Ref.,NA,NA
-agesex,oral_throat_dryitchy,sex,male,68 (75.56%),22 (24.44%),-0.791554022881167,0.317501501442083,0.0126643253066504
-agesex,oral_cough,age,<24,33 (73.33%),12 (26.67%),Ref.,NA,NA
-agesex,oral_cough,age,24-30,72 (90%),8 (10%),1.18780188557711,0.502922824472618,0.0181865716829887
-agesex,oral_cough,age,31-40,113 (88.98%),14 (11.02%),1.05933776151608,0.441548863880204,0.0164336078300071
-agesex,oral_cough,age,>40,60 (90.91%),6 (9.09%),1.29804301075248,0.54547756265559,0.0173293188564023
-agesex,oral_cough,sex,female,201 (88.16%),27 (11.84%),Ref.,NA,NA
-agesex,oral_cough,sex,male,77 (85.56%),13 (14.44%),-0.222462916224428,0.371110344883839,0.548871369999579
-agesex,eye_nose_tongue_tear,age,<24,16 (35.56%),29 (64.44%),Ref.,NA,NA
-agesex,eye_nose_tongue_tear,age,24-30,28 (35%),52 (65%),-0.023930512150635,0.394321352933504,0.951607814135333
-agesex,eye_nose_tongue_tear,age,31-40,44 (34.65%),83 (65.35%),-0.0978784654462597,0.367652082603616,0.790065323414152
-agesex,eye_nose_tongue_tear,age,>40,17 (25.76%),49 (74.24%),-0.458542674061235,0.424305403437499,0.279834961916511
-agesex,eye_nose_tongue_tear,sex,female,85 (37.28%),143 (62.72%),Ref.,NA,NA
-agesex,eye_nose_tongue_tear,sex,male,20 (22.22%),70 (77.78%),-0.723839855344313,0.290057749132842,0.0125778847873818
-agesex,eye_nose_tongue_eye_pain,age,<24,21 (46.67%),24 (53.33%),Ref.,NA,NA
-agesex,eye_nose_tongue_eye_pain,age,24-30,31 (38.75%),49 (61.25%),-0.32443404193977,0.37695498950973,0.389419541144062
-agesex,eye_nose_tongue_eye_pain,age,31-40,56 (44.09%),71 (55.91%),-0.115342932751823,0.349045571876233,0.741058184294041
-agesex,eye_nose_tongue_eye_pain,age,>40,15 (22.73%),51 (77.27%),-1.08817399778351,0.419188161927722,0.00943412599577149
-agesex,eye_nose_tongue_eye_pain,sex,female,91 (39.91%),137 (60.09%),Ref.,NA,NA
-agesex,eye_nose_tongue_eye_pain,sex,male,32 (35.56%),58 (64.44%),-0.138716996950038,0.263771419059809,0.598958722434594
-agesex,digestive_nausea,age,<24,24 (53.33%),21 (46.67%),Ref.,NA,NA
-agesex,digestive_nausea,age,24-30,42 (52.5%),38 (47.5%),-0.0335735442020685,0.38090673103392,0.929764518025275
-agesex,digestive_nausea,age,31-40,54 (42.52%),73 (57.48%),-0.522130426815215,0.356487281665537,0.143015414782578
-agesex,digestive_nausea,age,>40,24 (36.36%),42 (63.64%),-0.700686440760677,0.401011907426496,0.0805860329762101
-agesex,digestive_nausea,sex,female,116 (50.88%),112 (49.12%),Ref.,NA,NA
-agesex,digestive_nausea,sex,male,28 (31.11%),62 (68.89%),-0.866405320081025,0.267903857373769,0.00122062682746885
-agesex,digestive_diarrhea,age,<24,21 (46.67%),24 (53.33%),Ref.,NA,NA
-agesex,digestive_diarrhea,age,24-30,21 (26.25%),59 (73.75%),-0.906053530409718,0.393655035743281,0.0213552882922742
-agesex,digestive_diarrhea,age,31-40,45 (35.43%),82 (64.57%),-0.438795073575513,0.353389369606625,0.214356154834043
-agesex,digestive_diarrhea,age,>40,14 (21.21%),52 (78.79%),-1.19466112345046,0.425889892323288,0.00503019290298093
-agesex,digestive_diarrhea,sex,female,68 (29.82%),160 (70.18%),Ref.,NA,NA
-agesex,digestive_diarrhea,sex,male,33 (36.67%),57 (63.33%),0.365155385303648,0.269054475061206,0.17472398518505
-agesex,digestive_fart,age,<24,14 (31.11%),31 (68.89%),Ref.,NA,NA
-agesex,digestive_fart,age,24-30,48 (60%),32 (40%),1.2067758480785,0.395702856059236,0.00229068422253987
-agesex,digestive_fart,age,31-40,60 (47.24%),67 (52.76%),0.662130098022391,0.36892680014045,0.0726940918701412
-agesex,digestive_fart,age,>40,26 (39.39%),40 (60.61%),0.372664116657008,0.409851330314889,0.363209428006304
-agesex,digestive_fart,sex,female,111 (48.68%),117 (51.32%),Ref.,NA,NA
-agesex,digestive_fart,sex,male,37 (41.11%),53 (58.89%),-0.311556016024518,0.258209926990365,0.227586348949848
-agesex,nerve_headache,age,<24,33 (73.33%),12 (26.67%),Ref.,NA,NA
-agesex,nerve_headache,age,24-30,70 (87.5%),10 (12.5%),0.937135337876568,0.478071101225865,0.0499674416315168
-agesex,nerve_headache,age,31-40,102 (80.31%),25 (19.69%),0.372081726333471,0.405649990372587,0.359012590854722
-agesex,nerve_headache,age,>40,52 (78.79%),14 (21.21%),0.307789826162409,0.452799952822931,0.496664087989791
-agesex,nerve_headache,sex,female,187 (82.02%),41 (17.98%),Ref.,NA,NA
-agesex,nerve_headache,sex,male,70 (77.78%),20 (22.22%),-0.274662969772653,0.310669445821118,0.376642037363535
-agesex,organ_hyposexuality,age,<24,14 (31.11%),31 (68.89%),Ref.,NA,NA
-agesex,organ_hyposexuality,age,24-30,25 (31.25%),55 (68.75%),0.00498199538401292,0.421633822710866,0.990572471918349
-agesex,organ_hyposexuality,age,31-40,44 (34.65%),83 (65.35%),0.302033018482508,0.391035459425871,0.439881748696996
-agesex,organ_hyposexuality,age,>40,15 (22.73%),51 (77.27%),-0.502688923995986,0.45618173678329,0.270483924976661
-agesex,organ_hyposexuality,sex,female,52 (22.81%),176 (77.19%),Ref.,NA,NA
-agesex,organ_hyposexuality,sex,male,46 (51.11%),44 (48.89%),1.34514880383248,0.270365704305801,6.51487623063777e-07
-agesex,wholebody_fatigue,age,<24,38 (84.44%),7 (15.56%),Ref.,NA,NA
-agesex,wholebody_fatigue,age,24-30,77 (96.25%),3 (3.75%),1.56878186918086,0.721110572443174,0.0295920640896691
-agesex,wholebody_fatigue,age,31-40,118 (92.91%),9 (7.09%),0.827747746519623,0.541400855590537,0.126289246149282
-agesex,wholebody_fatigue,age,>40,57 (86.36%),9 (13.64%),0.173010358001287,0.549969117822032,0.753079085010319
-agesex,wholebody_fatigue,sex,female,212 (92.98%),16 (7.02%),Ref.,NA,NA
-agesex,wholebody_fatigue,sex,male,78 (86.67%),12 (13.33%),-0.689530052639049,0.411716563683736,0.0939796039202923
-howlong_lastvac,oral_cough,howlong_lastvac,no_vac,0 (NaN%),0 (NaN%),Ref.,NA,NA
-howlong_lastvac,oral_cough,howlong_lastvac,<6 month,16 (66.67%),8 (33.33%),NA,NA,NA
-howlong_lastvac,oral_cough,howlong_lastvac,6-12 month,83 (87.37%),12 (12.63%),1.23517057405547,0.552216745067854,0.0253027113953926
-howlong_lastvac,oral_cough,howlong_lastvac,>12 month,115 (94.26%),7 (5.74%),2.23757727746677,0.607382954604715,0.000229634184926479
-n_vaccine,oral_swallow_pain,n_vaccine,0,24 (50%),24 (50%),Ref.,NA,NA
-n_vaccine,oral_swallow_pain,n_vaccine,1,6 (46.15%),7 (53.85%),-0.153903420644367,0.631522183237185,0.807461377101877
-n_vaccine,oral_swallow_pain,n_vaccine,2,47 (71.21%),19 (28.79%),0.967618490375594,0.404299837982356,0.0166967164919969
-n_vaccine,oral_swallow_pain,n_vaccine,>3,100 (61.73%),62 (38.27%),0.549483077750713,0.336938334652277,0.102929995635648
-n_vaccine,oral_cough,n_vaccine,0,38 (79.17%),10 (20.83%),Ref.,NA,NA
-n_vaccine,oral_cough,n_vaccine,1,11 (84.62%),2 (15.38%),0.36705314253767,0.868905392597993,0.672709977052127
-n_vaccine,oral_cough,n_vaccine,2,61 (92.42%),5 (7.58%),1.41211250624811,0.611138783252964,0.0208535811865935
-n_vaccine,oral_cough,n_vaccine,>3,142 (87.65%),20 (12.35%),0.730755442751026,0.450568167401989,0.104834775374722
-n_vaccine,eye_nose_tongue_congestion,n_vaccine,0,34 (70.83%),14 (29.17%),Ref.,NA,NA
-n_vaccine,eye_nose_tongue_congestion,n_vaccine,1,11 (84.62%),2 (15.38%),0.793814431396069,0.836474758720851,0.342620681776072
-n_vaccine,eye_nose_tongue_congestion,n_vaccine,2,60 (90.91%),6 (9.09%),1.33181187734932,0.540110858154379,0.0136703033172477
-n_vaccine,eye_nose_tongue_congestion,n_vaccine,>3,137 (84.57%),25 (15.43%),0.825369427741365,0.392488606071685,0.0354733672863664
-n_vaccine,eye_nose_tongue_runny_nose,n_vaccine,0,36 (75%),12 (25%),Ref.,NA,NA
-n_vaccine,eye_nose_tongue_runny_nose,n_vaccine,1,7 (53.85%),6 (46.15%),-0.994263566911069,0.658662281619892,0.1311660724315
-n_vaccine,eye_nose_tongue_runny_nose,n_vaccine,2,60 (90.91%),6 (9.09%),1.13435131313176,0.551702835501244,0.0397737318978676
-n_vaccine,eye_nose_tongue_runny_nose,n_vaccine,>3,137 (84.57%),25 (15.43%),0.551968431425326,0.40480460255986,0.172711481719404
-n_vaccine,eye_nose_tongue_sneeze,n_vaccine,0,24 (50%),24 (50%),Ref.,NA,NA
-n_vaccine,eye_nose_tongue_sneeze,n_vaccine,1,8 (61.54%),5 (38.46%),0.537989911565085,0.649434293311992,0.407445276690503
-n_vaccine,eye_nose_tongue_sneeze,n_vaccine,2,42 (63.64%),24 (36.36%),0.708483473906298,0.397032387092345,0.0743509689447783
-n_vaccine,eye_nose_tongue_sneeze,n_vaccine,>3,108 (66.67%),54 (33.33%),0.69863478488086,0.341256819953699,0.0406344760968669
-infect_work,oral_throat_phlegmy,infect_work,0,177 (88.94%),22 (11.06%),Ref.,NA,NA
-infect_work,oral_throat_phlegmy,infect_work,1,115 (96.64%),4 (3.36%),1.30170858545839,0.565408374556462,0.0213213613311225
-infect_traffic,nerve_insomnia,infect_traffic,0,147 (48.51%),156 (51.49%),Ref.,NA,NA
-infect_traffic,nerve_insomnia,infect_traffic,1,12 (80%),3 (20%),1.41080624229617,0.664169208599108,0.033656190795576
-infect_traffic,organ_dyspnea,infect_traffic,0,83 (27.39%),220 (72.61%),Ref.,NA,NA
-infect_traffic,organ_dyspnea,infect_traffic,1,9 (60%),6 (40%),1.24319957249729,0.554165746668902,0.0248728762650491
-infect_hosp,organ_dyspnea,infect_hosp,0,84 (27.91%),217 (72.09%),Ref.,NA,NA
-infect_hosp,organ_dyspnea,infect_hosp,1,8 (47.06%),9 (52.94%),1.05570709310003,0.524363352052827,0.0440818038881108
+outcome,test_var,reg_var,level,ncase,nctrl,mean,beta,se,p
+Respiratoryscore,agesex,age,<24,NA,NA,0.36±0.16,Ref.,NA,NA
+Respiratoryscore,agesex,age,24-30,NA,NA,0.40±0.17,0.0360980072107808,0.0279676509372481,0.197352001283064
+Respiratoryscore,agesex,age,31-40,NA,NA,0.36±0.18,-0.00639094229875489,0.026551923965442,0.809881078022226
+Respiratoryscore,agesex,age,>40,NA,NA,0.30±0.16,-0.061510808742029,0.0285321282852132,0.0315320548952881
+Respiratoryscore,agesex,sex,Female,NA,NA,0.36±0.18,Ref.,NA,NA
+Respiratoryscore,agesex,sex,Male,NA,NA,0.34±0.17,-0.0242282590759304,0.0163677501586741,0.139384990195185
+Digestivescore,agesex,age,<24,NA,NA,0.20±0.16,Ref.,NA,NA
+Digestivescore,agesex,age,24-30,NA,NA,0.20±0.16,-3.04702660017479e-05,0.0245653830247375,0.999010777917132
+Digestivescore,agesex,age,31-40,NA,NA,0.18±0.15,-0.0206723838696358,0.023321879399821,0.375795259466523
+Digestivescore,agesex,age,>40,NA,NA,0.13±0.14,-0.0691357462281449,0.0250611916392209,0.00599820299651929
+Digestivescore,agesex,sex,Female,NA,NA,0.18±0.16,Ref.,NA,NA
+Digestivescore,agesex,sex,Male,NA,NA,0.16±0.14,-0.0283509558933628,0.0143766114931568,0.0491116824502103
+Palate discomfort,agesex,age,<24,14 (28%),36 (72%),NA,Ref.,NA,NA
+Palate discomfort,agesex,age,24-30,65 (44.83%),80 (55.17%),NA,0.726248800681828,0.35704789236857,0.0419478151383364
+Palate discomfort,agesex,age,31-40,89 (38.36%),143 (61.64%),NA,0.466605059698331,0.342822469845143,0.173491863493228
+Palate discomfort,agesex,age,>40,37 (29.84%),87 (70.16%),NA,0.0842753304802173,0.371318740507705,0.820453109579106
+Palate discomfort,agesex,sex,Female,146 (36.32%),256 (63.68%),NA,Ref.,NA,NA
+Palate discomfort,agesex,sex,Male,60 (40%),90 (60%),NA,0.112214028216895,0.198964921411324,0.572761614374227
+Cough,agesex,age,<24,38 (76%),12 (24%),NA,Ref.,NA,NA
+Cough,agesex,age,24-30,135 (93.1%),10 (6.9%),NA,1.48994695825118,0.468344146296175,0.00146611691079164
+Cough,agesex,age,31-40,207 (89.22%),25 (10.78%),NA,0.976961596117576,0.394142237959048,0.013186100722696
+Cough,agesex,age,>40,112 (90.32%),12 (9.68%),NA,1.10135720770804,0.450622162106661,0.0145221528940447
+Cough,agesex,sex,Female,362 (90.05%),40 (9.95%),NA,Ref.,NA,NA
+Cough,agesex,sex,Male,131 (87.33%),19 (12.67%),NA,-0.346500508671132,0.301363972439484,0.250236900093438
+Nasal congestion,agesex,age,<24,45 (90%),5 (10%),NA,Ref.,NA,NA
+Nasal congestion,agesex,age,24-30,127 (87.59%),18 (12.41%),NA,-0.226629431586996,0.53519493697251,0.671965423628981
+Nasal congestion,agesex,age,31-40,195 (84.05%),37 (15.95%),NA,-0.529483208553998,0.504518456430781,0.293956180539303
+Nasal congestion,agesex,age,>40,93 (75%),31 (25%),NA,-1.09142892418301,0.515213219587804,0.0341410022570413
+Nasal congestion,agesex,sex,Female,338 (84.08%),64 (15.92%),NA,Ref.,NA,NA
+Nasal congestion,agesex,sex,Male,122 (81.33%),28 (18.67%),NA,-0.168949001341419,0.255556496229451,0.508546675506798
+Running nose,agesex,age,<24,47 (94%),3 (6%),NA,Ref.,NA,NA
+Running nose,agesex,age,24-30,123 (84.83%),22 (15.17%),NA,-1.0129136344093,0.639469634202333,0.113195949025779
+Running nose,agesex,age,31-40,188 (81.03%),44 (18.97%),NA,-1.2936951054913,0.618743872833573,0.0365423125111621
+Running nose,agesex,age,>40,93 (75%),31 (25%),NA,-1.6455486607951,0.63076423546427,0.00908557315351619
+Running nose,agesex,sex,Female,332 (82.59%),70 (17.41%),NA,Ref.,NA,NA
+Running nose,agesex,sex,Male,119 (79.33%),31 (20.67%),NA,-0.180238288638452,0.245690712047584,0.463193597454488
+Nausea,agesex,age,<24,26 (52%),24 (48%),NA,Ref.,NA,NA
+Nausea,agesex,age,24-30,69 (47.59%),76 (52.41%),NA,-0.121217299090706,0.331452010161304,0.714577015329725
+Nausea,agesex,age,31-40,98 (42.24%),134 (57.76%),NA,-0.378649863504377,0.315136704419134,0.229541175427501
+Nausea,agesex,age,>40,44 (35.48%),80 (64.52%),NA,-0.661073977618079,0.342208416129424,0.0533857262232236
+Nausea,agesex,sex,Female,188 (46.77%),214 (53.23%),NA,Ref.,NA,NA
+Nausea,agesex,sex,Male,49 (32.67%),101 (67.33%),NA,-0.598996129527559,0.202697253282166,0.00312540348527845
+Vomit,agesex,age,<24,10 (20%),40 (80%),NA,Ref.,NA,NA
+Vomit,agesex,age,24-30,24 (16.55%),121 (83.45%),NA,-0.160242493781188,0.422123318943023,0.704234478152081
+Vomit,agesex,age,31-40,35 (15.09%),197 (84.91%),NA,-0.320633638879677,0.401335255602737,0.424338424563017
+Vomit,agesex,age,>40,20 (16.13%),104 (83.87%),NA,-0.231337352126901,0.433040627155253,0.593191908164544
+Vomit,agesex,sex,Female,76 (18.91%),326 (81.09%),NA,Ref.,NA,NA
+Vomit,agesex,sex,Male,13 (8.67%),137 (91.33%),NA,-0.894237769034452,0.317729264798954,0.00488585581103769
+Diarrhea,agesex,age,<24,22 (44%),28 (56%),NA,Ref.,NA,NA
+Diarrhea,agesex,age,24-30,42 (28.97%),103 (71.03%),NA,-0.706755610870191,0.341191216037184,0.0383181124983557
+Diarrhea,agesex,age,31-40,86 (37.07%),146 (62.93%),NA,-0.306374936273902,0.317192237560977,0.334095872624348
+Diarrhea,agesex,age,>40,31 (25%),93 (75%),NA,-0.88622160952801,0.354277323646137,0.0123671513858826
+Diarrhea,agesex,sex,Female,122 (30.35%),280 (69.65%),NA,Ref.,NA,NA
+Diarrhea,agesex,sex,Male,59 (39.33%),91 (60.67%),NA,0.446513952059127,0.20224952475739,0.0272625454346958
+Abdominal distention,agesex,age,<24,16 (32%),34 (68%),NA,Ref.,NA,NA
+Abdominal distention,agesex,age,24-30,43 (29.66%),102 (70.34%),NA,-0.0930984267707077,0.354357287127446,0.792762745296791
+Abdominal distention,agesex,age,31-40,58 (25%),174 (75%),NA,-0.339239179263356,0.339223532041699,0.317288185813398
+Abdominal distention,agesex,age,>40,21 (16.94%),103 (83.06%),NA,-0.829248994538027,0.38659350134387,0.0319516197272679
+Abdominal distention,agesex,sex,Female,104 (25.87%),298 (74.13%),NA,Ref.,NA,NA
+Abdominal distention,agesex,sex,Male,34 (22.67%),116 (77.33%),NA,-0.178031031684711,0.228065990207859,0.435030775820913
+Fatigue,agesex,age,<24,43 (86%),7 (14%),NA,Ref.,NA,NA
+Fatigue,agesex,age,24-30,140 (96.55%),5 (3.45%),NA,1.57200738966891,0.613782236761907,0.0104316998880144
+Fatigue,agesex,age,31-40,215 (92.67%),17 (7.33%),NA,0.743054322469144,0.480696197091036,0.12215582163223
+Fatigue,agesex,age,>40,110 (88.71%),14 (11.29%),NA,0.271117448853182,0.498365625662178,0.586432430731006
+Fatigue,agesex,sex,Female,374 (93.03%),28 (6.97%),NA,Ref.,NA,NA
+Fatigue,agesex,sex,Male,135 (90%),15 (10%),NA,-0.471387903630881,0.339783970546324,0.165345278555833
+Eye pain,agesex,age,<24,27 (54%),23 (46%),NA,Ref.,NA,NA
+Eye pain,agesex,age,24-30,49 (33.79%),96 (66.21%),NA,-0.807934781930629,0.334660544329233,0.0157701532254593
+Eye pain,agesex,age,31-40,90 (38.79%),142 (61.21%),NA,-0.608693653902939,0.314717760593331,0.0531016021878564
+Eye pain,agesex,age,>40,28 (22.58%),96 (77.42%),NA,-1.38397607377379,0.356474694846361,0.000103432085082579
+Eye pain,agesex,sex,Female,149 (37.06%),253 (62.94%),NA,Ref.,NA,NA
+Eye pain,agesex,sex,Male,45 (30%),105 (70%),NA,-0.292450017424664,0.209584420078101,0.162901121914795
+Palpitation,agesex,age,<24,16 (32%),34 (68%),NA,Ref.,NA,NA
+Palpitation,agesex,age,24-30,72 (49.66%),73 (50.34%),NA,0.742234934980174,0.346223970526932,0.0320489183674015
+Palpitation,agesex,age,31-40,102 (43.97%),130 (56.03%),NA,0.512010978525525,0.330843198099793,0.121720054905751
+Palpitation,agesex,age,>40,50 (40.32%),74 (59.68%),NA,0.362798884281703,0.354274712332184,0.305806506267373
+Palpitation,agesex,sex,Female,175 (43.53%),227 (56.47%),NA,Ref.,NA,NA
+Palpitation,agesex,sex,Male,65 (43.33%),85 (56.67%),NA,-0.0230403479059505,0.194819640755251,0.905857676113731
+Phlegm in throat,how_long_lastvac,how_long_lastvac,<6 month,45 (83.33%),9 (16.67%),NA,Ref.,NA,NA
+Phlegm in throat,how_long_lastvac,how_long_lastvac,6-12 month,149 (91.41%),14 (8.59%),NA,0.79279334937984,0.467598772455802,0.089988867240008
+Phlegm in throat,how_long_lastvac,how_long_lastvac,>12 month,232 (94.69%),13 (5.31%),NA,1.39104272502307,0.474177170810566,0.00335063494244633
+Cough,how_long_lastvac,how_long_lastvac,<6 month,44 (81.48%),10 (18.52%),NA,Ref.,NA,NA
+Cough,how_long_lastvac,how_long_lastvac,6-12 month,145 (88.96%),18 (11.04%),NA,0.701539539390945,0.444569166365977,0.114560755027915
+Cough,how_long_lastvac,how_long_lastvac,>12 month,230 (93.88%),15 (6.12%),NA,1.46416725128212,0.458838739235522,0.0014176755443976
+Vertigo,how_long_lastvac,how_long_lastvac,<6 month,24 (44.44%),30 (55.56%),NA,Ref.,NA,NA
+Vertigo,how_long_lastvac,how_long_lastvac,6-12 month,100 (61.35%),63 (38.65%),NA,0.687181813378016,0.32011231702286,0.031817993419743
+Vertigo,how_long_lastvac,how_long_lastvac,>12 month,144 (58.78%),101 (41.22%),NA,0.605415366621944,0.306485592394444,0.048228793641321
+Nausea,how_long_lastvac,how_long_lastvac,<6 month,18 (33.33%),36 (66.67%),NA,Ref.,NA,NA
+Nausea,how_long_lastvac,how_long_lastvac,6-12 month,59 (36.2%),104 (63.8%),NA,0.156250246847377,0.33703827111632,0.642935833388204
+Nausea,how_long_lastvac,how_long_lastvac,>12 month,115 (46.94%),130 (53.06%),NA,0.697200362081139,0.321892341134785,0.0303155668613975
+Respiratoryscore,n_vac,n_vac,0,NA,NA,0.29±0.17,Ref.,NA,NA
+Respiratoryscore,n_vac,n_vac,1,NA,NA,0.30±0.18,0.00601923787351528,0.0400755064872511,0.880664631393952
+Respiratoryscore,n_vac,n_vac,2,NA,NA,0.39±0.16,0.0918478916628654,0.0236111422083756,0.000112670457912845
+Respiratoryscore,n_vac,n_vac,≥3,NA,NA,0.36±0.18,0.0752702480838452,0.020234878550337,0.000220100727921583
+Palate discomfort,n_vac,n_vac,0,26 (28.89%),64 (71.11%),NA,Ref.,NA,NA
+Palate discomfort,n_vac,n_vac,1,6 (27.27%),16 (72.73%),NA,-0.110365828138803,0.539585129934758,0.837932861208476
+Palate discomfort,n_vac,n_vac,2,48 (40.68%),70 (59.32%),NA,0.579713519478679,0.304427867588948,0.0568747452816184
+Palate discomfort,n_vac,n_vac,≥3,126 (39.13%),196 (60.87%),NA,0.533219473408063,0.265729719429295,0.0447897776655936
+Cough,n_vac,n_vac,0,74 (82.22%),16 (17.78%),NA,Ref.,NA,NA
+Cough,n_vac,n_vac,1,20 (90.91%),2 (9.09%),NA,0.645826406242867,0.801601211792717,0.42043289432388
+Cough,n_vac,n_vac,2,111 (94.07%),7 (5.93%),NA,1.34386138594341,0.48825284074842,0.00591623328378975
+Cough,n_vac,n_vac,≥3,288 (89.44%),34 (10.56%),NA,0.570549952098505,0.340019730729124,0.0933489110521168
+Running nose,n_vac,n_vac,0,70 (77.78%),20 (22.22%),NA,Ref.,NA,NA
+Running nose,n_vac,n_vac,1,12 (54.55%),10 (45.45%),NA,-1.14862017674348,0.510560279662189,0.0244664135440487
+Running nose,n_vac,n_vac,2,104 (88.14%),14 (11.86%),NA,0.67496678626761,0.389007008712685,0.0827227640653573
+Running nose,n_vac,n_vac,≥3,265 (82.3%),57 (17.7%),NA,0.279488730041395,0.303179842682455,0.356602706688177
+Headache,n_vac,n_vac,0,78 (86.67%),12 (13.33%),NA,Ref.,NA,NA
+Headache,n_vac,n_vac,1,17 (77.27%),5 (22.73%),NA,-0.810012035583177,0.607533571731311,0.18244010993337
+Headache,n_vac,n_vac,2,95 (80.51%),23 (19.49%),NA,-0.525984242686368,0.399665033699996,0.188152999531998
+Headache,n_vac,n_vac,≥3,243 (75.47%),79 (24.53%),NA,-0.838876182619169,0.350722672718643,0.0167636714253251
+Vertigo,n_vac,n_vac,0,62 (68.89%),28 (31.11%),NA,Ref.,NA,NA
+Vertigo,n_vac,n_vac,1,12 (54.55%),10 (45.45%),NA,-0.713509076954999,0.491194145902353,0.146334585553972
+Vertigo,n_vac,n_vac,2,68 (57.63%),50 (42.37%),NA,-0.572479262515323,0.299078461212471,0.0556017500411409
+Vertigo,n_vac,n_vac,≥3,188 (58.39%),134 (41.61%),NA,-0.511483757639727,0.259951757797738,0.0491128930470761
+Appetite increase,n_vac,n_vac,0,10 (11.11%),80 (88.89%),NA,Ref.,NA,NA
+Appetite increase,n_vac,n_vac,1,4 (18.18%),18 (81.82%),NA,0.45889363768874,0.654961389489728,0.483526289104515
+Appetite increase,n_vac,n_vac,2,30 (25.42%),88 (74.58%),NA,1.00494697566895,0.401243024977286,0.0122595391009131
+Appetite increase,n_vac,n_vac,≥3,56 (17.39%),266 (82.61%),NA,0.521946834057367,0.370822003494405,0.159267299856257
+Phlegm in throat,infectway_work,infectway_work,0,327 (89.59%),38 (10.41%),NA,Ref.,NA,NA
+Phlegm in throat,infectway_work,infectway_work,1,178 (95.19%),9 (4.81%),NA,0.916950138403875,0.387219750219593,0.0178828169718822
+Palate discomfort,infectway_work,infectway_work,0,123 (33.7%),242 (66.3%),NA,Ref.,NA,NA
+Palate discomfort,infectway_work,infectway_work,1,83 (44.39%),104 (55.61%),NA,0.409296626845103,0.187283401800519,0.0288566049325965
+Appetite increase,infectway_work,infectway_work,0,54 (14.79%),311 (85.21%),NA,Ref.,NA,NA
+Appetite increase,infectway_work,infectway_work,1,46 (24.6%),141 (75.4%),NA,0.601368483762002,0.229783690733172,0.00886785630504428
+Palate discomfort,infectway_family,infectway_family,0,128 (41.69%),179 (58.31%),NA,Ref.,NA,NA
+Palate discomfort,infectway_family,infectway_family,1,78 (31.84%),167 (68.16%),NA,-0.391265984046812,0.181887426153444,0.0314648621364774
+Respiratoryscore,infectway_traffic,infectway_traffic,0,NA,NA,0.35±0.17,Ref.,NA,NA
+Respiratoryscore,infectway_traffic,infectway_traffic,1,NA,NA,0.43±0.17,0.0691259192843936,0.0326981063583413,0.0349633108366872
+Respiratoryscore,infectway_hosp,infectway_hosp,0,NA,NA,0.35±0.17,Ref.,NA,NA
+Respiratoryscore,infectway_hosp,infectway_hosp,1,NA,NA,0.40±0.18,0.0690101196688562,0.0322075014989833,0.0325816967445598
+Digestivescore,infectway_hosp,infectway_hosp,0,NA,NA,0.17±0.15,Ref.,NA,NA
+Digestivescore,infectway_hosp,infectway_hosp,1,NA,NA,0.21±0.17,0.0565949486818462,0.0283047320415398,0.0460516038480865
+Otherscore,infectway_hosp,infectway_hosp,0,NA,NA,0.28±0.17,Ref.,NA,NA
+Otherscore,infectway_hosp,infectway_hosp,1,NA,NA,0.33±0.18,0.0692245705226215,0.0329187199982783,0.035932995556675
+Palate discomfort,infectway_hosp,infectway_hosp,0,190 (36.4%),332 (63.6%),NA,Ref.,NA,NA
+Palate discomfort,infectway_hosp,infectway_hosp,1,16 (53.33%),14 (46.67%),NA,0.820203784604385,0.386875528986839,0.0340000156606969
+Hematuria,infectway_hosp,infectway_hosp,0,3 (0.57%),519 (99.43%),NA,Ref.,NA,NA
+Hematuria,infectway_hosp,infectway_hosp,1,2 (6.67%),28 (93.33%),NA,3.10640520509123,0.976839770492743,0.00147246577371992
+Respiratoryscore,ibuprofen_use,ibuprofen_use,0,NA,NA,0.32±0.17,Ref.,NA,NA
+Respiratoryscore,ibuprofen_use,ibuprofen_use,1,NA,NA,0.41±0.17,0.0811137176330107,0.0146447857066202,4.74536266239598e-08
+Neurologicalscore,ibuprofen_use,ibuprofen_use,0,NA,NA,0.23±0.17,Ref.,NA,NA
+Neurologicalscore,ibuprofen_use,ibuprofen_use,1,NA,NA,0.32±0.18,0.0895154992898329,0.0153472434464805,9.35721458492821e-09
+Digestivescore,ibuprofen_use,ibuprofen_use,0,NA,NA,0.16±0.15,Ref.,NA,NA
+Digestivescore,ibuprofen_use,ibuprofen_use,1,NA,NA,0.20±0.16,0.0404868343535668,0.0131060758419873,0.00210954216461798
+Otherscore,ibuprofen_use,ibuprofen_use,0,NA,NA,0.25±0.17,Ref.,NA,NA
+Otherscore,ibuprofen_use,ibuprofen_use,1,NA,NA,0.33±0.17,0.0801008159964273,0.0149937420036699,1.35054362933115e-07
+Sore throat,ibuprofen_use,ibuprofen_use,0,238 (71.26%),96 (28.74%),NA,Ref.,NA,NA
+Sore throat,ibuprofen_use,ibuprofen_use,1,182 (83.49%),36 (16.51%),NA,0.686763023449891,0.221784476046516,0.00195797845246065
+Palate discomfort,ibuprofen_use,ibuprofen_use,0,110 (32.93%),224 (67.07%),NA,Ref.,NA,NA
+Palate discomfort,ibuprofen_use,ibuprofen_use,1,96 (44.04%),122 (55.96%),NA,0.439174634706714,0.182914401563243,0.0163510310998535
+Cough,ibuprofen_use,ibuprofen_use,0,290 (86.83%),44 (13.17%),NA,Ref.,NA,NA
+Cough,ibuprofen_use,ibuprofen_use,1,203 (93.12%),15 (6.88%),NA,0.808031869003772,0.320938901804201,0.011811970966387
+Hemoptysis,ibuprofen_use,ibuprofen_use,0,55 (16.47%),279 (83.53%),NA,Ref.,NA,NA
+Hemoptysis,ibuprofen_use,ibuprofen_use,1,58 (26.61%),160 (73.39%),NA,0.566992959761297,0.216068622796881,0.00868696711593178
+Chest pain,ibuprofen_use,ibuprofen_use,0,70 (20.96%),264 (79.04%),NA,Ref.,NA,NA
+Chest pain,ibuprofen_use,ibuprofen_use,1,66 (30.28%),152 (69.72%),NA,0.443996257657136,0.202323333327071,0.0282002993626407
+Dyspnea,ibuprofen_use,ibuprofen_use,0,93 (27.84%),241 (72.16%),NA,Ref.,NA,NA
+Dyspnea,ibuprofen_use,ibuprofen_use,1,87 (39.91%),131 (60.09%),NA,0.519760090871478,0.188460576550933,0.00581695846157295
+Anosmia,ibuprofen_use,ibuprofen_use,0,143 (42.81%),191 (57.19%),NA,Ref.,NA,NA
+Anosmia,ibuprofen_use,ibuprofen_use,1,117 (53.67%),101 (46.33%),NA,0.399953316996688,0.178346216658867,0.0249247586066392
+Brain Fog,ibuprofen_use,ibuprofen_use,0,117 (35.03%),217 (64.97%),NA,Ref.,NA,NA
+Brain Fog,ibuprofen_use,ibuprofen_use,1,110 (50.46%),108 (49.54%),NA,0.589511359281424,0.181210454749437,0.00114118672523412
+Headache,ibuprofen_use,ibuprofen_use,0,247 (73.95%),87 (26.05%),NA,Ref.,NA,NA
+Headache,ibuprofen_use,ibuprofen_use,1,186 (85.32%),32 (14.68%),NA,0.6901759502314,0.232650111432258,0.0030112871352857
+Vertigo,ibuprofen_use,ibuprofen_use,0,182 (54.49%),152 (45.51%),NA,Ref.,NA,NA
+Vertigo,ibuprofen_use,ibuprofen_use,1,148 (67.89%),70 (32.11%),NA,0.540275987504953,0.185003677963492,0.0034963545605091
+Insomnia,ibuprofen_use,ibuprofen_use,0,147 (44.01%),187 (55.99%),NA,Ref.,NA,NA
+Insomnia,ibuprofen_use,ibuprofen_use,1,118 (54.13%),100 (45.87%),NA,0.361106629775604,0.177634510974155,0.0420663632828154
+Drowsiness,ibuprofen_use,ibuprofen_use,0,155 (46.41%),179 (53.59%),NA,Ref.,NA,NA
+Drowsiness,ibuprofen_use,ibuprofen_use,1,127 (58.26%),91 (41.74%),NA,0.416376064950565,0.179237610598898,0.020177025877923
+Appetite loss,ibuprofen_use,ibuprofen_use,0,198 (59.28%),136 (40.72%),NA,Ref.,NA,NA
+Appetite loss,ibuprofen_use,ibuprofen_use,1,151 (69.27%),67 (30.73%),NA,0.418708639606925,0.187012494282195,0.0251602081453557
+Nausea,ibuprofen_use,ibuprofen_use,0,128 (38.32%),206 (61.68%),NA,Ref.,NA,NA
+Nausea,ibuprofen_use,ibuprofen_use,1,109 (50%),109 (50%),NA,0.4673632632441,0.180995748889637,0.00981788974247785
+Abdominal pain,ibuprofen_use,ibuprofen_use,0,53 (15.87%),281 (84.13%),NA,Ref.,NA,NA
+Abdominal pain,ibuprofen_use,ibuprofen_use,1,54 (24.77%),164 (75.23%),NA,0.50111124000593,0.219882624663947,0.0226674063731291
+Fatigue,ibuprofen_use,ibuprofen_use,0,299 (89.52%),35 (10.48%),NA,Ref.,NA,NA
+Fatigue,ibuprofen_use,ibuprofen_use,1,210 (96.33%),8 (3.67%),NA,1.12270746091423,0.409839369154269,0.00615544091182125
+Myalgia,ibuprofen_use,ibuprofen_use,0,228 (68.26%),106 (31.74%),NA,Ref.,NA,NA
+Myalgia,ibuprofen_use,ibuprofen_use,1,179 (82.11%),39 (17.89%),NA,0.746588138189505,0.215429174170484,0.000529079038897481
+Arthralgia,ibuprofen_use,ibuprofen_use,0,152 (45.51%),182 (54.49%),NA,Ref.,NA,NA
+Arthralgia,ibuprofen_use,ibuprofen_use,1,129 (59.17%),89 (40.83%),NA,0.564186288650651,0.179006774641876,0.00162289926567573
+Eye pain,ibuprofen_use,ibuprofen_use,0,100 (29.94%),234 (70.06%),NA,Ref.,NA,NA
+Eye pain,ibuprofen_use,ibuprofen_use,1,94 (43.12%),124 (56.88%),NA,0.515787233036662,0.186541388678964,0.00569225213975748
+Respiratoryscore,acetaminophen_use,acetaminophen_use,0,NA,NA,0.34±0.17,Ref.,NA,NA
+Respiratoryscore,acetaminophen_use,acetaminophen_use,1,NA,NA,0.39±0.17,0.0426909920321572,0.0153048072863547,0.00546555936117206
+Neurologicalscore,acetaminophen_use,acetaminophen_use,0,NA,NA,0.25±0.18,Ref.,NA,NA
+Neurologicalscore,acetaminophen_use,acetaminophen_use,1,NA,NA,0.29±0.19,0.0355516255580976,0.0161280952783512,0.0279183926982007
+Digestivescore,acetaminophen_use,acetaminophen_use,0,NA,NA,0.17±0.15,Ref.,NA,NA
+Digestivescore,acetaminophen_use,acetaminophen_use,1,NA,NA,0.20±0.15,0.0274281167995088,0.0134875192576351,0.0424766123024888
+Chest pain,acetaminophen_use,acetaminophen_use,0,76 (20.82%),289 (79.18%),NA,Ref.,NA,NA
+Chest pain,acetaminophen_use,acetaminophen_use,1,60 (32.09%),127 (67.91%),NA,0.555288277458748,0.204316426114447,0.00657203731539311
+Headache,acetaminophen_use,acetaminophen_use,0,274 (75.07%),91 (24.93%),NA,Ref.,NA,NA
+Headache,acetaminophen_use,acetaminophen_use,1,159 (85.03%),28 (14.97%),NA,0.605434604204267,0.240379593906536,0.0117802158464925
+Insomnia,acetaminophen_use,acetaminophen_use,0,160 (43.84%),205 (56.16%),NA,Ref.,NA,NA
+Insomnia,acetaminophen_use,acetaminophen_use,1,105 (56.15%),82 (43.85%),NA,0.474679491720072,0.182671726442469,0.0093621579109995
+Palpitation,acetaminophen_use,acetaminophen_use,0,144 (39.45%),221 (60.55%),NA,Ref.,NA,NA
+Palpitation,acetaminophen_use,acetaminophen_use,1,96 (51.34%),91 (48.66%),NA,0.483028515470158,0.183357738437584,0.00842984643903665
+Respiratoryscore,chnmed_usd,chnmed_usd,0,NA,NA,0.32±0.17,Ref.,NA,NA
+Respiratoryscore,chnmed_usd,chnmed_usd,1,NA,NA,0.40±0.17,0.0830058268336317,0.0142409283111522,9.57048602488736e-09
+Neurologicalscore,chnmed_usd,chnmed_usd,0,NA,NA,0.25±0.18,Ref.,NA,NA
+Neurologicalscore,chnmed_usd,chnmed_usd,1,NA,NA,0.29±0.19,0.0446499144137518,0.0153077104588129,0.00368185677005388
+Digestivescore,chnmed_usd,chnmed_usd,0,NA,NA,0.16±0.15,Ref.,NA,NA
+Digestivescore,chnmed_usd,chnmed_usd,1,NA,NA,0.20±0.16,0.038291768067403,0.012787729509374,0.00287457630422117
+Otherscore,chnmed_usd,chnmed_usd,0,NA,NA,0.26±0.17,Ref.,NA,NA
+Otherscore,chnmed_usd,chnmed_usd,1,NA,NA,0.30±0.18,0.0369433375460575,0.0149161983168547,0.0135617154382248
+Sore throat,chnmed_usd,chnmed_usd,0,215 (70.26%),91 (29.74%),NA,Ref.,NA,NA
+Sore throat,chnmed_usd,chnmed_usd,1,205 (83.33%),41 (16.67%),NA,0.783943206207657,0.214328773299424,0.000254521771148009
+Palate discomfort,chnmed_usd,chnmed_usd,0,96 (31.37%),210 (68.63%),NA,Ref.,NA,NA
+Palate discomfort,chnmed_usd,chnmed_usd,1,110 (44.72%),136 (55.28%),NA,0.595709200724436,0.180909239461908,0.000991730591453505
+Hemoptysis,chnmed_usd,chnmed_usd,0,53 (17.32%),253 (82.68%),NA,Ref.,NA,NA
+Hemoptysis,chnmed_usd,chnmed_usd,1,60 (24.39%),186 (75.61%),NA,0.459098424511357,0.214081683806442,0.0319927506212696
+Chest pain,chnmed_usd,chnmed_usd,0,58 (18.95%),248 (81.05%),NA,Ref.,NA,NA
+Chest pain,chnmed_usd,chnmed_usd,1,78 (31.71%),168 (68.29%),NA,0.743928181732154,0.202778972512303,0.000243820020503898
+Anosmia,chnmed_usd,chnmed_usd,0,127 (41.5%),179 (58.5%),NA,Ref.,NA,NA
+Anosmia,chnmed_usd,chnmed_usd,1,133 (54.07%),113 (45.93%),NA,0.536322449529283,0.17520366820943,0.00220498101645482
+Ageusia,chnmed_usd,chnmed_usd,0,133 (43.46%),173 (56.54%),NA,Ref.,NA,NA
+Ageusia,chnmed_usd,chnmed_usd,1,126 (51.22%),120 (48.78%),NA,0.341269895584826,0.173908399514094,0.0497212494367392
+Dysgeusia,chnmed_usd,chnmed_usd,0,58 (18.95%),248 (81.05%),NA,Ref.,NA,NA
+Dysgeusia,chnmed_usd,chnmed_usd,1,64 (26.02%),182 (73.98%),NA,0.446556655324743,0.208024085735967,0.0318204852639794
+Diarrhea,chnmed_usd,chnmed_usd,0,87 (28.43%),219 (71.57%),NA,Ref.,NA,NA
+Diarrhea,chnmed_usd,chnmed_usd,1,94 (38.21%),152 (61.79%),NA,0.528041075696768,0.186952550731845,0.00473595101799704
+Respiratoryscore,lianhua_use,lianhua_use,0,NA,NA,0.34±0.17,Ref.,NA,NA
+Respiratoryscore,lianhua_use,lianhua_use,1,NA,NA,0.43±0.16,0.0927281996824324,0.021388970400048,1.733853196663e-05
+Neurologicalscore,lianhua_use,lianhua_use,0,NA,NA,0.26±0.18,Ref.,NA,NA
+Neurologicalscore,lianhua_use,lianhua_use,1,NA,NA,0.32±0.19,0.0631836779921791,0.0227034872049893,0.00557280787277869
+Sore throat,lianhua_use,lianhua_use,0,355 (73.8%),126 (26.2%),NA,Ref.,NA,NA
+Sore throat,lianhua_use,lianhua_use,1,65 (91.55%),6 (8.45%),NA,1.34517443565292,0.440223682081995,0.00224564832221846
+Palate discomfort,lianhua_use,lianhua_use,0,169 (35.14%),312 (64.86%),NA,Ref.,NA,NA
+Palate discomfort,lianhua_use,lianhua_use,1,37 (52.11%),34 (47.89%),NA,0.724109969249344,0.259450400625793,0.00525555465164014
+Anosmia,lianhua_use,lianhua_use,0,217 (45.11%),264 (54.89%),NA,Ref.,NA,NA
+Anosmia,lianhua_use,lianhua_use,1,43 (60.56%),28 (39.44%),NA,0.649041574545896,0.262280040535652,0.0133380652145454
+Dysgeusia,lianhua_use,lianhua_use,0,99 (20.58%),382 (79.42%),NA,Ref.,NA,NA
+Dysgeusia,lianhua_use,lianhua_use,1,23 (32.39%),48 (67.61%),NA,0.589015965120554,0.279758571906012,0.0352526900416839
+Diarrhea,lianhua_use,lianhua_use,0,145 (30.15%),336 (69.85%),NA,Ref.,NA,NA
+Diarrhea,lianhua_use,lianhua_use,1,36 (50.7%),35 (49.3%),NA,0.818109716203535,0.261084239053179,0.00172729839171113
