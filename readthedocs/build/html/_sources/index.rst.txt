@@ -43,43 +43,12 @@ You can download the data at `here <https://github.com/zhanghaoyang0/covid_surve
 
 Analysis code
 =======================
-We used R 4.0.3 for analysis, with follow packages and functions. 
+We used R 4.0.3 for analysis, with follow packages and functions1. 
 
 .. code-block:: python
+   
    libs = c('openxlsx', 'stringr', 'dplyr', 'stringi', 'R.utils', 'ggplot2', 'ggpubr', 'ggsci', 'mapchina', 'sf', 'data.table')
-   lapply(libs, require, character.only = TRUE) 
-   options(stringsAsFactors=F)
-   sf::sf_use_s2(FALSE)
-   # get items with matched pattern
-   # e.g, get('a', c('a1', 'a', 'c'))
-   get = function(key, vector, exact=F, v=F){
-      if (exact==T){out =vector[grep(key, vector, invert=v)]}
-      else {out = vector[grep(toupper(key), toupper(vector), invert=v)]}
-      return(out)
-   }
-   # calculate proportion of a given var for all, male, female participants
-   # e.g, 
-   # temp = data.frame(sex=c('Male', 'Female'), var=c(1, 0))
-   # get_prop(temp, 'var')
-   get_prop = function(df, var){
-      for (sex1 in c('Male|Female', 'Male', 'Female')){
-         df1 = df%>%filter(grepl(sex1, sex))
-         tab = table(df1[,var])
-         frq = data.frame(var=names(tab), n=as.numeric(tab))
-         frq = frq%>%mutate(n=paste0(n,'(', sprintf('%.2f', n*100/sum(tab)),'%)'))
-         print(paste0('distribution of ', ifelse(sex1=='Male|Female', 'all', tolower(sex1)), ' participants in ', var, ':'))
-         print(frq)
-      }
-   }
-   # convert character vector to numeric 
-   # e.g, df = df%>%mutate_if(is_numeric,as.numeric)
-   is_numeric <- function(x) {
-      !any(is.na(suppressWarnings(as.numeric(na.omit(x))))) & is.character(x)
-   }
-
-
-.. code-block:: python
-   data
+ 
 
 
 
