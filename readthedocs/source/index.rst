@@ -45,7 +45,7 @@ The data is in Chinese. Please see our code about how to clean this data.
 
 You can download the data at `here <https://github.com/zhanghaoyang0/covid_survey/raw/master/data/covid_survey.xlsx>`_.
 
-Analysis code: preparation
+Analysis: preparation
 =======================
 We used R 4.0.3 for analysis.
 
@@ -84,7 +84,7 @@ Define functions:
    }
 
 
-Analysis code: data cleaning and description
+Analysis: data cleaning and description
 =============================================
 We conducted data cleaning by translating Chinese to English, combining groups with small samples, etc.
 Description was also performed.
@@ -258,7 +258,7 @@ Region:
    print(pop_tab)
 
 
-Analysis code: regression
+Analysis: regression
 =============================================
 We used regression to measure the association between symptoms and population characteris, vaccination, and medication.
 
@@ -331,7 +331,7 @@ We used regression to measure the association between symptoms and population ch
 
 
 
-Analysis code: plot
+Analysis: plot
 =============================================
 
 Bar plot for servere of sympytoms:
