@@ -3,7 +3,7 @@ A COVID-19 survey in China
 =============================================
 In Dec 2022, the COVID-19 restriction was end.
 
-We conducted a 3-weeks on-line survey to measure the characteristics to measure the characteristics of COVID-19 patients in China. 
+We conducted a 3-week on-line survey to measure the characteristics to measure the characteristics of COVID-19 patients in China. 
 
 We investigated: 
 

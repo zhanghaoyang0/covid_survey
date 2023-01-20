@@ -82,10 +82,10 @@
               <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">A COVID-19 survey in China</a></li>
 <li><a class="reference internal" href="#questionnaire-data">Questionnaire Data</a></li>
-<li><a class="reference internal" href="#analysis-code-preparation">Analysis code: preparation</a></li>
-<li><a class="reference internal" href="#analysis-code-data-cleaning-and-description">Analysis code: data cleaning and description</a></li>
-<li><a class="reference internal" href="#analysis-code-regression">Analysis code: regression</a></li>
-<li><a class="reference internal" href="#analysis-code-plot">Analysis code: plot</a></li>
+<li><a class="reference internal" href="#analysis-preparation">Analysis: preparation</a></li>
+<li><a class="reference internal" href="#analysis-data-cleaning-and-description">Analysis: data cleaning and description</a></li>
+<li><a class="reference internal" href="#analysis-regression">Analysis: regression</a></li>
+<li><a class="reference internal" href="#analysis-plot">Analysis: plot</a></li>
 <li><a class="reference internal" href="#comments-and-feedbacks">Comments and feedbacks</a></li>
 </ul>
 </div>
@@ -154,7 +154,7 @@
   <div class="section" id="a-covid-19-survey-in-china">
 <h1>A COVID-19 survey in China<a class="headerlink" href="#a-covid-19-survey-in-china" title="Permalink to this heading">¶</a></h1>
 <p>In Dec 2022, the COVID-19 restriction was end.</p>
-<p>We conduct a 3-weeks on-line survey to measure the characteristics to measure the characteristics of COVID-19 patients in China.</p>
+<p>We conducted a 3-week on-line survey to measure the characteristics to measure the characteristics of COVID-19 patients in China.</p>
 <p>We investigated:</p>
 <p>Symptom spectrum of COVID-19:</p>
 <a class="reference internal image-reference" href="_images/fig1.png"><img alt="_images/fig1.png" class="align-center" src="_images/fig1.png" style="width: 600px;" /></a>
@@ -173,8 +173,8 @@
 <p>The data is in Chinese. Please see our code about how to clean this data.</p>
 <p>You can download the data at <a class="reference external" href="https://github.com/zhanghaoyang0/covid_survey/raw/master/data/covid_survey.xlsx">here</a>.</p>
 </div>
-<div class="section" id="analysis-code-preparation">
-<h1>Analysis code: preparation<a class="headerlink" href="#analysis-code-preparation" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="analysis-preparation">
+<h1>Analysis: preparation<a class="headerlink" href="#analysis-preparation" title="Permalink to this heading">¶</a></h1>
 <p>We used R 4.0.3 for analysis.</p>
 <p>Load packages:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">libs</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s1">&#39;openxlsx&#39;</span><span class="p">,</span> <span class="s1">&#39;stringr&#39;</span><span class="p">,</span> <span class="s1">&#39;dplyr&#39;</span><span class="p">,</span> <span class="s1">&#39;stringi&#39;</span><span class="p">,</span> <span class="s1">&#39;R.utils&#39;</span><span class="p">,</span> <span class="s1">&#39;ggplot2&#39;</span><span class="p">,</span> <span class="s1">&#39;ggpubr&#39;</span><span class="p">,</span> <span class="s1">&#39;ggsci&#39;</span><span class="p">,</span> <span class="s1">&#39;mapchina&#39;</span><span class="p">,</span> <span class="s1">&#39;sf&#39;</span><span class="p">,</span> <span class="s1">&#39;data.table&#39;</span><span class="p">,</span><span class="s1">&#39;NbClust&#39;</span><span class="p">,</span> <span class="s1">&#39;igraph&#39;</span><span class="p">,</span> <span class="s1">&#39;factoextra&#39;</span><span class="p">)</span>
@@ -206,8 +206,8 @@ is_numeric &lt;- function(x) {
 </pre></div>
 </div>
 </div>
-<div class="section" id="analysis-code-data-cleaning-and-description">
-<h1>Analysis code: data cleaning and description<a class="headerlink" href="#analysis-code-data-cleaning-and-description" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="analysis-data-cleaning-and-description">
+<h1>Analysis: data cleaning and description<a class="headerlink" href="#analysis-data-cleaning-and-description" title="Permalink to this heading">¶</a></h1>
 <p>We conducted data cleaning by translating Chinese to English, combining groups with small samples, etc.
 Description was also performed.</p>
 <p>You may clone our repository, which contains our data, results, and plots:</p>
@@ -297,19 +297,16 @@ get_prop(df, &#39;how_long_lastvac&#39;)
 </pre></div>
 </div>
 <p>Medication:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># the &#39;drug_use&#39; have been grouped to four groups, by hand</span>
+<span class="n">drugs</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s1">&#39;ibuprofen_use&#39;</span><span class="p">,</span> <span class="s1">&#39;acetaminophen_use&#39;</span><span class="p">,</span> <span class="s1">&#39;chnmed_usd&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[,</span> <span class="n">drugs</span><span class="p">][</span><span class="ow">is</span><span class="o">.</span><span class="n">na</span><span class="p">(</span><span class="n">df</span><span class="p">[,</span> <span class="n">drugs</span><span class="p">])]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">drug</span> <span class="ow">in</span> <span class="n">drugs</span><span class="p">){</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">drug</span><span class="p">)</span>
+   <span class="n">get_prop</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">drug</span><span class="p">)</span>
+   <span class="n">df</span><span class="p">[,</span><span class="n">drug</span><span class="p">]</span> <span class="o">=</span> <span class="k">as</span><span class="o">.</span><span class="n">factor</span><span class="p">(</span><span class="n">df</span><span class="p">[,</span><span class="n">drug</span><span class="p">])</span>
+<span class="p">}</span>
 </pre></div>
 </div>
-<p># the ‘drug_use’ have been grouped to four groups, by hand
-drugs = c(‘ibuprofen_use’, ‘acetaminophen_use’, ‘chnmed_usd’)
-df[, drugs][is.na(df[, drugs])] = 0
-for (drug in drugs){</p>
-<blockquote>
-<div><p>print(drug)
-get_prop(df, drug)
-df[,drug] = as.factor(df[,drug])</p>
-</div></blockquote>
-<p>}</p>
 <p>Calculate syndrome score with symptom score, normalize to 0-1:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>## calculate syndrome score with symptom score, normalize to 0-1
 syndromes = unique(dict2$syndrome)
@@ -355,12 +352,79 @@ print(pop_tab)
 </pre></div>
 </div>
 </div>
-<div class="section" id="analysis-code-regression">
-<h1>Analysis code: regression<a class="headerlink" href="#analysis-code-regression" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="analysis-regression">
+<h1>Analysis: regression<a class="headerlink" href="#analysis-regression" title="Permalink to this heading">¶</a></h1>
 <p>We used regression to measure the association between symptoms and population characteris, vaccination, and medication.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span># we use linear regression to test if syndrome score varired in different population
+# we use logistic regression to test if symptom varired in different population
+# in each regression, we add age and sex as covariate
+covars = c(&#39;age&#39;, &#39;sex&#39;)
+test_vars = c(&#39;agesex&#39;, &#39;how_long_lastvac&#39;, &#39;n_vac&#39;,
+   &#39;infectway_work&#39;, &#39;infectway_family&#39;, &#39;infectway_traffic&#39;, &#39;infectway_hosp&#39;,
+   &#39;ibuprofen_use&#39;, &#39;acetaminophen_use&#39;, &#39;chnmed_usd&#39;, &#39;lianhua_use&#39;) # the first mean we only include age and sex in reg
+outcomes = c(paste0(c(&#39;Respiratory&#39;, &#39;Neurological&#39;, &#39;Digestive&#39;, &#39;Other&#39;), &#39;_score&#39;), unlist(symptoms))
+out = c()
+for (test_var in test_vars){
+   if (test_var==&#39;agesex&#39;){formula = formula(&#39;y~age+sex&#39;)}else{
+      formula = formula(paste0(&#39;y~age+sex+&#39;, test_var))}
+   # when var is how_long_lastvac, remove samples without vac
+   if (test_var==&#39;how_long_lastvac&#39;){
+      df1 = droplevels(df%&gt;%filter(how_long_lastvac!=&#39;no_vac&#39;)) # drop level
+   } else {df1 = df}
+   for (outcome in outcomes){
+      print(outcome)
+      # regression
+      df1$y = df1[,outcome]
+      link = &#39;gaussian&#39; # for linear reg
+      if (!grepl(&#39;_score&#39;, outcome)) {
+            df1$y = ifelse(df1$y==0, 0, 1) # binary outcome, logistic reg
+            link = &#39;binomial&#39; # for logistic reg
+      }
+      reg = glm(formula, df1, family=link)
+      coef = data.frame(summary(reg)$coefficients)%&gt;%tibble::rownames_to_column(&#39;var&#39;)
+      coef = coef[2:nrow(coef), c(1, 2, 3, 5)]
+      names(coef) = c(&#39;var&#39;, &#39;beta&#39;, &#39;se&#39;, &#39;p&#39;)
+      # calculate distribution in sub population, n(%) or mean±sd
+      reg_vars = strsplit(as.character(formula)[3], &#39; + &#39;, fixed=T)[[1]]
+      if (test_var!=&#39;agesex&#39;){reg_vars = reg_vars[!reg_vars%in%c(&#39;age&#39;, &#39;sex&#39;)]} # we dont show coef of age and sex when testing other var
+      for (reg_var in reg_vars){
+            for (group in levels(df1[,reg_var])){
+               temp = df1%&gt;%filter(df1[,reg_var]==group)%&gt;%pull(y)
+               coef1 = coef[coef$var==paste0(reg_var, group), c(&#39;beta&#39;, &#39;se&#39;, &#39;p&#39;)]
+               if (nrow(coef1)== 0){coef1 = c(&#39;NA&#39;, &#39;NA&#39;, &#39;NA&#39;)}
+               if (group==levels(df1[,reg_var])[1]) {coef1 = c(&#39;Ref.&#39;, &#39;NA&#39;, &#39;NA&#39;)}
+               d1 = d2 = d3 = NA
+               if (!grepl(&#39;_score&#39;, outcome)){
+                  d1 = paste0(sum(temp==1), &#39; (&#39;, round(sum(temp==1)/length(temp)*100,2), &#39;%)&#39;)
+                  d2 = paste0(sum(temp==0), &#39; (&#39;, round(sum(temp==0)/length(temp)*100,2), &#39;%)&#39;)
+               } else {d3 = paste0(sprintf(&#39;%.2f&#39;,mean(temp)), &#39;±&#39;, sprintf(&#39;%.2f&#39;,sd(temp)))}
+               # formal name
+               if (grepl(&#39;score&#39;, outcome)){outcome1 = gsub(&#39;_&#39;, &#39; &#39;, outcome)}else{
+                  outcome1 = dict2%&gt;%filter(item_eng==outcome)%&gt;%pull(item_eng1)
+               }
+               out = c(out, outcome1, test_var, reg_var, group, d1, d2, d3, unlist(coef1))
+            }
+      }
+   }
+}
+res = data.frame(matrix(out, ncol=10, byrow=T))
+names(res) = c(&#39;outcome&#39;,&#39;test_var&#39;, &#39;reg_var&#39;, &#39;level&#39;, &#39;ncase&#39;, &#39;nctrl&#39;, &#39;mean&#39;, &#39;beta&#39;, &#39;se&#39;, &#39;p&#39;)
+res1 = res%&gt;%filter(p&lt;0.05)
+write.csv(res1, &#39;./result/reg.csv&#39;, row.names=F, quote=F)
+# extract significant result
+res1 = data.frame()
+for (test_var1 in test_vars){
+   for (outcome1 in unique(res$outcome)){
+      sub = res%&gt;%filter(test_var==test_var1&amp;outcome==outcome1)
+      if (!any(as.numeric(sub%&gt;%filter(p!=&#39;NA&#39;)%&gt;%pull(p))&lt;0.05)){next}
+      res1 = rbind(res1, sub)
+   }
+}
+</pre></div>
 </div>
-<div class="section" id="analysis-code-plot">
-<h1>Analysis code: plot<a class="headerlink" href="#analysis-code-plot" title="Permalink to this heading">¶</a></h1>
+</div>
+<div class="section" id="analysis-plot">
+<h1>Analysis: plot<a class="headerlink" href="#analysis-plot" title="Permalink to this heading">¶</a></h1>
 <p>Bar plot for servere of sympytoms:</p>
 <a class="reference internal image-reference" href="_images/fig1.png"><img alt="_images/fig1.png" class="align-center" src="_images/fig1.png" style="width: 600px;" /></a>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>map = data.frame(score=c(0:3), score1=c(&#39;Absent&#39;, &#39;Mild&#39;, &#39;Moderate&#39;, &#39;Severe&#39;))
