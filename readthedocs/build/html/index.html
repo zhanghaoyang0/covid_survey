@@ -29,8 +29,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="A COVID-19 survey in China" href="Analysis_code/index.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -79,11 +78,14 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="Analysis_code/index.html">A COVID-19 survey in China</a></li>
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">A COVID-19 survey in China</a></li>
+<li><a class="reference internal" href="#questionnaire-data">Questionnaire Data</a></li>
+<li><a class="reference internal" href="#analysis-code">Analysis code</a></li>
+<li><a class="reference internal" href="#comments-and-feedbacks">Comments and feedbacks</a></li>
 </ul>
-
+</div>
             
           
         </div>
@@ -168,26 +170,9 @@
 <p>The data is in Chinese. Please see our code about how to clean this data.</p>
 <p>You can download the data at <a class="reference external" href="https://github.com/zhanghaoyang0/covid_survey/raw/master/data/covid_survey.xlsx">here</a>.</p>
 </div>
-<div class="section" id="code">
-<h1>Code<a class="headerlink" href="#code" title="Permalink to this heading">¶</a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="Analysis_code/index.html">A COVID-19 survey in China</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Analysis_code/code1.html">Code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Analysis_code/code2.html">Code</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<p>It’s recommended to create a separate conda environment for running STAligner:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#create an environment called env_STAligner</span>
-<span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">env_STAligner</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.8</span>
-
-<span class="c1">#activate your environment</span>
-<span class="n">conda</span> <span class="n">activate</span> <span class="n">env_STAligner</span>
-</pre></div>
-</div>
+<div class="section" id="analysis-code">
+<h1>Analysis code<a class="headerlink" href="#analysis-code" title="Permalink to this heading">¶</a></h1>
+<p>We used R 4.0.3 for analysis, with follow packages and functions.</p>
 </div>
 <div class="section" id="comments-and-feedbacks">
 <h1>Comments and feedbacks<a class="headerlink" href="#comments-and-feedbacks" title="Permalink to this heading">¶</a></h1>
@@ -199,13 +184,6 @@
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="Analysis_code/index.html" class="btn btn-neutral float-right" title="A COVID-19 survey in China" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-    </div>
   
 
   <hr/>
