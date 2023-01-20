@@ -1,10 +1,13 @@
 A COVID-19 survey in China after ending of restriction.
 =============================================
 
-123
+test1:
+
 .. image:: fig1.png
    :width: 600
-23
+
+test2 :
+
 .. image:: fig2.png
    :width: 600
 .. image:: fig3.png
