@@ -49,7 +49,7 @@ Load packages:
 
 .. code-block:: python
 
-   libs = c('openxlsx', 'stringr', 'dplyr', 'stringi', 'R.utils', 'ggplot2', 'ggpubr', 'ggsci', 'mapchina', 'sf', 'data.table')
+   libs = c('openxlsx', 'stringr', 'dplyr', 'stringi', 'R.utils', 'ggplot2', 'ggpubr', 'ggsci', 'mapchina', 'sf', 'data.table','NbClust', 'igraph', 'factoextra')
    lapply(libs, require, character.only = TRUE) 
    options(stringsAsFactors=F)
    sf::sf_use_s2(FALSE)
@@ -81,7 +81,7 @@ Define functions:
 
 
 Analysis code: data cleaning and description
-=======================
+=============================================
 We conducted data cleaning by translating Chinese to English, combining groups with small samples, etc.
 Description was also performed.
 
@@ -147,26 +147,27 @@ Disease duration:
    get_prop(df, 'fever_duration')
 
 
-Infect route
+Infect route:
 
 .. code-block:: python
 
-df = df%>%mutate(
-    infectway_entertainment=factor(as.numeric(grepl('消费场所', infect_way))), 
-    infectway_work=factor(as.numeric(grepl('工作场所', infect_way))), 
-    infectway_family=factor(as.numeric(grepl('在家被家人传染', infect_way))), 
-    infectway_traffic=factor(as.numeric(grepl('公共交通', infect_way))), 
-    infectway_hosp=factor(as.numeric(grepl('医疗场所', infect_way))))
-for (i in c('infectway_entertainment', 'infectway_work', 'infectway_family', 'infectway_traffic', 'infectway_hosp')){
-    print(i)
-    get_prop(df, i)
-}
+   df = df%>%mutate(
+      infectway_entertainment=factor(as.numeric(grepl('消费场所', infect_way))), 
+      infectway_work=factor(as.numeric(grepl('工作场所', infect_way))), 
+      infectway_family=factor(as.numeric(grepl('在家被家人传染', infect_way))), 
+      infectway_traffic=factor(as.numeric(grepl('公共交通', infect_way))), 
+      infectway_hosp=factor(as.numeric(grepl('医疗场所', infect_way))))
+   for (i in c('infectway_entertainment', 'infectway_work', 'infectway_family', 'infectway_traffic', 'infectway_hosp')){
+      print(i)
+      get_prop(df, i)
+   }
 
 
 
 Vaccination:
 
 .. code-block:: python
+
    df[df$how_long_lastvac=='', 'n_vac'] = '0' # if a person report n_vac but not how_long_lastvac, treat n_vac as NA
    df = df%>%mutate(n_vac=ifelse(n_vac%in%c(3, 4), '≥3', n_vac))%>%
       mutate(n_vac=factor(n_vac, levels=c('0', '1', '2', '≥3')))
@@ -243,6 +244,238 @@ Region:
    pop_tab = tab%>%rename(n=tab, region=V1)%>%mutate(n=as.numeric(n))%>%arrange(n)
    print(pop_tab)
 
+
+Analysis code: regression
+=============================================
+We used regression to measure the association between symptoms and population characteris, vaccination, and medication.
+
+.. code-block:: python
+   # we use linear regression to test if syndrome score varired in different population
+   # we use logistic regression to test if symptom varired in different population
+   # in each regression, we add age and sex as covariate
+   covars = c('age', 'sex')
+   test_vars = c('agesex', 'how_long_lastvac', 'n_vac', 
+      'infectway_work', 'infectway_family', 'infectway_traffic', 'infectway_hosp', 
+      'ibuprofen_use', 'acetaminophen_use', 'chnmed_usd', 'lianhua_use') # the first mean we only include age and sex in reg
+   outcomes = c(paste0(c('Respiratory', 'Neurological', 'Digestive', 'Other'), '_score'), unlist(symptoms))
+   out = c()
+   for (test_var in test_vars){
+      if (test_var=='agesex'){formula = formula('y~age+sex')}else{
+         formula = formula(paste0('y~age+sex+', test_var))}
+      # when var is how_long_lastvac, remove samples without vac  
+      if (test_var=='how_long_lastvac'){
+         df1 = droplevels(df%>%filter(how_long_lastvac!='no_vac')) # drop level
+      } else {df1 = df}
+      for (outcome in outcomes){
+         print(outcome)
+         # regression
+         df1$y = df1[,outcome]
+         link = 'gaussian' # for linear reg
+         if (!grepl('_score', outcome)) {
+               df1$y = ifelse(df1$y==0, 0, 1) # binary outcome, logistic reg 
+               link = 'binomial' # for logistic reg
+         } 
+         reg = glm(formula, df1, family=link)
+         coef = data.frame(summary(reg)$coefficients)%>%tibble::rownames_to_column('var')
+         coef = coef[2:nrow(coef), c(1, 2, 3, 5)]
+         names(coef) = c('var', 'beta', 'se', 'p')
+         # calculate distribution in sub population, n(%) or mean±sd 
+         reg_vars = strsplit(as.character(formula)[3], ' + ', fixed=T)[[1]]
+         if (test_var!='agesex'){reg_vars = reg_vars[!reg_vars%in%c('age', 'sex')]} # we dont show coef of age and sex when testing other var
+         for (reg_var in reg_vars){
+               for (group in levels(df1[,reg_var])){
+                  temp = df1%>%filter(df1[,reg_var]==group)%>%pull(y)
+                  coef1 = coef[coef$var==paste0(reg_var, group), c('beta', 'se', 'p')]
+                  if (nrow(coef1)== 0){coef1 = c('NA', 'NA', 'NA')}
+                  if (group==levels(df1[,reg_var])[1]) {coef1 = c('Ref.', 'NA', 'NA')}
+                  d1 = d2 = d3 = NA
+                  if (!grepl('_score', outcome)){
+                     d1 = paste0(sum(temp==1), ' (', round(sum(temp==1)/length(temp)*100,2), '%)')
+                     d2 = paste0(sum(temp==0), ' (', round(sum(temp==0)/length(temp)*100,2), '%)')
+                  } else {d3 = paste0(sprintf('%.2f',mean(temp)), '±', sprintf('%.2f',sd(temp)))}
+                  # formal name
+                  if (grepl('score', outcome)){outcome1 = gsub('_', ' ', outcome)}else{
+                     outcome1 = dict2%>%filter(item_eng==outcome)%>%pull(item_eng1) 
+                  }
+                  out = c(out, outcome1, test_var, reg_var, group, d1, d2, d3, unlist(coef1))
+               }
+         }
+      }
+   }
+   res = data.frame(matrix(out, ncol=10, byrow=T))
+   names(res) = c('outcome','test_var', 'reg_var', 'level', 'ncase', 'nctrl', 'mean', 'beta', 'se', 'p')
+   res1 = res%>%filter(p<0.05)
+   write.csv(res1, './result/reg.csv', row.names=F, quote=F)
+   # extract significant result
+   res1 = data.frame()
+   for (test_var1 in test_vars){
+      for (outcome1 in unique(res$outcome)){
+         sub = res%>%filter(test_var==test_var1&outcome==outcome1)
+         if (!any(as.numeric(sub%>%filter(p!='NA')%>%pull(p))<0.05)){next}
+         res1 = rbind(res1, sub)
+      }
+   }
+
+
+
+Analysis code: plot
+=============================================
+
+Bar plot for servere of sympytoms:
+
+.. image:: fig1.png
+   :width: 600
+
+.. code-block:: python
+
+   map = data.frame(score=c(0:3), score1=c('Absent', 'Mild', 'Moderate', 'Severe'))
+   out = c()
+   for (i in unlist(symptoms)){
+      for (j in c(0:3)){
+         prop = sum(df[,i]==j)/nrow(df)
+         out = c(out, i, j, prop)
+      }
+   }
+   df_p = data.frame(matrix(out, ncol=3, byrow=T))
+   df_p = df_p%>%mutate_if(is_numeric,as.numeric)%>%rename(sympton=X1, score=X2, prop=X3)
+   df_p = df_p%>%merge(map, 'score')%>%mutate(score1=factor(score1, levels=c('Severe', 'Moderate', 'Mild', 'Absent')))
+   df_p%>%merge(dict2, by.x='sympton', by.y='item_eng')%>%select(syndrome, sympton, score1, prop) # add syndrome
+   plots = list()
+   for (syndrome in syndromes){
+      df_p1 = df_p%>%filter(sympton%in%symptoms[[syndrome]])
+      df_p1 = df_p1%>%mutate(sympton=gsub(paste0(syndrome, '_'), '', sympton))
+      xlevels = df_p1%>%filter(score1=='Absent')%>%arrange(prop)%>%pull(sympton)
+      df_p1$sympton = factor(df_p1$sympton, levels=xlevels)
+      df_p1 = df_p1%>%rename(item_eng=sympton)%>%merge(dict2, 'item_eng')%>%rename(sympton=item_eng1) # repalce symptoms with their formal names
+      p = ggplot(df_p1, aes(x = sympton, weight = prop, fill = score1))+
+         geom_bar( position = "stack") + 
+         xlab('') + ylab('') + labs(fill = 'Severity') +
+         theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, color="black"), 
+               axis.text.y = element_text(color="black"), legend.position="none") +
+         ggtitle(syndrome) + 
+         theme(plot.title = element_text(size = 15, face = "bold", hjust = 0.5)) +
+         coord_flip() +
+         scale_fill_nejm() 
+      plots[[syndrome]] = p
+   }
+   # multiple plot
+   p1 <- ggarrange(plots[[1]], plots[[2]], plots[[3]], plots[[4]], 
+      ncol=2, nrow=2, common.legend=T, legend="bottom", 
+      hjust=0.1, vjust=0.1)
+   file_out = './plot/bar.png'
+   png(file_out, height=1000, width=1000, res=160)
+   print(p1)
+   dev.off()
+
+
+Dendrogram for sympytoms clustering: 
+
+.. image:: fig2.png
+   :width: 600
+
+.. code-block:: python
+   path_out = './plot/hclust/'
+   df_p = t(df[, unlist(symptoms)])
+   # repalce symptoms with their formal names
+   for (i in 1:nrow(dict2)){ 
+      row.names(df_p)[row.names(df_p)==dict2[i, 'item_eng']] = dict2[i, 'item_eng1']
+   }
+   d = dist(df_p)
+   fit = hclust(d, method = "average")
+   png(paste0(path_out, 'hclust.png'), width=2500, height=1500, res=300)
+   fviz_dend(fit, k=3, rect =F, rect_fill = T, palette='aaas', cex = 0.6,
+      type = c("rectangle"), # type = c("rectangle", "circular", "phylogenic")
+      main = '', ylab = "Dendrogram height", horiz = T)  # ggsci color
+   dev.off()
+   # multiple plot
+   p1 <- ggarrange(plots[[1]], plots[[2]], plots[[3]], plots[[4]], 
+      ncol=2, nrow=2, common.legend=T, legend="bottom", 
+      hjust=0.1, vjust=0.1)
+   file_out = './plot/bar.png'
+   png(file_out, height=1000, width=1000, res=160)
+   print(p1)
+   dev.off()
+
+
+Heatmap for regional distribution of symptoms: 
+
+.. image:: fig3.png
+   :width: 600
+
+.. code-block:: python
+
+   res = data.frame()
+   provs =  names(rev(sort(table(df$region)))) # sort by n
+   for (prov in provs){
+      sub = df%>%filter(region==prov)
+      temp = colMeans(sub[,unlist(symptoms)])/3
+      add = data.frame(region=prov, symptom=names(temp), score=temp, n=nrow(sub))
+      res = rbind(res, add)
+   }
+   # replace symptom names with their formal name
+   res = res%>%merge(dict2%>%select(item_eng, item_eng1), by.x='symptom', by.y='item_eng')%>%select(-symptom)%>%rename(symptom=item_eng1)
+   # filter region with less than 10 samples
+   res = res%>%filter(n>=10)
+   p = res%>% 
+      ggplot(aes(region, symptom, fill=score)) +
+      geom_tile() + 
+      labs(x = NULL, y = NULL, fill = "Score", title="", subtitle="") + 
+      scale_fill_gradient2(limits=c(0,1)) +
+      theme_classic() +
+      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, color="black"), 
+         axis.text.y = element_text(color="black"),
+         legend.title = element_text(size=12)) +
+      scale_fill_distiller(palette = "Spectral")
+   file_out = './plot/heatmap.png'
+   png(file_out, height=1000, width=800, res=150)
+   print(p)
+   dev.off()
+
+
+Map for regional distribution of syndromes: 
+
+.. image:: fig4.png
+   :width: 600
+
+.. code-block:: python
+
+   # mean score
+   res = data.frame()
+   plots = list()
+   for (group in syndromes){
+      print(group)
+      temp = df[, c('region', paste0(group, '_score'))]
+      names(temp)[2] = 'score'
+      temp = temp%>%group_by(region)%>%dplyr::summarise(score=mean(score))
+      temp = temp%>%merge(pop_tab, 'region')%>%filter(n>=10)%>%arrange(desc(score))
+      sub = data.frame(temp)%>%mutate(group=group)
+      res = rbind(res, sub)
+      map1 = china%>%merge(temp, by='region', all.x=T)%>%mutate(region=ifelse(is.na(score), NA, region)) # add to map
+      p = ggplot(data = map1) +
+         geom_sf(aes(fill = score)) + 
+         geom_sf_text(aes(label = region), colour = "black") +
+         scale_fill_distiller(palette = "Spectral") + 
+         labs(fill = 'Score') +
+         ggtitle(group) +
+         theme(plot.title = element_text(size = 35, face = "bold", hjust=0.07, vjust=-9),
+               plot.background = element_blank(), panel.border = element_blank(),
+               axis.text.x=element_blank(), axis.ticks.x=element_blank(), 
+               axis.text.y=element_blank(), axis.ticks.y=element_blank(), 
+               legend.key.height= unit(1.5, 'cm'), legend.key.width= unit(1.5, 'cm'),
+               legend.title = element_text(size=20), legend.text = element_text(size=15),
+               panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+         labs(x = "", y = '') +
+         coord_sf(xlim = c(73, 135), ylim = c(18, 54), expand = T) 
+      
+      plots[[group]] = p
+   }
+   p1 = ggarrange(plots[[1]], plots[[2]], plots[[3]], plots[[4]], ncol=2, nrow=2, 
+      common.legend=T, legend="right")
+   file_out = './plot/map.png'
+   png(file_out, height=1300, width=1700, res=80)
+   print(p1)
+   dev.off()
+   res # average score
 
 
 Comments and feedbacks

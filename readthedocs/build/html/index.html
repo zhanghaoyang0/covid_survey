@@ -84,6 +84,8 @@
 <li><a class="reference internal" href="#questionnaire-data">Questionnaire Data</a></li>
 <li><a class="reference internal" href="#analysis-code-preparation">Analysis code: preparation</a></li>
 <li><a class="reference internal" href="#analysis-code-data-cleaning-and-description">Analysis code: data cleaning and description</a></li>
+<li><a class="reference internal" href="#analysis-code-regression">Analysis code: regression</a></li>
+<li><a class="reference internal" href="#analysis-code-plot">Analysis code: plot</a></li>
 <li><a class="reference internal" href="#comments-and-feedbacks">Comments and feedbacks</a></li>
 </ul>
 </div>
@@ -175,7 +177,7 @@
 <h1>Analysis code: preparation<a class="headerlink" href="#analysis-code-preparation" title="Permalink to this heading">¶</a></h1>
 <p>We used R 4.0.3 for analysis.</p>
 <p>Load packages:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">libs</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s1">&#39;openxlsx&#39;</span><span class="p">,</span> <span class="s1">&#39;stringr&#39;</span><span class="p">,</span> <span class="s1">&#39;dplyr&#39;</span><span class="p">,</span> <span class="s1">&#39;stringi&#39;</span><span class="p">,</span> <span class="s1">&#39;R.utils&#39;</span><span class="p">,</span> <span class="s1">&#39;ggplot2&#39;</span><span class="p">,</span> <span class="s1">&#39;ggpubr&#39;</span><span class="p">,</span> <span class="s1">&#39;ggsci&#39;</span><span class="p">,</span> <span class="s1">&#39;mapchina&#39;</span><span class="p">,</span> <span class="s1">&#39;sf&#39;</span><span class="p">,</span> <span class="s1">&#39;data.table&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">libs</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s1">&#39;openxlsx&#39;</span><span class="p">,</span> <span class="s1">&#39;stringr&#39;</span><span class="p">,</span> <span class="s1">&#39;dplyr&#39;</span><span class="p">,</span> <span class="s1">&#39;stringi&#39;</span><span class="p">,</span> <span class="s1">&#39;R.utils&#39;</span><span class="p">,</span> <span class="s1">&#39;ggplot2&#39;</span><span class="p">,</span> <span class="s1">&#39;ggpubr&#39;</span><span class="p">,</span> <span class="s1">&#39;ggsci&#39;</span><span class="p">,</span> <span class="s1">&#39;mapchina&#39;</span><span class="p">,</span> <span class="s1">&#39;sf&#39;</span><span class="p">,</span> <span class="s1">&#39;data.table&#39;</span><span class="p">,</span><span class="s1">&#39;NbClust&#39;</span><span class="p">,</span> <span class="s1">&#39;igraph&#39;</span><span class="p">,</span> <span class="s1">&#39;factoextra&#39;</span><span class="p">)</span>
 <span class="n">lapply</span><span class="p">(</span><span class="n">libs</span><span class="p">,</span> <span class="n">require</span><span class="p">,</span> <span class="n">character</span><span class="o">.</span><span class="n">only</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
 <span class="n">options</span><span class="p">(</span><span class="n">stringsAsFactors</span><span class="o">=</span><span class="n">F</span><span class="p">)</span>
 <span class="n">sf</span><span class="p">::</span><span class="n">sf_use_s2</span><span class="p">(</span><span class="n">FALSE</span><span class="p">)</span>
@@ -240,7 +242,234 @@ table(df$sex)
 get_prop(df, &#39;age&#39;)
 </pre></div>
 </div>
-<p>Clean and vaccination:</p>
+<p>Disease duration:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span># assume interval is left closed and right open, modify to reduce confusing
+df$infect_duration[df$infect_duration==&#39;3～5天&#39;] = &#39;3~4天&#39;
+df$infect_duration[df$infect_duration==&#39;5~7天&#39;] = &#39;5~6天&#39;
+df$infect_duration[df$infect_duration==&#39;7~10天&#39;] = &#39;7~9天&#39;
+
+df = df%&gt;%mutate(infect_duration=ifelse(infect_duration%in%c(&#39;7~9天&#39;, &#39;10天以上&#39;), &#39;&gt;7 day&#39;, infect_duration))%&gt;%
+   mutate(infect_duration=ifelse(infect_duration%in%c(&#39;&#39;, &#39;小于3天&#39;), &#39;&lt;3 day&#39;, infect_duration))%&gt;%
+   mutate(infect_duration=gsub(&#39;天&#39;, &#39; day&#39;, infect_duration))%&gt;%
+   mutate(infect_duration=gsub(&#39;~&#39;, &#39;-&#39;, infect_duration))%&gt;%
+   mutate(infect_duration=factor(infect_duration, levels=c(&#39;&lt;3 day&#39;, &#39;3-4 day&#39;, &#39;5-6 day&#39;, &#39;&gt;7 day&#39;)))
+get_prop(df, &#39;infect_duration&#39;)
+# trim fever_duration
+df$fever_duration = sapply(df$fever_duration, function(x){strsplit(x, &#39;[(]&#39;)[[1]][1]})
+df = df%&gt;%mutate(fever_duration=ifelse(is.na(fever_duration), &#39;no reply&#39;, fever_duration))%&gt;%
+   mutate(fever_duration=gsub(&#39;天&#39;, &#39; day&#39;, fever_duration))%&gt;%
+   mutate(fever_duration=ifelse(fever_duration%in%c(&#39;1 day&#39;, &#39;&lt;1 day&#39;), &#39;≤1 day&#39;, fever_duration))%&gt;%
+   mutate(fever_duration=factor(fever_duration, levels=c(&#39;no reply&#39;, &#39;≤1 day&#39;, &#39;2 day&#39;, &#39;3 day&#39;, &#39;&gt;3 day&#39;)))
+get_prop(df, &#39;fever_duration&#39;)
+</pre></div>
+</div>
+<p>Infect route:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">%&gt;%</span><span class="n">mutate</span><span class="p">(</span>
+   <span class="n">infectway_entertainment</span><span class="o">=</span><span class="n">factor</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">numeric</span><span class="p">(</span><span class="n">grepl</span><span class="p">(</span><span class="s1">&#39;消费场所&#39;</span><span class="p">,</span> <span class="n">infect_way</span><span class="p">))),</span>
+   <span class="n">infectway_work</span><span class="o">=</span><span class="n">factor</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">numeric</span><span class="p">(</span><span class="n">grepl</span><span class="p">(</span><span class="s1">&#39;工作场所&#39;</span><span class="p">,</span> <span class="n">infect_way</span><span class="p">))),</span>
+   <span class="n">infectway_family</span><span class="o">=</span><span class="n">factor</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">numeric</span><span class="p">(</span><span class="n">grepl</span><span class="p">(</span><span class="s1">&#39;在家被家人传染&#39;</span><span class="p">,</span> <span class="n">infect_way</span><span class="p">))),</span>
+   <span class="n">infectway_traffic</span><span class="o">=</span><span class="n">factor</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">numeric</span><span class="p">(</span><span class="n">grepl</span><span class="p">(</span><span class="s1">&#39;公共交通&#39;</span><span class="p">,</span> <span class="n">infect_way</span><span class="p">))),</span>
+   <span class="n">infectway_hosp</span><span class="o">=</span><span class="n">factor</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">numeric</span><span class="p">(</span><span class="n">grepl</span><span class="p">(</span><span class="s1">&#39;医疗场所&#39;</span><span class="p">,</span> <span class="n">infect_way</span><span class="p">))))</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="ow">in</span> <span class="n">c</span><span class="p">(</span><span class="s1">&#39;infectway_entertainment&#39;</span><span class="p">,</span> <span class="s1">&#39;infectway_work&#39;</span><span class="p">,</span> <span class="s1">&#39;infectway_family&#39;</span><span class="p">,</span> <span class="s1">&#39;infectway_traffic&#39;</span><span class="p">,</span> <span class="s1">&#39;infectway_hosp&#39;</span><span class="p">)){</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+   <span class="n">get_prop</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Vaccination:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>df[df$how_long_lastvac==&#39;&#39;, &#39;n_vac&#39;] = &#39;0&#39; # if a person report n_vac but not how_long_lastvac, treat n_vac as NA
+df = df%&gt;%mutate(n_vac=ifelse(n_vac%in%c(3, 4), &#39;≥3&#39;, n_vac))%&gt;%
+   mutate(n_vac=factor(n_vac, levels=c(&#39;0&#39;, &#39;1&#39;, &#39;2&#39;, &#39;≥3&#39;)))
+
+df = df%&gt;%mutate(how_long_lastvac=ifelse(how_long_lastvac==&#39;&#39;, &#39;no_vac&#39;, how_long_lastvac))%&gt;%
+   mutate(how_long_lastvac=gsub(&#39;个月&#39;, &#39; month&#39;, how_long_lastvac))%&gt;%
+   mutate(how_long_lastvac=ifelse(how_long_lastvac%in%c(&#39;&lt;3 month&#39;, &#39;3-6 month&#39;), &#39;&lt;6 month&#39;, how_long_lastvac))%&gt;%
+   mutate(how_long_lastvac=factor(how_long_lastvac, levels=c(&#39;no_vac&#39;, &#39;&lt;6 month&#39;, &#39;6-12 month&#39;, &#39;&gt;12 month&#39;)))
+
+get_prop(df, &#39;n_vac&#39;)
+get_prop(df, &#39;how_long_lastvac&#39;)
+</pre></div>
+</div>
+<p>Medication:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p># the ‘drug_use’ have been grouped to four groups, by hand
+drugs = c(‘ibuprofen_use’, ‘acetaminophen_use’, ‘chnmed_usd’)
+df[, drugs][is.na(df[, drugs])] = 0
+for (drug in drugs){</p>
+<blockquote>
+<div><p>print(drug)
+get_prop(df, drug)
+df[,drug] = as.factor(df[,drug])</p>
+</div></blockquote>
+<p>}</p>
+<p>Calculate syndrome score with symptom score, normalize to 0-1:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>## calculate syndrome score with symptom score, normalize to 0-1
+syndromes = unique(dict2$syndrome)
+symptoms = list()
+for (i in syndromes){
+   symptoms[[i]] = dict2%&gt;%filter(syndrome==i)%&gt;%pull(item_eng)
+}
+print(symptoms)
+print(sum(is.na(df[,unlist(symptoms)]))) # number of NA
+for (syndrome in syndromes){
+   score = rowSums(df[,symptoms[[syndrome]]])/length(symptoms[[syndrome]])/3 # normalize to 0-1
+   df[,paste0(syndrome, &#39;_score&#39;)] = score
+}
+</pre></div>
+</div>
+<p>Region:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>## region
+df$region = gsub(&#39;维吾尔|壮族&#39;, &#39;&#39;, df$region)
+regions = c()
+for (i in 1:nrow(df)){
+   item = df[i, &#39;region&#39;]
+   item1 = strsplit(item, &#39;自治区|自治州|特别行政区|省|市&#39;)[[1]][1]
+   regions = c(regions, item1)
+}
+df$region = regions
+# replace chn with pinyin
+data(china)
+china = china%&gt;%mutate(region=gsub(&#39;省|市|回族|壮族|维吾尔|特别行政区|自治区&#39;, &#39;&#39;, Name_Province))
+china = china%&gt;%group_by(region)%&gt;%dplyr::summarise(geometry=st_union(geometry))
+replace = data.frame(region=china$region,
+region1 = c(&#39;Shanghai&#39;, &#39;Yunnan&#39;, &#39;Neimenggu&#39;, &#39;Beijing&#39;, &#39;Taiwan&#39;, &#39;Jilin&#39;, &#39;Sichuan&#39;, &#39;Tianji&#39;,
+&#39;Ningxia&#39;, &#39;Anhui&#39;, &#39;Shandong&#39;, &#39;Shānxi&#39;, &#39;Guangdong&#39;, &#39;Guangxi&#39;, &#39;Xinjiang&#39;, &#39;Jiangsu&#39;, &#39;Jiangxi&#39;, &#39;Hebei&#39;,
+&#39;Henan&#39;, &#39;Zhejiang&#39;, &#39;Hainan&#39;, &#39;Hubei&#39;, &#39;Hunan&#39;, &#39;Macau&#39;, &#39;Gansu&#39;, &#39;Fujian&#39;, &#39;Tibet&#39;, &#39;Guizhou&#39;, &#39;Liaoning&#39;,
+&#39;Chongqing&#39;, &#39;Shǎnxi&#39;, &#39;Qinghai&#39;, &#39;Hong Kong&#39;, &#39;Heilongjiang&#39;))
+china = china%&gt;%merge(replace, &#39;region&#39;)%&gt;%select(-region)%&gt;%rename(region=region1)
+df = df%&gt;%merge(replace, &#39;region&#39;)%&gt;%select(-region)%&gt;%rename(region=region1)
+print(table(df$region))
+# sample size for each region
+tab = table(df$region)
+tab = data.frame(cbind(names(tab), tab))
+pop_tab = tab%&gt;%rename(n=tab, region=V1)%&gt;%mutate(n=as.numeric(n))%&gt;%arrange(n)
+print(pop_tab)
+</pre></div>
+</div>
+</div>
+<div class="section" id="analysis-code-regression">
+<h1>Analysis code: regression<a class="headerlink" href="#analysis-code-regression" title="Permalink to this heading">¶</a></h1>
+<p>We used regression to measure the association between symptoms and population characteris, vaccination, and medication.</p>
+</div>
+<div class="section" id="analysis-code-plot">
+<h1>Analysis code: plot<a class="headerlink" href="#analysis-code-plot" title="Permalink to this heading">¶</a></h1>
+<p>Bar plot for servere of sympytoms:</p>
+<a class="reference internal image-reference" href="_images/fig1.png"><img alt="_images/fig1.png" src="_images/fig1.png" style="width: 600px;" /></a>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>map = data.frame(score=c(0:3), score1=c(&#39;Absent&#39;, &#39;Mild&#39;, &#39;Moderate&#39;, &#39;Severe&#39;))
+out = c()
+for (i in unlist(symptoms)){
+   for (j in c(0:3)){
+      prop = sum(df[,i]==j)/nrow(df)
+      out = c(out, i, j, prop)
+   }
+}
+df_p = data.frame(matrix(out, ncol=3, byrow=T))
+df_p = df_p%&gt;%mutate_if(is_numeric,as.numeric)%&gt;%rename(sympton=X1, score=X2, prop=X3)
+df_p = df_p%&gt;%merge(map, &#39;score&#39;)%&gt;%mutate(score1=factor(score1, levels=c(&#39;Severe&#39;, &#39;Moderate&#39;, &#39;Mild&#39;, &#39;Absent&#39;)))
+df_p%&gt;%merge(dict2, by.x=&#39;sympton&#39;, by.y=&#39;item_eng&#39;)%&gt;%select(syndrome, sympton, score1, prop) # add syndrome
+plots = list()
+for (syndrome in syndromes){
+   df_p1 = df_p%&gt;%filter(sympton%in%symptoms[[syndrome]])
+   df_p1 = df_p1%&gt;%mutate(sympton=gsub(paste0(syndrome, &#39;_&#39;), &#39;&#39;, sympton))
+   xlevels = df_p1%&gt;%filter(score1==&#39;Absent&#39;)%&gt;%arrange(prop)%&gt;%pull(sympton)
+   df_p1$sympton = factor(df_p1$sympton, levels=xlevels)
+   df_p1 = df_p1%&gt;%rename(item_eng=sympton)%&gt;%merge(dict2, &#39;item_eng&#39;)%&gt;%rename(sympton=item_eng1) # repalce symptoms with their formal names
+   p = ggplot(df_p1, aes(x = sympton, weight = prop, fill = score1))+
+      geom_bar( position = &quot;stack&quot;) +
+      xlab(&#39;&#39;) + ylab(&#39;&#39;) + labs(fill = &#39;Severity&#39;) +
+      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, color=&quot;black&quot;),
+            axis.text.y = element_text(color=&quot;black&quot;), legend.position=&quot;none&quot;) +
+      ggtitle(syndrome) +
+      theme(plot.title = element_text(size = 15, face = &quot;bold&quot;, hjust = 0.5)) +
+      coord_flip() +
+      scale_fill_nejm()
+   plots[[syndrome]] = p
+}
+# multiple plot
+p1 &lt;- ggarrange(plots[[1]], plots[[2]], plots[[3]], plots[[4]],
+   ncol=2, nrow=2, common.legend=T, legend=&quot;bottom&quot;,
+   hjust=0.1, vjust=0.1)
+file_out = &#39;./plot/bar.png&#39;
+png(file_out, height=1000, width=1000, res=160)
+print(p1)
+dev.off()
+</pre></div>
+</div>
+<p>Dendrogram for sympytoms clustering:</p>
+<a class="reference internal image-reference" href="_images/fig2.png"><img alt="_images/fig2.png" src="_images/fig2.png" style="width: 600px;" /></a>
+<p>Heatmap for regional distribution of symptoms:</p>
+<a class="reference internal image-reference" href="_images/fig3.png"><img alt="_images/fig3.png" src="_images/fig3.png" style="width: 600px;" /></a>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>res = data.frame()
+provs =  names(rev(sort(table(df$region)))) # sort by n
+for (prov in provs){
+   sub = df%&gt;%filter(region==prov)
+   temp = colMeans(sub[,unlist(symptoms)])/3
+   add = data.frame(region=prov, symptom=names(temp), score=temp, n=nrow(sub))
+   res = rbind(res, add)
+}
+# replace symptom names with their formal name
+res = res%&gt;%merge(dict2%&gt;%select(item_eng, item_eng1), by.x=&#39;symptom&#39;, by.y=&#39;item_eng&#39;)%&gt;%select(-symptom)%&gt;%rename(symptom=item_eng1)
+# filter region with less than 10 samples
+res = res%&gt;%filter(n&gt;=10)
+p = res%&gt;%
+   ggplot(aes(region, symptom, fill=score)) +
+   geom_tile() +
+   labs(x = NULL, y = NULL, fill = &quot;Score&quot;, title=&quot;&quot;, subtitle=&quot;&quot;) +
+   scale_fill_gradient2(limits=c(0,1)) +
+   theme_classic() +
+   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, color=&quot;black&quot;),
+      axis.text.y = element_text(color=&quot;black&quot;),
+      legend.title = element_text(size=12)) +
+   scale_fill_distiller(palette = &quot;Spectral&quot;)
+file_out = &#39;./plot/heatmap.png&#39;
+png(file_out, height=1000, width=800, res=150)
+print(p)
+dev.off()
+</pre></div>
+</div>
+<p>Map for regional distribution of syndromes:</p>
+<a class="reference internal image-reference" href="_images/fig4.png"><img alt="_images/fig4.png" src="_images/fig4.png" style="width: 600px;" /></a>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># mean score</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">frame</span><span class="p">()</span>
+<span class="n">plots</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">group</span> <span class="ow">in</span> <span class="n">syndromes</span><span class="p">){</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+   <span class="n">temp</span> <span class="o">=</span> <span class="n">df</span><span class="p">[,</span> <span class="n">c</span><span class="p">(</span><span class="s1">&#39;region&#39;</span><span class="p">,</span> <span class="n">paste0</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="s1">&#39;_score&#39;</span><span class="p">))]</span>
+   <span class="n">names</span><span class="p">(</span><span class="n">temp</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;score&#39;</span>
+   <span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span><span class="o">%&gt;%</span><span class="n">group_by</span><span class="p">(</span><span class="n">region</span><span class="p">)</span><span class="o">%&gt;%</span><span class="n">dplyr</span><span class="p">::</span><span class="n">summarise</span><span class="p">(</span><span class="n">score</span><span class="o">=</span><span class="n">mean</span><span class="p">(</span><span class="n">score</span><span class="p">))</span>
+   <span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span><span class="o">%&gt;%</span><span class="n">merge</span><span class="p">(</span><span class="n">pop_tab</span><span class="p">,</span> <span class="s1">&#39;region&#39;</span><span class="p">)</span><span class="o">%&gt;%</span><span class="nb">filter</span><span class="p">(</span><span class="n">n</span><span class="o">&gt;=</span><span class="mi">10</span><span class="p">)</span><span class="o">%&gt;%</span><span class="n">arrange</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">score</span><span class="p">))</span>
+   <span class="n">sub</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">frame</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span><span class="o">%&gt;%</span><span class="n">mutate</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
+   <span class="n">res</span> <span class="o">=</span> <span class="n">rbind</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">sub</span><span class="p">)</span>
+   <span class="n">map1</span> <span class="o">=</span> <span class="n">china</span><span class="o">%&gt;%</span><span class="n">merge</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s1">&#39;region&#39;</span><span class="p">,</span> <span class="nb">all</span><span class="o">.</span><span class="n">x</span><span class="o">=</span><span class="n">T</span><span class="p">)</span><span class="o">%&gt;%</span><span class="n">mutate</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="n">ifelse</span><span class="p">(</span><span class="ow">is</span><span class="o">.</span><span class="n">na</span><span class="p">(</span><span class="n">score</span><span class="p">),</span> <span class="n">NA</span><span class="p">,</span> <span class="n">region</span><span class="p">))</span> <span class="c1"># add to map</span>
+   <span class="n">p</span> <span class="o">=</span> <span class="n">ggplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">map1</span><span class="p">)</span> <span class="o">+</span>
+      <span class="n">geom_sf</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">fill</span> <span class="o">=</span> <span class="n">score</span><span class="p">))</span> <span class="o">+</span>
+      <span class="n">geom_sf_text</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">region</span><span class="p">),</span> <span class="n">colour</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span><span class="p">)</span> <span class="o">+</span>
+      <span class="n">scale_fill_distiller</span><span class="p">(</span><span class="n">palette</span> <span class="o">=</span> <span class="s2">&quot;Spectral&quot;</span><span class="p">)</span> <span class="o">+</span>
+      <span class="n">labs</span><span class="p">(</span><span class="n">fill</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">)</span> <span class="o">+</span>
+      <span class="n">ggtitle</span><span class="p">(</span><span class="n">group</span><span class="p">)</span> <span class="o">+</span>
+      <span class="n">theme</span><span class="p">(</span><span class="n">plot</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">element_text</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="mi">35</span><span class="p">,</span> <span class="n">face</span> <span class="o">=</span> <span class="s2">&quot;bold&quot;</span><span class="p">,</span> <span class="n">hjust</span><span class="o">=</span><span class="mf">0.07</span><span class="p">,</span> <span class="n">vjust</span><span class="o">=-</span><span class="mi">9</span><span class="p">),</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">background</span> <span class="o">=</span> <span class="n">element_blank</span><span class="p">(),</span> <span class="n">panel</span><span class="o">.</span><span class="n">border</span> <span class="o">=</span> <span class="n">element_blank</span><span class="p">(),</span>
+            <span class="n">axis</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">x</span><span class="o">=</span><span class="n">element_blank</span><span class="p">(),</span> <span class="n">axis</span><span class="o">.</span><span class="n">ticks</span><span class="o">.</span><span class="n">x</span><span class="o">=</span><span class="n">element_blank</span><span class="p">(),</span>
+            <span class="n">axis</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">y</span><span class="o">=</span><span class="n">element_blank</span><span class="p">(),</span> <span class="n">axis</span><span class="o">.</span><span class="n">ticks</span><span class="o">.</span><span class="n">y</span><span class="o">=</span><span class="n">element_blank</span><span class="p">(),</span>
+            <span class="n">legend</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">height</span><span class="o">=</span> <span class="n">unit</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="s1">&#39;cm&#39;</span><span class="p">),</span> <span class="n">legend</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">width</span><span class="o">=</span> <span class="n">unit</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="s1">&#39;cm&#39;</span><span class="p">),</span>
+            <span class="n">legend</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">),</span> <span class="n">legend</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">),</span>
+            <span class="n">panel</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">major</span> <span class="o">=</span> <span class="n">element_blank</span><span class="p">(),</span> <span class="n">panel</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">minor</span> <span class="o">=</span> <span class="n">element_blank</span><span class="p">())</span> <span class="o">+</span>
+      <span class="n">labs</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span>
+      <span class="n">coord_sf</span><span class="p">(</span><span class="n">xlim</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="mi">73</span><span class="p">,</span> <span class="mi">135</span><span class="p">),</span> <span class="n">ylim</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">54</span><span class="p">),</span> <span class="n">expand</span> <span class="o">=</span> <span class="n">T</span><span class="p">)</span>
+
+   <span class="n">plots</span><span class="p">[[</span><span class="n">group</span><span class="p">]]</span> <span class="o">=</span> <span class="n">p</span>
+<span class="p">}</span>
+<span class="n">p1</span> <span class="o">=</span> <span class="n">ggarrange</span><span class="p">(</span><span class="n">plots</span><span class="p">[[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">plots</span><span class="p">[[</span><span class="mi">2</span><span class="p">]],</span> <span class="n">plots</span><span class="p">[[</span><span class="mi">3</span><span class="p">]],</span> <span class="n">plots</span><span class="p">[[</span><span class="mi">4</span><span class="p">]],</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nrow</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+   <span class="n">common</span><span class="o">.</span><span class="n">legend</span><span class="o">=</span><span class="n">T</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
+<span class="n">file_out</span> <span class="o">=</span> <span class="s1">&#39;./plot/map.png&#39;</span>
+<span class="n">png</span><span class="p">(</span><span class="n">file_out</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">1300</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1700</span><span class="p">,</span> <span class="n">res</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span>
+<span class="n">dev</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+<span class="n">res</span> <span class="c1"># average score</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="comments-and-feedbacks">
 <h1>Comments and feedbacks<a class="headerlink" href="#comments-and-feedbacks" title="Permalink to this heading">¶</a></h1>
