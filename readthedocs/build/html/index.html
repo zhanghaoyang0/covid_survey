@@ -154,16 +154,16 @@
   <div class="section" id="a-covid-19-survey-in-china">
 <h1>A COVID-19 survey in China<a class="headerlink" href="#a-covid-19-survey-in-china" title="Permalink to this heading">¶</a></h1>
 <p>In Dec 2022, the COVID-19 restriction was end.</p>
-<p>We conduct this 3-weeks on-line survey to measure the characteristics to measure the characteristics of COVID-19 patients in China.</p>
-<p>We investigate:</p>
+<p>We conduct a 3-weeks on-line survey to measure the characteristics to measure the characteristics of COVID-19 patients in China.</p>
+<p>We investigated:</p>
 <p>Symptom spectrum of COVID-19:</p>
-<a class="reference internal image-reference" href="_images/fig1.png"><img alt="_images/fig1.png" src="_images/fig1.png" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/fig1.png"><img alt="_images/fig1.png" class="align-center" src="_images/fig1.png" style="width: 600px;" /></a>
 <p>Cluster of COVID-19 symptoms:</p>
-<a class="reference internal image-reference" href="_images/fig2.png"><img alt="_images/fig2.png" src="_images/fig2.png" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/fig2.png"><img alt="_images/fig2.png" class="align-center" src="_images/fig2.png" style="width: 600px;" /></a>
 <p>Regional distribution of COVID-19 syndromes:</p>
-<a class="reference internal image-reference" href="_images/fig3.png"><img alt="_images/fig3.png" src="_images/fig3.png" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/fig3.png"><img alt="_images/fig3.png" class="align-center" src="_images/fig3.png" style="width: 600px;" /></a>
 <p>Regional distribution of COVID-19 symptoms:</p>
-<a class="reference internal image-reference" href="_images/fig4.png"><img alt="_images/fig4.png" src="_images/fig4.png" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/fig4.png"><img alt="_images/fig4.png" class="align-center" src="_images/fig4.png" style="width: 600px;" /></a>
 <p>And, measure the association between COVID-19 symptoms and population characteristics, vaccination, and medication.</p>
 </div>
 <div class="section" id="questionnaire-data">
@@ -210,6 +210,12 @@ is_numeric &lt;- function(x) {
 <h1>Analysis code: data cleaning and description<a class="headerlink" href="#analysis-code-data-cleaning-and-description" title="Permalink to this heading">¶</a></h1>
 <p>We conducted data cleaning by translating Chinese to English, combining groups with small samples, etc.
 Description was also performed.</p>
+<p>You may clone our repository, which contains our data, results, and plots:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">zhanghaoyang0</span><span class="o">/</span><span class="n">covid_survey</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">covid_survey</span>
+</pre></div>
+</div>
+<p>Or you can just download our data and performed the below analysis. If you do so, pleasue change the path in the code.</p>
 <p>Load data and clean:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">## questionaire data</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">read</span><span class="o">.</span><span class="n">xlsx</span><span class="p">(</span><span class="s1">&#39;data/covid_survey_20230112.xlsx&#39;</span><span class="p">,</span> <span class="n">sheet</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># questionaire</span>
@@ -356,7 +362,7 @@ print(pop_tab)
 <div class="section" id="analysis-code-plot">
 <h1>Analysis code: plot<a class="headerlink" href="#analysis-code-plot" title="Permalink to this heading">¶</a></h1>
 <p>Bar plot for servere of sympytoms:</p>
-<a class="reference internal image-reference" href="_images/fig1.png"><img alt="_images/fig1.png" src="_images/fig1.png" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/fig1.png"><img alt="_images/fig1.png" class="align-center" src="_images/fig1.png" style="width: 600px;" /></a>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>map = data.frame(score=c(0:3), score1=c(&#39;Absent&#39;, &#39;Mild&#39;, &#39;Moderate&#39;, &#39;Severe&#39;))
 out = c()
 for (i in unlist(symptoms)){
@@ -398,9 +404,32 @@ dev.off()
 </pre></div>
 </div>
 <p>Dendrogram for sympytoms clustering:</p>
-<a class="reference internal image-reference" href="_images/fig2.png"><img alt="_images/fig2.png" src="_images/fig2.png" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/fig2.png"><img alt="_images/fig2.png" class="align-center" src="_images/fig2.png" style="width: 600px;" /></a>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">path_out</span> <span class="o">=</span> <span class="s1">&#39;./plot/hclust/&#39;</span>
+<span class="n">df_p</span> <span class="o">=</span> <span class="n">t</span><span class="p">(</span><span class="n">df</span><span class="p">[,</span> <span class="n">unlist</span><span class="p">(</span><span class="n">symptoms</span><span class="p">)])</span>
+<span class="c1"># repalce symptoms with their formal names</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="ow">in</span> <span class="mi">1</span><span class="p">:</span><span class="n">nrow</span><span class="p">(</span><span class="n">dict2</span><span class="p">)){</span>
+   <span class="n">row</span><span class="o">.</span><span class="n">names</span><span class="p">(</span><span class="n">df_p</span><span class="p">)[</span><span class="n">row</span><span class="o">.</span><span class="n">names</span><span class="p">(</span><span class="n">df_p</span><span class="p">)</span><span class="o">==</span><span class="n">dict2</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;item_eng&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dict2</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;item_eng1&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">dist</span><span class="p">(</span><span class="n">df_p</span><span class="p">)</span>
+<span class="n">fit</span> <span class="o">=</span> <span class="n">hclust</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;average&quot;</span><span class="p">)</span>
+<span class="n">png</span><span class="p">(</span><span class="n">paste0</span><span class="p">(</span><span class="n">path_out</span><span class="p">,</span> <span class="s1">&#39;hclust.png&#39;</span><span class="p">),</span> <span class="n">width</span><span class="o">=</span><span class="mi">2500</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">1500</span><span class="p">,</span> <span class="n">res</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">fviz_dend</span><span class="p">(</span><span class="n">fit</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">rect</span> <span class="o">=</span><span class="n">F</span><span class="p">,</span> <span class="n">rect_fill</span> <span class="o">=</span> <span class="n">T</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;aaas&#39;</span><span class="p">,</span> <span class="n">cex</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">,</span>
+   <span class="nb">type</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">&quot;rectangle&quot;</span><span class="p">),</span> <span class="c1"># type = c(&quot;rectangle&quot;, &quot;circular&quot;, &quot;phylogenic&quot;)</span>
+   <span class="n">main</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">ylab</span> <span class="o">=</span> <span class="s2">&quot;Dendrogram height&quot;</span><span class="p">,</span> <span class="n">horiz</span> <span class="o">=</span> <span class="n">T</span><span class="p">)</span>  <span class="c1"># ggsci color</span>
+<span class="n">dev</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+<span class="c1"># multiple plot</span>
+<span class="n">p1</span> <span class="o">&lt;-</span> <span class="n">ggarrange</span><span class="p">(</span><span class="n">plots</span><span class="p">[[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">plots</span><span class="p">[[</span><span class="mi">2</span><span class="p">]],</span> <span class="n">plots</span><span class="p">[[</span><span class="mi">3</span><span class="p">]],</span> <span class="n">plots</span><span class="p">[[</span><span class="mi">4</span><span class="p">]],</span>
+   <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nrow</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">common</span><span class="o">.</span><span class="n">legend</span><span class="o">=</span><span class="n">T</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span>
+   <span class="n">hjust</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">vjust</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">file_out</span> <span class="o">=</span> <span class="s1">&#39;./plot/bar.png&#39;</span>
+<span class="n">png</span><span class="p">(</span><span class="n">file_out</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">res</span><span class="o">=</span><span class="mi">160</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span>
+<span class="n">dev</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+</pre></div>
+</div>
 <p>Heatmap for regional distribution of symptoms:</p>
-<a class="reference internal image-reference" href="_images/fig3.png"><img alt="_images/fig3.png" src="_images/fig3.png" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/fig3.png"><img alt="_images/fig3.png" class="align-center" src="_images/fig3.png" style="width: 600px;" /></a>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>res = data.frame()
 provs =  names(rev(sort(table(df$region)))) # sort by n
 for (prov in provs){
@@ -430,7 +459,7 @@ dev.off()
 </pre></div>
 </div>
 <p>Map for regional distribution of syndromes:</p>
-<a class="reference internal image-reference" href="_images/fig4.png"><img alt="_images/fig4.png" src="_images/fig4.png" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/fig4.png"><img alt="_images/fig4.png" class="align-center" src="_images/fig4.png" style="width: 600px;" /></a>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># mean score</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">frame</span><span class="p">()</span>
 <span class="n">plots</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
