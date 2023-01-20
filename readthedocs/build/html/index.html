@@ -82,7 +82,8 @@
               <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">A COVID-19 survey in China</a></li>
 <li><a class="reference internal" href="#questionnaire-data">Questionnaire Data</a></li>
-<li><a class="reference internal" href="#analysis-code">Analysis code</a></li>
+<li><a class="reference internal" href="#analysis-code-preparation">Analysis code: preparation</a></li>
+<li><a class="reference internal" href="#analysis-code-data-cleaning-and-description">Analysis code: data cleaning and description</a></li>
 <li><a class="reference internal" href="#comments-and-feedbacks">Comments and feedbacks</a></li>
 </ul>
 </div>
@@ -170,9 +171,76 @@
 <p>The data is in Chinese. Please see our code about how to clean this data.</p>
 <p>You can download the data at <a class="reference external" href="https://github.com/zhanghaoyang0/covid_survey/raw/master/data/covid_survey.xlsx">here</a>.</p>
 </div>
-<div class="section" id="analysis-code">
-<h1>Analysis code<a class="headerlink" href="#analysis-code" title="Permalink to this heading">¶</a></h1>
-<p>We used R 4.0.3 for analysis, with follow packages and functions.</p>
+<div class="section" id="analysis-code-preparation">
+<h1>Analysis code: preparation<a class="headerlink" href="#analysis-code-preparation" title="Permalink to this heading">¶</a></h1>
+<p>We used R 4.0.3 for analysis.</p>
+<p>Load packages:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">libs</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s1">&#39;openxlsx&#39;</span><span class="p">,</span> <span class="s1">&#39;stringr&#39;</span><span class="p">,</span> <span class="s1">&#39;dplyr&#39;</span><span class="p">,</span> <span class="s1">&#39;stringi&#39;</span><span class="p">,</span> <span class="s1">&#39;R.utils&#39;</span><span class="p">,</span> <span class="s1">&#39;ggplot2&#39;</span><span class="p">,</span> <span class="s1">&#39;ggpubr&#39;</span><span class="p">,</span> <span class="s1">&#39;ggsci&#39;</span><span class="p">,</span> <span class="s1">&#39;mapchina&#39;</span><span class="p">,</span> <span class="s1">&#39;sf&#39;</span><span class="p">,</span> <span class="s1">&#39;data.table&#39;</span><span class="p">)</span>
+<span class="n">lapply</span><span class="p">(</span><span class="n">libs</span><span class="p">,</span> <span class="n">require</span><span class="p">,</span> <span class="n">character</span><span class="o">.</span><span class="n">only</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+<span class="n">options</span><span class="p">(</span><span class="n">stringsAsFactors</span><span class="o">=</span><span class="n">F</span><span class="p">)</span>
+<span class="n">sf</span><span class="p">::</span><span class="n">sf_use_s2</span><span class="p">(</span><span class="n">FALSE</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Define functions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span># calculate proportion of a given var for all, male, female participants
+# e.g,
+# temp = data.frame(sex=c(&#39;Male&#39;, &#39;Female&#39;), var=c(1, 0))
+# get_prop(temp, &#39;var&#39;)
+get_prop = function(df, var){
+   for (sex1 in c(&#39;Male|Female&#39;, &#39;Male&#39;, &#39;Female&#39;)){
+      df1 = df%&gt;%filter(grepl(sex1, sex))
+      tab = table(df1[,var])
+      frq = data.frame(var=names(tab), n=as.numeric(tab))
+      frq = frq%&gt;%mutate(n=paste0(n,&#39;(&#39;, sprintf(&#39;%.2f&#39;, n*100/sum(tab)),&#39;%)&#39;))
+      print(paste0(&#39;distribution of &#39;, ifelse(sex1==&#39;Male|Female&#39;, &#39;all&#39;, tolower(sex1)), &#39; participants in &#39;, var, &#39;:&#39;))
+      print(frq)
+   }
+}
+# convert character vector to numeric
+# e.g, df = df%&gt;%mutate_if(is_numeric,as.numeric)
+is_numeric &lt;- function(x) {
+   !any(is.na(suppressWarnings(as.numeric(na.omit(x))))) &amp; is.character(x)
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="analysis-code-data-cleaning-and-description">
+<h1>Analysis code: data cleaning and description<a class="headerlink" href="#analysis-code-data-cleaning-and-description" title="Permalink to this heading">¶</a></h1>
+<p>We conducted data cleaning by translating Chinese to English, combining groups with small samples, etc.
+Description was also performed.</p>
+<p>Load data and clean:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">## questionaire data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">read</span><span class="o">.</span><span class="n">xlsx</span><span class="p">(</span><span class="s1">&#39;data/covid_survey_20230112.xlsx&#39;</span><span class="p">,</span> <span class="n">sheet</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># questionaire</span>
+<span class="n">names</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">=</span> <span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;/|，|？|“|”&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">names</span><span class="p">(</span><span class="n">df</span><span class="p">))</span> <span class="c1"># remove Chinese punctuations</span>
+<span class="n">names</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">=</span> <span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">names</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> <span class="n">fixed</span><span class="o">=</span><span class="n">T</span><span class="p">)</span>
+<span class="n">names</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">=</span> <span class="n">str_replace</span><span class="p">(</span><span class="n">names</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> <span class="s1">&#39;在感染后是否有出现以下[\U4E00-\U9FFF\U3000-\U303F]+症状:&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="n">names</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">=</span> <span class="n">str_replace</span><span class="p">(</span><span class="n">names</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> <span class="s1">&#39;[（][\U4E00-\U9FFF\U3000-\U303F|1-9]+[）]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="c1">## drop unused items and atypical symptons</span>
+<span class="n">drop_cols</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s1">&#39;提交时间&#39;</span><span class="p">,</span> <span class="s1">&#39;答题时间&#39;</span><span class="p">,</span> <span class="s1">&#39;喉咙有刀割感&#39;</span><span class="p">,</span> <span class="s1">&#39;吞咽时疼痛&#39;</span><span class="p">,</span> <span class="s1">&#39;喉咙嘶哑&#39;</span><span class="p">,</span> <span class="s1">&#39;喉咙干痒&#39;</span><span class="p">,</span> <span class="s1">&#39;性欲减退&#39;</span><span class="p">,</span> <span class="s1">&#39;生理期异常&#39;</span><span class="p">,</span> <span class="s1">&#39;肾脏部位疼痛&#39;</span><span class="p">,</span> <span class="s1">&#39;流泪&#39;</span><span class="p">,</span> <span class="s1">&#39;打喷嚏&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[,</span><span class="n">drop_cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">NULL</span> <span class="c1"># drop atypical symptons</span>
+<span class="n">names</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="c1">## replace chinese with english</span>
+<span class="n">dict1</span> <span class="o">=</span> <span class="n">read</span><span class="o">.</span><span class="n">xlsx</span><span class="p">(</span><span class="s1">&#39;data/covid_survey_20230112.xlsx&#39;</span><span class="p">,</span> <span class="n">sheet</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">dict2</span> <span class="o">=</span> <span class="n">read</span><span class="o">.</span><span class="n">xlsx</span><span class="p">(</span><span class="s1">&#39;data/covid_survey_20230112.xlsx&#39;</span><span class="p">,</span> <span class="n">sheet</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">dict</span> <span class="o">=</span> <span class="n">rbind</span><span class="p">(</span><span class="n">dict1</span><span class="p">,</span> <span class="n">dict2</span><span class="p">[,</span><span class="n">c</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)])</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;chinese items to english:&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="nb">dict</span><span class="p">))</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="ow">in</span> <span class="mi">1</span><span class="p">:</span><span class="n">nrow</span><span class="p">(</span><span class="nb">dict</span><span class="p">)){</span>
+   <span class="n">names</span><span class="p">(</span><span class="n">df</span><span class="p">)[</span><span class="n">names</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">==</span><span class="nb">dict</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Age and sex:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>df = df%&gt;%mutate(age=gsub(&#39;岁&#39;, &#39;&#39;, age))%&gt;%
+   mutate(age=ifelse(age%in%c(&#39;41-50&#39;, &#39;51-60&#39;, &#39;61-70&#39;), &#39;&gt;40&#39;, age))%&gt;%
+   mutate(age=ifelse(age%in%c(&#39;12-18&#39;,  &#39;18-24&#39;, &#39;6-12&#39;, &#39;3-6&#39;), &#39;&lt;24&#39;, age))%&gt;%
+   mutate(age=factor(age, levels=c(&#39;&lt;24&#39;, &#39;24-30&#39;, &#39;31-40&#39;, &#39;&gt;40&#39;)))
+df = df%&gt;%mutate(sex=factor(ifelse(sex==&#39;女&#39;,&#39;Female&#39;, &#39;Male&#39;), levels=c(&#39;Female&#39;, &#39;Male&#39;)))
+table(df$sex)
+get_prop(df, &#39;age&#39;)
+</pre></div>
+</div>
+<p>Clean and vaccination:</p>
 </div>
 <div class="section" id="comments-and-feedbacks">
 <h1>Comments and feedbacks<a class="headerlink" href="#comments-and-feedbacks" title="Permalink to this heading">¶</a></h1>

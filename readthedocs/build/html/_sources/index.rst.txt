@@ -41,7 +41,7 @@ The data is in Chinese. Please see our code about how to clean this data.
 
 You can download the data at `here <https://github.com/zhanghaoyang0/covid_survey/raw/master/data/covid_survey.xlsx>`_.
 
-Analysis code
+Analysis code: preparation
 =======================
 We used R 4.0.3 for analysis.
 
@@ -55,7 +55,7 @@ Load packages:
    sf::sf_use_s2(FALSE)
    
 
-Defind functions:
+Define functions:
 
 .. code-block:: python
 
@@ -73,8 +73,67 @@ Defind functions:
          print(frq)
       }
    }
+   # convert character vector to numeric 
+   # e.g, df = df%>%mutate_if(is_numeric,as.numeric)
+   is_numeric <- function(x) {
+      !any(is.na(suppressWarnings(as.numeric(na.omit(x))))) & is.character(x)
+   }
 
 
+Analysis code: data cleaning and description
+=======================
+We conducted data cleaning by translating Chinese to English, combining groups with small samples, etc.
+Description was also performed.
+
+Load data and clean:
+.. code-block:: python
+
+   ## questionaire data
+   df = read.xlsx('data/covid_survey_20230112.xlsx', sheet=1) # questionaire
+   names(df) = gsub('/|，|？|“|”', '', names(df)) # remove Chinese punctuations
+   names(df) = gsub('?', '', names(df), fixed=T) 
+   names(df) = str_replace(names(df), '在感染后是否有出现以下[\U4E00-\U9FFF\U3000-\U303F]+症状:', '')
+   names(df) = str_replace(names(df), '[（][\U4E00-\U9FFF\U3000-\U303F|1-9]+[）]', '')
+   ## drop unused items and atypical symptons
+   drop_cols = c('提交时间', '答题时间', '喉咙有刀割感', '吞咽时疼痛', '喉咙嘶哑', '喉咙干痒', '性欲减退', '生理期异常', '肾脏部位疼痛', '流泪', '打喷嚏')
+   df[,drop_cols] = NULL # drop atypical symptons
+   names(df)
+   ## replace chinese with english
+   dict1 = read.xlsx('data/covid_survey_20230112.xlsx', sheet=2)
+   dict2 = read.xlsx('data/covid_survey_20230112.xlsx', sheet=3)
+   dict = rbind(dict1, dict2[,c(1,4)])
+   print('chinese items to english:')
+   print(head(dict))
+   for (i in 1:nrow(dict)){
+      names(df)[names(df)==dict[i, 1]] = dict[i, 2]
+   }
+   
+
+Age and sex:
+.. code-block:: python
+
+   df = df%>%mutate(age=gsub('岁', '', age))%>%
+      mutate(age=ifelse(age%in%c('41-50', '51-60', '61-70'), '>40', age))%>%
+      mutate(age=ifelse(age%in%c('12-18',  '18-24', '6-12', '3-6'), '<24', age))%>%
+      mutate(age=factor(age, levels=c('<24', '24-30', '31-40', '>40')))
+   df = df%>%mutate(sex=factor(ifelse(sex=='女','Female', 'Male'), levels=c('Female', 'Male')))
+   table(df$sex)
+   get_prop(df, 'age')
+
+
+Vaccination:
+.. code-block:: python
+   df[df$how_long_lastvac=='', 'n_vac'] = '0' # if a person report n_vac but not how_long_lastvac, treat n_vac as NA
+   df = df%>%mutate(n_vac=ifelse(n_vac%in%c(3, 4), '≥3', n_vac))%>%
+      mutate(n_vac=factor(n_vac, levels=c('0', '1', '2', '≥3')))
+
+   df = df%>%mutate(how_long_lastvac=ifelse(how_long_lastvac=='', 'no_vac', how_long_lastvac))%>%
+      mutate(how_long_lastvac=gsub('个月', ' month', how_long_lastvac))%>%
+      mutate(how_long_lastvac=ifelse(how_long_lastvac%in%c('<3 month', '3-6 month'), '<6 month', how_long_lastvac))%>%
+      mutate(how_long_lastvac=factor(how_long_lastvac, levels=c('no_vac', '<6 month', '6-12 month', '>12 month')))
+
+   get_prop(df, 'n_vac')
+   get_prop(df, 'how_long_lastvac')
 
 Comments and feedbacks
 =======================
