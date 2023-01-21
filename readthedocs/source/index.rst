@@ -480,4 +480,10 @@ We used regression to measure the association between symptoms and population ch
 
 Comments and feedbacks
 =======================
+
+
 Feel free to contact me via zhanghaoyang0@hotmail.com
+
+.. image:: dog_with_hat.png
+   :width: 200
+   :align: left
