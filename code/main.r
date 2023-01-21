@@ -234,8 +234,7 @@ for (test_var in test_vars){
 res = data.frame(matrix(out, ncol=10, byrow=T))
 names(res) = c('outcome','test_var', 'reg_var', 'level', 'ncase', 'nctrl', 'mean', 'beta', 'se', 'p')
 
-res1 = res%>%filter(p<0.05)
-write.csv(res1, './result/reg.csv', row.names=F, quote=F)
+write.csv(res, './result/reg.csv', row.names=F, quote=F)
 
 # extract significant result
 res1 = data.frame()

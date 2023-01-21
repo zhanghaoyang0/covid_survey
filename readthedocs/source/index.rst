@@ -1,38 +1,12 @@
 
-A COVID-19 survey in China
+Overview
 =============================================
 In Dec 2022, the COVID-19 restriction was end.
 
 We conducted a 3-week on-line survey to measure the characteristics to measure the characteristics of COVID-19 patients in China. 
 
-We investigated: 
+We investigated the symptom spectrum of COVID-19 in the participants, and, evaluated if the association between COVID-19 symptoms and population characteristics, vaccination, and medication.
 
-Symptom spectrum of COVID-19:
-
-.. image:: fig1.png
-   :width: 600
-   :align: center
-
-Cluster of COVID-19 symptoms:
-
-.. image:: fig2.png
-   :width: 600
-   :align: center
-
-Regional distribution of COVID-19 syndromes:
-
-.. image:: fig3.png
-   :width: 600
-   :align: center
-
-Regional distribution of COVID-19 symptoms:
-
-.. image:: fig4.png
-   :width: 600
-   :align: center
-
-
-And, measure the association between COVID-19 symptoms and population characteristics, vaccination, and medication.
 
 Questionnaire Data
 =======================
@@ -343,50 +317,12 @@ Dendrogram for sympytoms clustering:
    dev.off()
 
 
-Analysis: regional distribution of symptoms
-=============================================
-
-Heatmap for regional distribution of symptoms: 
-
-.. image:: fig3.png
-   :width: 600
-   :align: center
-
-.. code-block:: python
-
-   res = data.frame()
-   provs =  names(rev(sort(table(df$region)))) # sort by n
-   for (prov in provs){
-      sub = df%>%filter(region==prov)
-      temp = colMeans(sub[,unlist(symptoms)])/3
-      add = data.frame(region=prov, symptom=names(temp), score=temp, n=nrow(sub))
-      res = rbind(res, add)
-   }
-   # replace symptom names with their formal name
-   res = res%>%merge(dict2%>%select(item_eng, item_eng1), by.x='symptom', by.y='item_eng')%>%select(-symptom)%>%rename(symptom=item_eng1)
-   # filter region with less than 10 samples
-   res = res%>%filter(n>=10)
-   p = res%>% 
-      ggplot(aes(region, symptom, fill=score)) +
-      geom_tile() + 
-      labs(x = NULL, y = NULL, fill = "Score", title="", subtitle="") + 
-      scale_fill_gradient2(limits=c(0,1)) +
-      theme_classic() +
-      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, color="black"), 
-         axis.text.y = element_text(color="black"),
-         legend.title = element_text(size=12)) +
-      scale_fill_distiller(palette = "Spectral")
-   file_out = './plot/heatmap.png'
-   png(file_out, height=1000, width=800, res=150)
-   print(p)
-   dev.off()
-
 Analysis: regional distribution of syndromes
 =============================================
 
 Map for regional distribution of syndromes: 
 
-.. image:: fig4.png
+.. image:: fig3.png
    :width: 600
    :align: center
 
@@ -429,6 +365,45 @@ Map for regional distribution of syndromes:
    print(p1)
    dev.off()
    res # average score
+
+
+Analysis: regional distribution of symptoms
+=============================================
+
+Heatmap for regional distribution of symptoms: 
+
+.. image:: fig4.png
+   :width: 600
+   :align: center
+
+.. code-block:: python
+
+   res = data.frame()
+   provs =  names(rev(sort(table(df$region)))) # sort by n
+   for (prov in provs){
+      sub = df%>%filter(region==prov)
+      temp = colMeans(sub[,unlist(symptoms)])/3
+      add = data.frame(region=prov, symptom=names(temp), score=temp, n=nrow(sub))
+      res = rbind(res, add)
+   }
+   # replace symptom names with their formal name
+   res = res%>%merge(dict2%>%select(item_eng, item_eng1), by.x='symptom', by.y='item_eng')%>%select(-symptom)%>%rename(symptom=item_eng1)
+   # filter region with less than 10 samples
+   res = res%>%filter(n>=10)
+   p = res%>% 
+      ggplot(aes(region, symptom, fill=score)) +
+      geom_tile() + 
+      labs(x = NULL, y = NULL, fill = "Score", title="", subtitle="") + 
+      scale_fill_gradient2(limits=c(0,1)) +
+      theme_classic() +
+      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, color="black"), 
+         axis.text.y = element_text(color="black"),
+         legend.title = element_text(size=12)) +
+      scale_fill_distiller(palette = "Spectral")
+   file_out = './plot/heatmap.png'
+   png(file_out, height=1000, width=800, res=150)
+   print(p)
+   dev.off()
 
 
 Analysis: regression
