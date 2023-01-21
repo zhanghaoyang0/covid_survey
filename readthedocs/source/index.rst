@@ -7,6 +7,7 @@ We conducted a 3-week on-line survey to measure the characteristics to measure t
 
 We investigated the symptom spectrum of COVID-19 in the participants, and, evaluated if the association between COVID-19 symptoms and population characteristics, vaccination, and medication.
 
+The data and anaysis procedure are available at below.
 
 Questionnaire Data
 =======================
