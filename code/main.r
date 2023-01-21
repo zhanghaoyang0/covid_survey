@@ -407,6 +407,15 @@ png(file_out, height=1000, width=800, res=150)
 print(p)
 dev.off()
 
+# t-test example
+regions1 = c('Zhejiang', 'Liaoning', 'Yunnan')
+mean1 = df%>%filter(region%in%regions1)%>%select(cough)/3
+mean2 = df%>%filter(!region%in%regions1)%>%select(cough)/3
+t.test(mean1, mean2)
+
+mean = unlist(df%>%filter(region%in%'Liaoning')%>%select(appetite_loss)/3)
+mean(mean)
+sd(mean)
 
 #=====================================================================================
 # plot: map 
