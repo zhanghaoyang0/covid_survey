@@ -484,6 +484,6 @@ Comments and feedbacks
 
 Feel free to contact me via zhanghaoyang0@hotmail.com
 
-.. image:: dog_with_hat.png
+.. image:: dogwithhat.png
    :width: 200
    :align: left
