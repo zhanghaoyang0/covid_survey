@@ -256,7 +256,6 @@ write.csv(res, '../temp.csv', quote=F)
 libs = c('NbClust', 'igraph', 'factoextra')
 lapply(libs, require, character.only = TRUE) 
 
-path_out = './plot/hclust/'
 df_p = t(df[, unlist(symptoms)])
 # repalce symptoms with their formal names
 for (i in 1:nrow(dict2)){ 
@@ -264,15 +263,14 @@ for (i in 1:nrow(dict2)){
 }
 d = dist(df_p)
 fit = hclust(d, method = "average")
-
 # nc = NbClust(df_p, distance = "euclidean", method = "average")
 
-png(paste0(path_out, 'hclust.png'), width=2500, height=1500, res=300)
+file_out = './plot/hclust.png'
+png(file_out, width=2500, height=1500, res=300)
 fviz_dend(fit, k=3, rect =F, rect_fill = T, palette='aaas', cex = 0.6,
     type = c("rectangle"), # type = c("rectangle", "circular", "phylogenic")
     main = '', ylab = "Dendrogram height", horiz = T)  # ggsci color
 dev.off()
-
 
 
 #=====================================================================================

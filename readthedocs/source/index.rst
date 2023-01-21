@@ -258,6 +258,179 @@ Region:
    print(pop_tab)
 
 
+Analysis: distribution of symptom serverity
+=============================================
+
+Bar plot for servere of sympytoms:
+
+.. image:: fig1.png
+   :width: 600
+   :align: center
+
+.. code-block:: python
+
+   map = data.frame(score=c(0:3), score1=c('Absent', 'Mild', 'Moderate', 'Severe'))
+   out = c()
+   for (i in unlist(symptoms)){
+      for (j in c(0:3)){
+         prop = sum(df[,i]==j)/nrow(df)
+         out = c(out, i, j, prop)
+      }
+   }
+   df_p = data.frame(matrix(out, ncol=3, byrow=T))
+   df_p = df_p%>%mutate_if(is_numeric,as.numeric)%>%rename(sympton=X1, score=X2, prop=X3)
+   df_p = df_p%>%merge(map, 'score')%>%mutate(score1=factor(score1, levels=c('Severe', 'Moderate', 'Mild', 'Absent')))
+   df_p%>%merge(dict2, by.x='sympton', by.y='item_eng')%>%select(syndrome, sympton, score1, prop) # add syndrome
+   plots = list()
+   for (syndrome in syndromes){
+      df_p1 = df_p%>%filter(sympton%in%symptoms[[syndrome]])
+      df_p1 = df_p1%>%mutate(sympton=gsub(paste0(syndrome, '_'), '', sympton))
+      xlevels = df_p1%>%filter(score1=='Absent')%>%arrange(prop)%>%pull(sympton)
+      df_p1$sympton = factor(df_p1$sympton, levels=xlevels)
+      df_p1 = df_p1%>%rename(item_eng=sympton)%>%merge(dict2, 'item_eng')%>%rename(sympton=item_eng1) # repalce symptoms with their formal names
+      p = ggplot(df_p1, aes(x = sympton, weight = prop, fill = score1))+
+         geom_bar( position = "stack") + 
+         xlab('') + ylab('') + labs(fill = 'Severity') +
+         theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, color="black"), 
+               axis.text.y = element_text(color="black"), legend.position="none") +
+         ggtitle(syndrome) + 
+         theme(plot.title = element_text(size = 15, face = "bold", hjust = 0.5)) +
+         coord_flip() +
+         scale_fill_nejm() 
+      plots[[syndrome]] = p
+   }
+   # multiple plot
+   p1 <- ggarrange(plots[[1]], plots[[2]], plots[[3]], plots[[4]], 
+      ncol=2, nrow=2, common.legend=T, legend="bottom", 
+      hjust=0.1, vjust=0.1)
+   file_out = './plot/bar.png'
+   png(file_out, height=1000, width=1000, res=160)
+   print(p1)
+   dev.off()
+
+
+Analysis: clustering of symptoms
+=============================================
+
+Dendrogram for sympytoms clustering: 
+
+.. image:: fig2.png
+   :width: 600
+   :align: center
+
+.. code-block:: python
+
+   path_out = './plot/hclust/'
+   df_p = t(df[, unlist(symptoms)])
+   # repalce symptoms with their formal names
+   for (i in 1:nrow(dict2)){ 
+      row.names(df_p)[row.names(df_p)==dict2[i, 'item_eng']] = dict2[i, 'item_eng1']
+   }
+   d = dist(df_p)
+   fit = hclust(d, method = "average")
+   png(paste0(path_out, 'hclust.png'), width=2500, height=1500, res=300)
+   fviz_dend(fit, k=3, rect =F, rect_fill = T, palette='aaas', cex = 0.6,
+      type = c("rectangle"), # type = c("rectangle", "circular", "phylogenic")
+      main = '', ylab = "Dendrogram height", horiz = T)  # ggsci color
+   dev.off()
+   # multiple plot
+   p1 <- ggarrange(plots[[1]], plots[[2]], plots[[3]], plots[[4]], 
+      ncol=2, nrow=2, common.legend=T, legend="bottom", 
+      hjust=0.1, vjust=0.1)
+   file_out = './plot/bar.png'
+   png(file_out, height=1000, width=1000, res=160)
+   print(p1)
+   dev.off()
+
+
+Analysis: regional distribution of symptoms
+=============================================
+
+Heatmap for regional distribution of symptoms: 
+
+.. image:: fig3.png
+   :width: 600
+   :align: center
+
+.. code-block:: python
+
+   res = data.frame()
+   provs =  names(rev(sort(table(df$region)))) # sort by n
+   for (prov in provs){
+      sub = df%>%filter(region==prov)
+      temp = colMeans(sub[,unlist(symptoms)])/3
+      add = data.frame(region=prov, symptom=names(temp), score=temp, n=nrow(sub))
+      res = rbind(res, add)
+   }
+   # replace symptom names with their formal name
+   res = res%>%merge(dict2%>%select(item_eng, item_eng1), by.x='symptom', by.y='item_eng')%>%select(-symptom)%>%rename(symptom=item_eng1)
+   # filter region with less than 10 samples
+   res = res%>%filter(n>=10)
+   p = res%>% 
+      ggplot(aes(region, symptom, fill=score)) +
+      geom_tile() + 
+      labs(x = NULL, y = NULL, fill = "Score", title="", subtitle="") + 
+      scale_fill_gradient2(limits=c(0,1)) +
+      theme_classic() +
+      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, color="black"), 
+         axis.text.y = element_text(color="black"),
+         legend.title = element_text(size=12)) +
+      scale_fill_distiller(palette = "Spectral")
+   file_out = './plot/heatmap.png'
+   png(file_out, height=1000, width=800, res=150)
+   print(p)
+   dev.off()
+
+Analysis: regional distribution of syndromes
+=============================================
+
+Map for regional distribution of syndromes: 
+
+.. image:: fig4.png
+   :width: 600
+   :align: center
+
+.. code-block:: python
+
+   # mean score
+   res = data.frame()
+   plots = list()
+   for (group in syndromes){
+      print(group)
+      temp = df[, c('region', paste0(group, '_score'))]
+      names(temp)[2] = 'score'
+      temp = temp%>%group_by(region)%>%dplyr::summarise(score=mean(score))
+      temp = temp%>%merge(pop_tab, 'region')%>%filter(n>=10)%>%arrange(desc(score))
+      sub = data.frame(temp)%>%mutate(group=group)
+      res = rbind(res, sub)
+      map1 = china%>%merge(temp, by='region', all.x=T)%>%mutate(region=ifelse(is.na(score), NA, region)) # add to map
+      p = ggplot(data = map1) +
+         geom_sf(aes(fill = score)) + 
+         geom_sf_text(aes(label = region), colour = "black") +
+         scale_fill_distiller(palette = "Spectral") + 
+         labs(fill = 'Score') +
+         ggtitle(group) +
+         theme(plot.title = element_text(size = 35, face = "bold", hjust=0.07, vjust=-9),
+               plot.background = element_blank(), panel.border = element_blank(),
+               axis.text.x=element_blank(), axis.ticks.x=element_blank(), 
+               axis.text.y=element_blank(), axis.ticks.y=element_blank(), 
+               legend.key.height= unit(1.5, 'cm'), legend.key.width= unit(1.5, 'cm'),
+               legend.title = element_text(size=20), legend.text = element_text(size=15),
+               panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+         labs(x = "", y = '') +
+         coord_sf(xlim = c(73, 135), ylim = c(18, 54), expand = T) 
+      
+      plots[[group]] = p
+   }
+   p1 = ggarrange(plots[[1]], plots[[2]], plots[[3]], plots[[4]], ncol=2, nrow=2, 
+      common.legend=T, legend="right")
+   file_out = './plot/map.png'
+   png(file_out, height=1300, width=1700, res=80)
+   print(p1)
+   dev.off()
+   res # average score
+
+
 Analysis: regression
 =============================================
 We used regression to measure the association between symptoms and population characteris, vaccination, and medication.
@@ -318,8 +491,6 @@ We used regression to measure the association between symptoms and population ch
    }
    res = data.frame(matrix(out, ncol=10, byrow=T))
    names(res) = c('outcome','test_var', 'reg_var', 'level', 'ncase', 'nctrl', 'mean', 'beta', 'se', 'p')
-   res1 = res%>%filter(p<0.05)
-   write.csv(res1, './result/reg.csv', row.names=F, quote=F)
    # extract significant result
    res1 = data.frame()
    for (test_var1 in test_vars){
@@ -329,173 +500,7 @@ We used regression to measure the association between symptoms and population ch
          res1 = rbind(res1, sub)
       }
    }
-
-
-
-Analysis: plot
-=============================================
-
-Bar plot for servere of sympytoms:
-
-.. image:: fig1.png
-   :width: 600
-   :align: center
-
-.. code-block:: python
-
-   map = data.frame(score=c(0:3), score1=c('Absent', 'Mild', 'Moderate', 'Severe'))
-   out = c()
-   for (i in unlist(symptoms)){
-      for (j in c(0:3)){
-         prop = sum(df[,i]==j)/nrow(df)
-         out = c(out, i, j, prop)
-      }
-   }
-   df_p = data.frame(matrix(out, ncol=3, byrow=T))
-   df_p = df_p%>%mutate_if(is_numeric,as.numeric)%>%rename(sympton=X1, score=X2, prop=X3)
-   df_p = df_p%>%merge(map, 'score')%>%mutate(score1=factor(score1, levels=c('Severe', 'Moderate', 'Mild', 'Absent')))
-   df_p%>%merge(dict2, by.x='sympton', by.y='item_eng')%>%select(syndrome, sympton, score1, prop) # add syndrome
-   plots = list()
-   for (syndrome in syndromes){
-      df_p1 = df_p%>%filter(sympton%in%symptoms[[syndrome]])
-      df_p1 = df_p1%>%mutate(sympton=gsub(paste0(syndrome, '_'), '', sympton))
-      xlevels = df_p1%>%filter(score1=='Absent')%>%arrange(prop)%>%pull(sympton)
-      df_p1$sympton = factor(df_p1$sympton, levels=xlevels)
-      df_p1 = df_p1%>%rename(item_eng=sympton)%>%merge(dict2, 'item_eng')%>%rename(sympton=item_eng1) # repalce symptoms with their formal names
-      p = ggplot(df_p1, aes(x = sympton, weight = prop, fill = score1))+
-         geom_bar( position = "stack") + 
-         xlab('') + ylab('') + labs(fill = 'Severity') +
-         theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, color="black"), 
-               axis.text.y = element_text(color="black"), legend.position="none") +
-         ggtitle(syndrome) + 
-         theme(plot.title = element_text(size = 15, face = "bold", hjust = 0.5)) +
-         coord_flip() +
-         scale_fill_nejm() 
-      plots[[syndrome]] = p
-   }
-   # multiple plot
-   p1 <- ggarrange(plots[[1]], plots[[2]], plots[[3]], plots[[4]], 
-      ncol=2, nrow=2, common.legend=T, legend="bottom", 
-      hjust=0.1, vjust=0.1)
-   file_out = './plot/bar.png'
-   png(file_out, height=1000, width=1000, res=160)
-   print(p1)
-   dev.off()
-
-
-Dendrogram for sympytoms clustering: 
-
-.. image:: fig2.png
-   :width: 600
-   :align: center
-
-.. code-block:: python
-
-   path_out = './plot/hclust/'
-   df_p = t(df[, unlist(symptoms)])
-   # repalce symptoms with their formal names
-   for (i in 1:nrow(dict2)){ 
-      row.names(df_p)[row.names(df_p)==dict2[i, 'item_eng']] = dict2[i, 'item_eng1']
-   }
-   d = dist(df_p)
-   fit = hclust(d, method = "average")
-   png(paste0(path_out, 'hclust.png'), width=2500, height=1500, res=300)
-   fviz_dend(fit, k=3, rect =F, rect_fill = T, palette='aaas', cex = 0.6,
-      type = c("rectangle"), # type = c("rectangle", "circular", "phylogenic")
-      main = '', ylab = "Dendrogram height", horiz = T)  # ggsci color
-   dev.off()
-   # multiple plot
-   p1 <- ggarrange(plots[[1]], plots[[2]], plots[[3]], plots[[4]], 
-      ncol=2, nrow=2, common.legend=T, legend="bottom", 
-      hjust=0.1, vjust=0.1)
-   file_out = './plot/bar.png'
-   png(file_out, height=1000, width=1000, res=160)
-   print(p1)
-   dev.off()
-
-
-Heatmap for regional distribution of symptoms: 
-
-.. image:: fig3.png
-   :width: 600
-   :align: center
-
-.. code-block:: python
-
-   res = data.frame()
-   provs =  names(rev(sort(table(df$region)))) # sort by n
-   for (prov in provs){
-      sub = df%>%filter(region==prov)
-      temp = colMeans(sub[,unlist(symptoms)])/3
-      add = data.frame(region=prov, symptom=names(temp), score=temp, n=nrow(sub))
-      res = rbind(res, add)
-   }
-   # replace symptom names with their formal name
-   res = res%>%merge(dict2%>%select(item_eng, item_eng1), by.x='symptom', by.y='item_eng')%>%select(-symptom)%>%rename(symptom=item_eng1)
-   # filter region with less than 10 samples
-   res = res%>%filter(n>=10)
-   p = res%>% 
-      ggplot(aes(region, symptom, fill=score)) +
-      geom_tile() + 
-      labs(x = NULL, y = NULL, fill = "Score", title="", subtitle="") + 
-      scale_fill_gradient2(limits=c(0,1)) +
-      theme_classic() +
-      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, color="black"), 
-         axis.text.y = element_text(color="black"),
-         legend.title = element_text(size=12)) +
-      scale_fill_distiller(palette = "Spectral")
-   file_out = './plot/heatmap.png'
-   png(file_out, height=1000, width=800, res=150)
-   print(p)
-   dev.off()
-
-
-Map for regional distribution of syndromes: 
-
-.. image:: fig4.png
-   :width: 600
-   :align: center
-
-.. code-block:: python
-
-   # mean score
-   res = data.frame()
-   plots = list()
-   for (group in syndromes){
-      print(group)
-      temp = df[, c('region', paste0(group, '_score'))]
-      names(temp)[2] = 'score'
-      temp = temp%>%group_by(region)%>%dplyr::summarise(score=mean(score))
-      temp = temp%>%merge(pop_tab, 'region')%>%filter(n>=10)%>%arrange(desc(score))
-      sub = data.frame(temp)%>%mutate(group=group)
-      res = rbind(res, sub)
-      map1 = china%>%merge(temp, by='region', all.x=T)%>%mutate(region=ifelse(is.na(score), NA, region)) # add to map
-      p = ggplot(data = map1) +
-         geom_sf(aes(fill = score)) + 
-         geom_sf_text(aes(label = region), colour = "black") +
-         scale_fill_distiller(palette = "Spectral") + 
-         labs(fill = 'Score') +
-         ggtitle(group) +
-         theme(plot.title = element_text(size = 35, face = "bold", hjust=0.07, vjust=-9),
-               plot.background = element_blank(), panel.border = element_blank(),
-               axis.text.x=element_blank(), axis.ticks.x=element_blank(), 
-               axis.text.y=element_blank(), axis.ticks.y=element_blank(), 
-               legend.key.height= unit(1.5, 'cm'), legend.key.width= unit(1.5, 'cm'),
-               legend.title = element_text(size=20), legend.text = element_text(size=15),
-               panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
-         labs(x = "", y = '') +
-         coord_sf(xlim = c(73, 135), ylim = c(18, 54), expand = T) 
-      
-      plots[[group]] = p
-   }
-   p1 = ggarrange(plots[[1]], plots[[2]], plots[[3]], plots[[4]], ncol=2, nrow=2, 
-      common.legend=T, legend="right")
-   file_out = './plot/map.png'
-   png(file_out, height=1300, width=1700, res=80)
-   print(p1)
-   dev.off()
-   res # average score
-
+   res1
 
 Comments and feedbacks
 =======================
