@@ -120,7 +120,7 @@ get_prop(df, 'how_long_lastvac')
 
 ## drug use
 # the 'drug_use' have been grouped to four groups, by hand
-drugs = c('ibuprofen_use', 'acetaminophen_use', 'chnmed_usd', 'lianhua_use')
+drugs = c('ibuprofen_use', 'acetaminophen_use', 'chnmed_use', 'lianhua_use')
 df[, drugs][is.na(df[, drugs])] = 0
 for (drug in drugs){
     print(drug)
@@ -183,7 +183,7 @@ print(pop_tab)
 covars = c('age', 'sex')
 test_vars = c('agesex', 'how_long_lastvac', 'n_vac', 
     'infectway_work', 'infectway_family', 'infectway_traffic', 'infectway_hosp', 
-    'ibuprofen_use', 'acetaminophen_use', 'chnmed_usd', 'lianhua_use') # the first mean we only include age and sex in reg
+    'ibuprofen_use', 'acetaminophen_use', 'chnmed_use', 'lianhua_use') # the first mean we only include age and sex in reg
 outcomes = c(paste0(c('Respiratory', 'Neurological', 'Digestive', 'Other'), '_score'), unlist(symptoms))
 out = c()
 

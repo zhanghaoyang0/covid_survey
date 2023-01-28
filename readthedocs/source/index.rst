@@ -18,7 +18,7 @@ The questionnaire was open for around 3 weeks, from 22th Dec 2022 to 17th Jan 20
 The data is in Chinese. Please see our code about how to clean this data.  
 
 
-You can download the data at `here <https://github.com/zhanghaoyang0/covid_survey/raw/master/data/covid_survey.xlsx>`_.
+You can download the data at `here <https://github.com/zhanghaoyang0/covid_survey/raw/master/data/covid_survey_20230112.xlsx>`_.
 
 Analysis: preparation
 =======================
@@ -174,7 +174,7 @@ Medication:
 .. code-block:: python
 
    # the 'drug_use' have been grouped to four groups, by hand
-   drugs = c('ibuprofen_use', 'acetaminophen_use', 'chnmed_usd')
+   drugs = c('ibuprofen_use', 'acetaminophen_use', 'chnmed_use')
    df[, drugs][is.na(df[, drugs])] = 0
    for (drug in drugs){
       print(drug)
