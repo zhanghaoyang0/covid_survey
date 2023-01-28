@@ -924,80 +924,80 @@ Eye pain,acetaminophen_use,acetaminophen_use,0,123 (33.7%),242 (66.3%),NA,Ref.,N
 Eye pain,acetaminophen_use,acetaminophen_use,1,71 (37.97%),116 (62.03%),NA,0.109490841285798,0.191100545364257,0.566679314771449
 Palpitation,acetaminophen_use,acetaminophen_use,0,144 (39.45%),221 (60.55%),NA,Ref.,NA,NA
 Palpitation,acetaminophen_use,acetaminophen_use,1,96 (51.34%),91 (48.66%),NA,0.483028515470158,0.183357738437584,0.00842984643903665
-Respiratory score,chnmed_usd,chnmed_usd,0,NA,NA,0.32±0.17,Ref.,NA,NA
-Respiratory score,chnmed_usd,chnmed_usd,1,NA,NA,0.40±0.17,0.0830058268336317,0.0142409283111522,9.57048602488736e-09
-Neurological score,chnmed_usd,chnmed_usd,0,NA,NA,0.25±0.18,Ref.,NA,NA
-Neurological score,chnmed_usd,chnmed_usd,1,NA,NA,0.29±0.19,0.0446499144137518,0.0153077104588129,0.00368185677005388
-Digestive score,chnmed_usd,chnmed_usd,0,NA,NA,0.16±0.15,Ref.,NA,NA
-Digestive score,chnmed_usd,chnmed_usd,1,NA,NA,0.20±0.16,0.038291768067403,0.012787729509374,0.00287457630422117
-Other score,chnmed_usd,chnmed_usd,0,NA,NA,0.26±0.17,Ref.,NA,NA
-Other score,chnmed_usd,chnmed_usd,1,NA,NA,0.30±0.18,0.0369433375460575,0.0149161983168547,0.0135617154382248
-Sore throat,chnmed_usd,chnmed_usd,0,215 (70.26%),91 (29.74%),NA,Ref.,NA,NA
-Sore throat,chnmed_usd,chnmed_usd,1,205 (83.33%),41 (16.67%),NA,0.783943206207657,0.214328773299424,0.000254521771148009
-Phlegm in throat,chnmed_usd,chnmed_usd,0,274 (89.54%),32 (10.46%),NA,Ref.,NA,NA
-Phlegm in throat,chnmed_usd,chnmed_usd,1,231 (93.9%),15 (6.1%),NA,0.568345008623487,0.328195687821252,0.0833223575150771
-Palate discomfort,chnmed_usd,chnmed_usd,0,96 (31.37%),210 (68.63%),NA,Ref.,NA,NA
-Palate discomfort,chnmed_usd,chnmed_usd,1,110 (44.72%),136 (55.28%),NA,0.595709200724436,0.180909239461908,0.000991730591453505
-Cough,chnmed_usd,chnmed_usd,0,268 (87.58%),38 (12.42%),NA,Ref.,NA,NA
-Cough,chnmed_usd,chnmed_usd,1,225 (91.46%),21 (8.54%),NA,0.388161269453728,0.290920620356701,0.182121451828773
-Hemoptysis,chnmed_usd,chnmed_usd,0,53 (17.32%),253 (82.68%),NA,Ref.,NA,NA
-Hemoptysis,chnmed_usd,chnmed_usd,1,60 (24.39%),186 (75.61%),NA,0.459098424511357,0.214081683806442,0.0319927506212696
-Nasal congestion,chnmed_usd,chnmed_usd,0,252 (82.35%),54 (17.65%),NA,Ref.,NA,NA
-Nasal congestion,chnmed_usd,chnmed_usd,1,208 (84.55%),38 (15.45%),NA,0.233283480419054,0.236816196416017,0.324583570150969
-Running nose,chnmed_usd,chnmed_usd,0,244 (79.74%),62 (20.26%),NA,Ref.,NA,NA
-Running nose,chnmed_usd,chnmed_usd,1,207 (84.15%),39 (15.85%),NA,0.36359056202479,0.230258207931515,0.114323255398928
-Chest pain,chnmed_usd,chnmed_usd,0,58 (18.95%),248 (81.05%),NA,Ref.,NA,NA
-Chest pain,chnmed_usd,chnmed_usd,1,78 (31.71%),168 (68.29%),NA,0.743928181732154,0.202778972512303,0.000243820020503898
-Dyspnea,chnmed_usd,chnmed_usd,0,95 (31.05%),211 (68.95%),NA,Ref.,NA,NA
-Dyspnea,chnmed_usd,chnmed_usd,1,85 (34.55%),161 (65.45%),NA,0.170515492494465,0.184984060497289,0.356640845122352
-Blurred vision,chnmed_usd,chnmed_usd,0,70 (22.88%),236 (77.12%),NA,Ref.,NA,NA
-Blurred vision,chnmed_usd,chnmed_usd,1,62 (25.2%),184 (74.8%),NA,0.139573501738147,0.202029522758731,0.489655436583273
-Anosmia,chnmed_usd,chnmed_usd,0,127 (41.5%),179 (58.5%),NA,Ref.,NA,NA
-Anosmia,chnmed_usd,chnmed_usd,1,133 (54.07%),113 (45.93%),NA,0.536322449529283,0.17520366820943,0.00220498101645482
-Ageusia,chnmed_usd,chnmed_usd,0,133 (43.46%),173 (56.54%),NA,Ref.,NA,NA
-Ageusia,chnmed_usd,chnmed_usd,1,126 (51.22%),120 (48.78%),NA,0.341269895584826,0.173908399514094,0.0497212494367392
-Dysgeusia,chnmed_usd,chnmed_usd,0,58 (18.95%),248 (81.05%),NA,Ref.,NA,NA
-Dysgeusia,chnmed_usd,chnmed_usd,1,64 (26.02%),182 (73.98%),NA,0.446556655324743,0.208024085735967,0.0318204852639794
-Brain Fog,chnmed_usd,chnmed_usd,0,120 (39.22%),186 (60.78%),NA,Ref.,NA,NA
-Brain Fog,chnmed_usd,chnmed_usd,1,107 (43.5%),139 (56.5%),NA,0.224110651173213,0.177184729572641,0.205928046113867
-Headache,chnmed_usd,chnmed_usd,0,240 (78.43%),66 (21.57%),NA,Ref.,NA,NA
-Headache,chnmed_usd,chnmed_usd,1,193 (78.46%),53 (21.54%),NA,0.0333819424180846,0.211380085322279,0.874516858246267
-Vertigo,chnmed_usd,chnmed_usd,0,179 (58.5%),127 (41.5%),NA,Ref.,NA,NA
-Vertigo,chnmed_usd,chnmed_usd,1,151 (61.38%),95 (38.62%),NA,0.134597813651898,0.176930958283581,0.44681455107842
-Insomnia,chnmed_usd,chnmed_usd,0,141 (46.08%),165 (53.92%),NA,Ref.,NA,NA
-Insomnia,chnmed_usd,chnmed_usd,1,124 (50.41%),122 (49.59%),NA,0.205839030895377,0.173290416342857,0.234901584863362
-Drowsiness,chnmed_usd,chnmed_usd,0,150 (49.02%),156 (50.98%),NA,Ref.,NA,NA
-Drowsiness,chnmed_usd,chnmed_usd,1,132 (53.66%),114 (46.34%),NA,0.220828277393347,0.174484888996667,0.205655911660212
-Appetite loss,chnmed_usd,chnmed_usd,0,183 (59.8%),123 (40.2%),NA,Ref.,NA,NA
-Appetite loss,chnmed_usd,chnmed_usd,1,166 (67.48%),80 (32.52%),NA,0.352347866404027,0.18090813203088,0.0514554382591943
-Appetite increase,chnmed_usd,chnmed_usd,0,53 (17.32%),253 (82.68%),NA,Ref.,NA,NA
-Appetite increase,chnmed_usd,chnmed_usd,1,47 (19.11%),199 (80.89%),NA,0.136908274420741,0.225281915357998,0.543373346677483
-Nausea,chnmed_usd,chnmed_usd,0,122 (39.87%),184 (60.13%),NA,Ref.,NA,NA
-Nausea,chnmed_usd,chnmed_usd,1,115 (46.75%),131 (53.25%),NA,0.299838704949175,0.17653853805581,0.0894262538801856
-Vomit,chnmed_usd,chnmed_usd,0,41 (13.4%),265 (86.6%),NA,Ref.,NA,NA
-Vomit,chnmed_usd,chnmed_usd,1,48 (19.51%),198 (80.49%),NA,0.438688361407178,0.235390433585374,0.0623690923229198
-Diarrhea,chnmed_usd,chnmed_usd,0,87 (28.43%),219 (71.57%),NA,Ref.,NA,NA
-Diarrhea,chnmed_usd,chnmed_usd,1,94 (38.21%),152 (61.79%),NA,0.528041075696768,0.186952550731845,0.00473595101799704
-Abdominal pain,chnmed_usd,chnmed_usd,0,55 (17.97%),251 (82.03%),NA,Ref.,NA,NA
-Abdominal pain,chnmed_usd,chnmed_usd,1,52 (21.14%),194 (78.86%),NA,0.239403694264093,0.217799720602211,0.271684359954357
-Abdominal distention,chnmed_usd,chnmed_usd,0,69 (22.55%),237 (77.45%),NA,Ref.,NA,NA
-Abdominal distention,chnmed_usd,chnmed_usd,1,69 (28.05%),177 (71.95%),NA,0.326110002819688,0.199749803029002,0.102554758621971
-Flatulence,chnmed_usd,chnmed_usd,0,138 (45.1%),168 (54.9%),NA,Ref.,NA,NA
-Flatulence,chnmed_usd,chnmed_usd,1,122 (49.59%),124 (50.41%),NA,0.203996850687859,0.174023455290558,0.241101646182925
-Hematuria,chnmed_usd,chnmed_usd,0,2 (0.65%),304 (99.35%),NA,Ref.,NA,NA
-Hematuria,chnmed_usd,chnmed_usd,1,3 (1.22%),243 (98.78%),NA,0.67958079683211,0.922926784349626,0.461528497212984
-Fatigue,chnmed_usd,chnmed_usd,0,279 (91.18%),27 (8.82%),NA,Ref.,NA,NA
-Fatigue,chnmed_usd,chnmed_usd,1,230 (93.5%),16 (6.5%),NA,0.348083225366514,0.33309266367708,0.296021038318785
-Myalgia,chnmed_usd,chnmed_usd,0,223 (72.88%),83 (27.12%),NA,Ref.,NA,NA
-Myalgia,chnmed_usd,chnmed_usd,1,184 (74.8%),62 (25.2%),NA,0.143931936847281,0.19729836536658,0.465687254030151
-Arthralgia,chnmed_usd,chnmed_usd,0,151 (49.35%),155 (50.65%),NA,Ref.,NA,NA
-Arthralgia,chnmed_usd,chnmed_usd,1,130 (52.85%),116 (47.15%),NA,0.142749320693268,0.17259964403632,0.408206144230266
-Itching,chnmed_usd,chnmed_usd,0,52 (16.99%),254 (83.01%),NA,Ref.,NA,NA
-Itching,chnmed_usd,chnmed_usd,1,45 (18.29%),201 (81.71%),NA,0.0646565917869586,0.226780677443544,0.775562730839247
-Eye pain,chnmed_usd,chnmed_usd,0,102 (33.33%),204 (66.67%),NA,Ref.,NA,NA
-Eye pain,chnmed_usd,chnmed_usd,1,92 (37.4%),154 (62.6%),NA,0.243633816832679,0.183759166768479,0.184895291013223
-Palpitation,chnmed_usd,chnmed_usd,0,123 (40.2%),183 (59.8%),NA,Ref.,NA,NA
-Palpitation,chnmed_usd,chnmed_usd,1,117 (47.56%),129 (52.44%),NA,0.313887719974684,0.174814768372801,0.0725669674540812
+Respiratory score,chnmed_use,chnmed_use,0,NA,NA,0.32±0.17,Ref.,NA,NA
+Respiratory score,chnmed_use,chnmed_use,1,NA,NA,0.40±0.17,0.0830058268336317,0.0142409283111522,9.57048602488736e-09
+Neurological score,chnmed_use,chnmed_use,0,NA,NA,0.25±0.18,Ref.,NA,NA
+Neurological score,chnmed_use,chnmed_use,1,NA,NA,0.29±0.19,0.0446499144137518,0.0153077104588129,0.00368185677005388
+Digestive score,chnmed_use,chnmed_use,0,NA,NA,0.16±0.15,Ref.,NA,NA
+Digestive score,chnmed_use,chnmed_use,1,NA,NA,0.20±0.16,0.038291768067403,0.012787729509374,0.00287457630422117
+Other score,chnmed_use,chnmed_use,0,NA,NA,0.26±0.17,Ref.,NA,NA
+Other score,chnmed_use,chnmed_use,1,NA,NA,0.30±0.18,0.0369433375460575,0.0149161983168547,0.0135617154382248
+Sore throat,chnmed_use,chnmed_use,0,215 (70.26%),91 (29.74%),NA,Ref.,NA,NA
+Sore throat,chnmed_use,chnmed_use,1,205 (83.33%),41 (16.67%),NA,0.783943206207657,0.214328773299424,0.000254521771148009
+Phlegm in throat,chnmed_use,chnmed_use,0,274 (89.54%),32 (10.46%),NA,Ref.,NA,NA
+Phlegm in throat,chnmed_use,chnmed_use,1,231 (93.9%),15 (6.1%),NA,0.568345008623487,0.328195687821252,0.0833223575150771
+Palate discomfort,chnmed_use,chnmed_use,0,96 (31.37%),210 (68.63%),NA,Ref.,NA,NA
+Palate discomfort,chnmed_use,chnmed_use,1,110 (44.72%),136 (55.28%),NA,0.595709200724436,0.180909239461908,0.000991730591453505
+Cough,chnmed_use,chnmed_use,0,268 (87.58%),38 (12.42%),NA,Ref.,NA,NA
+Cough,chnmed_use,chnmed_use,1,225 (91.46%),21 (8.54%),NA,0.388161269453728,0.290920620356701,0.182121451828773
+Hemoptysis,chnmed_use,chnmed_use,0,53 (17.32%),253 (82.68%),NA,Ref.,NA,NA
+Hemoptysis,chnmed_use,chnmed_use,1,60 (24.39%),186 (75.61%),NA,0.459098424511357,0.214081683806442,0.0319927506212696
+Nasal congestion,chnmed_use,chnmed_use,0,252 (82.35%),54 (17.65%),NA,Ref.,NA,NA
+Nasal congestion,chnmed_use,chnmed_use,1,208 (84.55%),38 (15.45%),NA,0.233283480419054,0.236816196416017,0.324583570150969
+Running nose,chnmed_use,chnmed_use,0,244 (79.74%),62 (20.26%),NA,Ref.,NA,NA
+Running nose,chnmed_use,chnmed_use,1,207 (84.15%),39 (15.85%),NA,0.36359056202479,0.230258207931515,0.114323255398928
+Chest pain,chnmed_use,chnmed_use,0,58 (18.95%),248 (81.05%),NA,Ref.,NA,NA
+Chest pain,chnmed_use,chnmed_use,1,78 (31.71%),168 (68.29%),NA,0.743928181732154,0.202778972512303,0.000243820020503898
+Dyspnea,chnmed_use,chnmed_use,0,95 (31.05%),211 (68.95%),NA,Ref.,NA,NA
+Dyspnea,chnmed_use,chnmed_use,1,85 (34.55%),161 (65.45%),NA,0.170515492494465,0.184984060497289,0.356640845122352
+Blurred vision,chnmed_use,chnmed_use,0,70 (22.88%),236 (77.12%),NA,Ref.,NA,NA
+Blurred vision,chnmed_use,chnmed_use,1,62 (25.2%),184 (74.8%),NA,0.139573501738147,0.202029522758731,0.489655436583273
+Anosmia,chnmed_use,chnmed_use,0,127 (41.5%),179 (58.5%),NA,Ref.,NA,NA
+Anosmia,chnmed_use,chnmed_use,1,133 (54.07%),113 (45.93%),NA,0.536322449529283,0.17520366820943,0.00220498101645482
+Ageusia,chnmed_use,chnmed_use,0,133 (43.46%),173 (56.54%),NA,Ref.,NA,NA
+Ageusia,chnmed_use,chnmed_use,1,126 (51.22%),120 (48.78%),NA,0.341269895584826,0.173908399514094,0.0497212494367392
+Dysgeusia,chnmed_use,chnmed_use,0,58 (18.95%),248 (81.05%),NA,Ref.,NA,NA
+Dysgeusia,chnmed_use,chnmed_use,1,64 (26.02%),182 (73.98%),NA,0.446556655324743,0.208024085735967,0.0318204852639794
+Brain Fog,chnmed_use,chnmed_use,0,120 (39.22%),186 (60.78%),NA,Ref.,NA,NA
+Brain Fog,chnmed_use,chnmed_use,1,107 (43.5%),139 (56.5%),NA,0.224110651173213,0.177184729572641,0.205928046113867
+Headache,chnmed_use,chnmed_use,0,240 (78.43%),66 (21.57%),NA,Ref.,NA,NA
+Headache,chnmed_use,chnmed_use,1,193 (78.46%),53 (21.54%),NA,0.0333819424180846,0.211380085322279,0.874516858246267
+Vertigo,chnmed_use,chnmed_use,0,179 (58.5%),127 (41.5%),NA,Ref.,NA,NA
+Vertigo,chnmed_use,chnmed_use,1,151 (61.38%),95 (38.62%),NA,0.134597813651898,0.176930958283581,0.44681455107842
+Insomnia,chnmed_use,chnmed_use,0,141 (46.08%),165 (53.92%),NA,Ref.,NA,NA
+Insomnia,chnmed_use,chnmed_use,1,124 (50.41%),122 (49.59%),NA,0.205839030895377,0.173290416342857,0.234901584863362
+Drowsiness,chnmed_use,chnmed_use,0,150 (49.02%),156 (50.98%),NA,Ref.,NA,NA
+Drowsiness,chnmed_use,chnmed_use,1,132 (53.66%),114 (46.34%),NA,0.220828277393347,0.174484888996667,0.205655911660212
+Appetite loss,chnmed_use,chnmed_use,0,183 (59.8%),123 (40.2%),NA,Ref.,NA,NA
+Appetite loss,chnmed_use,chnmed_use,1,166 (67.48%),80 (32.52%),NA,0.352347866404027,0.18090813203088,0.0514554382591943
+Appetite increase,chnmed_use,chnmed_use,0,53 (17.32%),253 (82.68%),NA,Ref.,NA,NA
+Appetite increase,chnmed_use,chnmed_use,1,47 (19.11%),199 (80.89%),NA,0.136908274420741,0.225281915357998,0.543373346677483
+Nausea,chnmed_use,chnmed_use,0,122 (39.87%),184 (60.13%),NA,Ref.,NA,NA
+Nausea,chnmed_use,chnmed_use,1,115 (46.75%),131 (53.25%),NA,0.299838704949175,0.17653853805581,0.0894262538801856
+Vomit,chnmed_use,chnmed_use,0,41 (13.4%),265 (86.6%),NA,Ref.,NA,NA
+Vomit,chnmed_use,chnmed_use,1,48 (19.51%),198 (80.49%),NA,0.438688361407178,0.235390433585374,0.0623690923229198
+Diarrhea,chnmed_use,chnmed_use,0,87 (28.43%),219 (71.57%),NA,Ref.,NA,NA
+Diarrhea,chnmed_use,chnmed_use,1,94 (38.21%),152 (61.79%),NA,0.528041075696768,0.186952550731845,0.00473595101799704
+Abdominal pain,chnmed_use,chnmed_use,0,55 (17.97%),251 (82.03%),NA,Ref.,NA,NA
+Abdominal pain,chnmed_use,chnmed_use,1,52 (21.14%),194 (78.86%),NA,0.239403694264093,0.217799720602211,0.271684359954357
+Abdominal distention,chnmed_use,chnmed_use,0,69 (22.55%),237 (77.45%),NA,Ref.,NA,NA
+Abdominal distention,chnmed_use,chnmed_use,1,69 (28.05%),177 (71.95%),NA,0.326110002819688,0.199749803029002,0.102554758621971
+Flatulence,chnmed_use,chnmed_use,0,138 (45.1%),168 (54.9%),NA,Ref.,NA,NA
+Flatulence,chnmed_use,chnmed_use,1,122 (49.59%),124 (50.41%),NA,0.203996850687859,0.174023455290558,0.241101646182925
+Hematuria,chnmed_use,chnmed_use,0,2 (0.65%),304 (99.35%),NA,Ref.,NA,NA
+Hematuria,chnmed_use,chnmed_use,1,3 (1.22%),243 (98.78%),NA,0.67958079683211,0.922926784349626,0.461528497212984
+Fatigue,chnmed_use,chnmed_use,0,279 (91.18%),27 (8.82%),NA,Ref.,NA,NA
+Fatigue,chnmed_use,chnmed_use,1,230 (93.5%),16 (6.5%),NA,0.348083225366514,0.33309266367708,0.296021038318785
+Myalgia,chnmed_use,chnmed_use,0,223 (72.88%),83 (27.12%),NA,Ref.,NA,NA
+Myalgia,chnmed_use,chnmed_use,1,184 (74.8%),62 (25.2%),NA,0.143931936847281,0.19729836536658,0.465687254030151
+Arthralgia,chnmed_use,chnmed_use,0,151 (49.35%),155 (50.65%),NA,Ref.,NA,NA
+Arthralgia,chnmed_use,chnmed_use,1,130 (52.85%),116 (47.15%),NA,0.142749320693268,0.17259964403632,0.408206144230266
+Itching,chnmed_use,chnmed_use,0,52 (16.99%),254 (83.01%),NA,Ref.,NA,NA
+Itching,chnmed_use,chnmed_use,1,45 (18.29%),201 (81.71%),NA,0.0646565917869586,0.226780677443544,0.775562730839247
+Eye pain,chnmed_use,chnmed_use,0,102 (33.33%),204 (66.67%),NA,Ref.,NA,NA
+Eye pain,chnmed_use,chnmed_use,1,92 (37.4%),154 (62.6%),NA,0.243633816832679,0.183759166768479,0.184895291013223
+Palpitation,chnmed_use,chnmed_use,0,123 (40.2%),183 (59.8%),NA,Ref.,NA,NA
+Palpitation,chnmed_use,chnmed_use,1,117 (47.56%),129 (52.44%),NA,0.313887719974684,0.174814768372801,0.0725669674540812
 Respiratory score,lianhua_use,lianhua_use,0,NA,NA,0.34±0.17,Ref.,NA,NA
 Respiratory score,lianhua_use,lianhua_use,1,NA,NA,0.43±0.16,0.0927281996824324,0.021388970400048,1.733853196663e-05
 Neurological score,lianhua_use,lianhua_use,0,NA,NA,0.26±0.18,Ref.,NA,NA

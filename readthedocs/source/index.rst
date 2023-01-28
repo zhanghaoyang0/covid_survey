@@ -419,7 +419,7 @@ We used regression to measure the association between symptoms and population ch
    covars = c('age', 'sex')
    test_vars = c('agesex', 'how_long_lastvac', 'n_vac', 
       'infectway_work', 'infectway_family', 'infectway_traffic', 'infectway_hosp', 
-      'ibuprofen_use', 'acetaminophen_use', 'chnmed_usd', 'lianhua_use') # the first mean we only include age and sex in reg
+      'ibuprofen_use', 'acetaminophen_use', 'chnmed_use', 'lianhua_use') # the first mean we only include age and sex in reg
    outcomes = c(paste0(c('Respiratory', 'Neurological', 'Digestive', 'Other'), '_score'), unlist(symptoms))
    out = c()
    for (test_var in test_vars){
