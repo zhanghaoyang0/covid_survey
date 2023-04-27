@@ -482,7 +482,7 @@ Comments and feedbacks
 =======================
 
 Feel free to contact me via zhanghaoyang0@hotmail.com
-If you feel it helpful, you may start the `project <https://github.com/zhanghaoyang0/covid_survey>`
+You may star the project at `here <https://github.com/zhanghaoyang0/covid_survey>`.
 
 .. image:: dogwithhat.png
    :width: 200
