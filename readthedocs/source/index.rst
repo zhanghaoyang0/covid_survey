@@ -18,7 +18,7 @@ The questionnaire was open for around 3 weeks, from 22th Dec 2022 to 17th Jan 20
 The data is in Chinese. Please see our code about how to clean this data.  
 
 
-You can download the data at `here <https://github.com/zhanghaoyang0/covid_survey/raw/master/data/covid_survey_20230112.xlsx>`_.
+You can download the data at `here <https://github.com/zhanghaoyang0/covid_survey/raw/master/data/covid_survey_20230112.xlsx>`.
 
 Analysis: preparation
 =======================
@@ -108,7 +108,7 @@ Age and sex:
       mutate(age=factor(age, levels=c('<24', '24-30', '31-40', '>40')))
    df = df%>%mutate(sex=factor(ifelse(sex=='女','Female', 'Male'), levels=c('Female', 'Male')))
    table(df$sex)
-   get_prop(df, 'age')
+   get_prop(df, 'sex', 'age')
 
 
 Disease duration:
@@ -125,14 +125,14 @@ Disease duration:
       mutate(infect_duration=gsub('天', ' day', infect_duration))%>%
       mutate(infect_duration=gsub('~', '-', infect_duration))%>%
       mutate(infect_duration=factor(infect_duration, levels=c('<3 day', '3-4 day', '5-6 day', '>7 day')))
-   get_prop(df, 'infect_duration')
+   get_prop(df, 'sex', 'infect_duration')
    # trim fever_duration
    df$fever_duration = sapply(df$fever_duration, function(x){strsplit(x, '[(]')[[1]][1]})
    df = df%>%mutate(fever_duration=ifelse(is.na(fever_duration), 'no reply', fever_duration))%>%
       mutate(fever_duration=gsub('天', ' day', fever_duration))%>%
       mutate(fever_duration=ifelse(fever_duration%in%c('1 day', '<1 day'), '≤1 day', fever_duration))%>%
       mutate(fever_duration=factor(fever_duration, levels=c('no reply', '≤1 day', '2 day', '3 day', '>3 day')))
-   get_prop(df, 'fever_duration')
+   get_prop(df, 'sex', 'fever_duration')
 
 
 Infect route:
@@ -147,7 +147,7 @@ Infect route:
       infectway_hosp=factor(as.numeric(grepl('医疗场所', infect_way))))
    for (i in c('infectway_entertainment', 'infectway_work', 'infectway_family', 'infectway_traffic', 'infectway_hosp')){
       print(i)
-      get_prop(df, i)
+      get_prop(df, 'sex', i)
    }
 
 
@@ -165,8 +165,8 @@ Vaccination:
       mutate(how_long_lastvac=ifelse(how_long_lastvac%in%c('<3 month', '3-6 month'), '<6 month', how_long_lastvac))%>%
       mutate(how_long_lastvac=factor(how_long_lastvac, levels=c('no_vac', '<6 month', '6-12 month', '>12 month')))
 
-   get_prop(df, 'n_vac')
-   get_prop(df, 'how_long_lastvac')
+   get_prop(df, 'sex', 'n_vac')
+   get_prop(df, 'sex', 'how_long_lastvac')
 
 
 Medication:
@@ -178,7 +178,7 @@ Medication:
    df[, drugs][is.na(df[, drugs])] = 0
    for (drug in drugs){
       print(drug)
-      get_prop(df, drug)
+      get_prop(df, 'sex', drug)
       df[,drug] = as.factor(df[,drug])
    }
 
@@ -481,8 +481,8 @@ We used regression to measure the association between symptoms and population ch
 Comments and feedbacks
 =======================
 
-
 Feel free to contact me via zhanghaoyang0@hotmail.com
+If you feel it helpful, you may start the `project <https://github.com/zhanghaoyang0/covid_survey>`
 
 .. image:: dogwithhat.png
    :width: 200
