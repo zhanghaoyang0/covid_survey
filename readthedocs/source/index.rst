@@ -481,7 +481,7 @@ We used regression to measure the association between symptoms and population ch
 Comments and feedbacks
 =======================
 
-Feel free to contact me via zhanghaoyang0@hotmail.com.
+Feel free to contact me via zhanghaoyang0@hotmail.com.\n
 
 You may star the project at https://github.com/zhanghaoyang0/covid_survey.
 
