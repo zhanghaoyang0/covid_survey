@@ -17,7 +17,6 @@ The questionnaire was open for around 3 weeks, from 22th Dec 2022 to 17th Jan 20
 
 The data is in Chinese. Please see our code about how to clean this data.  
 
-
 You can download the data at `here <https://github.com/zhanghaoyang0/covid_survey/raw/master/data/covid_survey_20230112.xlsx>`.
 
 Analysis: preparation
@@ -481,9 +480,9 @@ We used regression to measure the association between symptoms and population ch
 Comments and feedbacks
 =======================
 
-Feel free to contact me via zhanghaoyang0@hotmail.com.\n
+Feel free to contact me via zhanghaoyang0@hotmail.com.  
 
-You may star the project at https://github.com/zhanghaoyang0/covid_survey.
+You may star the project at https://github.com/zhanghaoyang0/covid_survey.  
 
 .. image:: dogwithhat.png
    :width: 200
