@@ -3,7 +3,7 @@ Overview
 =============================================
 In Dec 2022, the COVID-19 restriction was end.
 
-We conducted a 3-week on-line survey to measure the characteristics to measure the characteristics of COVID-19 patients in China. 
+We conducted a 3-week on-line survey to measure the characteristics of COVID-19 patients in China. 
 
 We investigated the symptom spectrum of COVID-19 in the participants, and, evaluated if the association between COVID-19 symptoms and population characteristics, vaccination, and medication.
 
@@ -482,7 +482,7 @@ Comments and feedbacks
 
 Feel free to contact me via zhanghaoyang0@hotmail.com.  
 
-You may star the project at `here <https://github.com/zhanghaoyang0/covid_survey>`.  
+You may star the project at `here<https://github.com/zhanghaoyang0/covid_survey>`.  
 
 .. image:: dogwithhat.png
    :width: 200
