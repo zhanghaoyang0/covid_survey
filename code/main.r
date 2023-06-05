@@ -1,4 +1,11 @@
 #====================================================================
+# prepare
+#====================================================================
+cd /home/yanglab_data/user/zhanghy/project/github_zhanghy/covid_survey
+conda activate r421_mr
+R
+
+#====================================================================
 # load packages and defind functions
 #====================================================================
 libs = c('openxlsx', 'stringr', 'dplyr', 'stringi', 'R.utils', 'ggplot2', 'ggpubr', 'ggsci', 'mapchina', 'sf', 'data.table')
@@ -63,13 +70,13 @@ for (i in 1:nrow(dict)){
 
 
 ## age and sex
-df = df%>%mutate(age=gsub('岁', '', age))%>%
-    mutate(age=ifelse(age%in%c('41-50', '51-60', '61-70'), '>40', age))%>%
+df = df%>%mutate(age=gsub('岁|以上', '', age))%>%
+    mutate(age=ifelse(age%in%c('41-50', '51-60', '61-70', '75'), '>40', age))%>%
     mutate(age=ifelse(age%in%c('12-18',  '18-24', '6-12', '3-6'), '<24', age))%>%
     mutate(age=factor(age, levels=c('<24', '24-30', '31-40', '>40')))
 df = df%>%mutate(sex=factor(ifelse(sex=='女','Female', 'Male'), levels=c('Female', 'Male')))
 table(df$sex)
-get_prop(df, 'age') # here age of a sample with age > 75 is replace with NA
+get_prop(df, 'age') # here age of a sample with age > 75 is replace with NA | we include this sample in r1
 
 
 ## duration
@@ -159,10 +166,10 @@ data(china)
 china = china%>%mutate(region=gsub('省|市|回族|壮族|维吾尔|特别行政区|自治区', '', Name_Province))
 china = china%>%group_by(region)%>%dplyr::summarise(geometry=st_union(geometry))
 replace = data.frame(region=china$region, 
-  region1 = c('Shanghai', 'Yunnan', 'Neimenggu', 'Beijing', 'Taiwan', 'Jilin', 'Sichuan', 'Tianji', 
- 'Ningxia', 'Anhui', 'Shandong', 'Shānxi', 'Guangdong', 'Guangxi', 'Xinjiang', 'Jiangsu', 'Jiangxi', 'Hebei', 
+  region1 = c('Shanghai', 'Yunnan', 'Inner mongolia', 'Beijing', 'Taiwan', 'Jilin', 'Sichuan', 'Tianji', 
+ 'Ningxia', 'Anhui', 'Shandong', 'Shanxi', 'Guangdong', 'Guangxi', 'Xinjiang', 'Jiangsu', 'Jiangxi', 'Hebei', 
  'Henan', 'Zhejiang', 'Hainan', 'Hubei', 'Hunan', 'Macau', 'Gansu', 'Fujian', 'Tibet', 'Guizhou', 'Liaoning', 
- 'Chongqing', 'Shǎnxi', 'Qinghai', 'Hong Kong', 'Heilongjiang'))
+ 'Chongqing', 'Shaanxi', 'Qinghai', 'Hong Kong', 'Heilongjiang'))
 china = china%>%merge(replace, 'region')%>%select(-region)%>%rename(region=region1)
 df = df%>%merge(replace, 'region')%>%select(-region)%>%rename(region=region1)
 print(table(df$region))
@@ -247,7 +254,7 @@ for (test_var1 in test_vars){
 }
 
 
-write.csv(res, '../temp.csv', quote=F)
+# write.csv(res1, '../temp.csv', quote=F)
 
 #=====================================================================================
 # plot: sympytom hclst
@@ -365,14 +372,6 @@ png(paste0(path_out, 'dist.png'), height=500, width=700, res=80)
 print(p1)
 dev.off()
 
-# top 5 symptoms
-res1 = data.frame()
-for (i in unique(df$region)){
-    sub = head(res%>%filter(region==i)%>%arrange(desc(score)), 5)
-    res1 = rbind(res1, sub)
-}
-
-tab = table(res1$region, res1$symptom)
 
 #=====================================================================================
 # plot: heatmap show top symptoms by region 
@@ -417,6 +416,16 @@ mean = unlist(df%>%filter(region%in%'Liaoning')%>%select(appetite_loss)/3)
 mean(mean)
 sd(mean)
 
+
+# top 5 symptoms
+res1 = data.frame()
+for (i in unique(df$region)){
+    sub = head(res%>%filter(region==i)%>%arrange(desc(score)), 5)
+    res1 = rbind(res1, sub)
+}
+
+tab = table(res1$region, res1$symptom)
+
 #=====================================================================================
 # plot: map 
 # https://github.com/xmc811/mapchina
@@ -442,7 +451,7 @@ for (group in syndromes){
         labs(fill = 'Score') +
         ggtitle(group) +
         theme(plot.title = element_text(size = 35, face = "bold", hjust=0.07, vjust=-9),
-            plot.background = element_blank(), panel.border = element_blank(),
+            plot.background = element_blank(), panel.border = element_blank(), panel.background = element_rect(fill = "white"),
             axis.text.x=element_blank(), axis.ticks.x=element_blank(), 
             axis.text.y=element_blank(), axis.ticks.y=element_blank(), 
             legend.key.height= unit(1.5, 'cm'), legend.key.width= unit(1.5, 'cm'),
@@ -463,3 +472,27 @@ print(p1)
 dev.off()
 
 res # average score
+
+
+
+#=====================================================================================
+# r1
+#=====================================================================================
+library(pwr)
+
+x1 = which(df$Respiratory_score != 0)
+x2 = which(df$Neurological_score != 0)
+x3 = which(df$Digestive_score != 0)
+x4 = which(df$Other_score != 0)
+
+x5 =  intersect(x1, x2)
+x6 =  intersect(x1, x3)
+x7 =  intersect(x1, x4)
+
+length(x1); length(x1)/nrow(df)
+length(x2); length(x2)/nrow(df)
+length(x3); length(x3)/nrow(df)
+length(x4); length(x4)/nrow(df)
+length(x5); length(x5)/nrow(df)
+length(x6); length(x6)/nrow(df)
+length(x7); length(x7)/nrow(df)

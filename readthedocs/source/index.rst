@@ -101,13 +101,14 @@ Age and sex:
 
 .. code-block:: python
 
-   df = df%>%mutate(age=gsub('岁', '', age))%>%
-      mutate(age=ifelse(age%in%c('41-50', '51-60', '61-70'), '>40', age))%>%
+   df = df%>%mutate(age=gsub('岁|以上', '', age))%>%
+      mutate(age=ifelse(age%in%c('41-50', '51-60', '61-70', '75'), '>40', age))%>%
       mutate(age=ifelse(age%in%c('12-18',  '18-24', '6-12', '3-6'), '<24', age))%>%
       mutate(age=factor(age, levels=c('<24', '24-30', '31-40', '>40')))
    df = df%>%mutate(sex=factor(ifelse(sex=='女','Female', 'Male'), levels=c('Female', 'Male')))
    table(df$sex)
-   get_prop(df, 'sex', 'age')
+   get_prop(df, 'age') 
+
 
 
 Disease duration:
