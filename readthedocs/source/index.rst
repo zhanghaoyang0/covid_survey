@@ -7,7 +7,7 @@ We conducted a 3-week on-line survey to measure the characteristics of COVID-19 
 
 We investigated the symptom spectrum of COVID-19 in the participants, and, evaluated if the association between COVID-19 symptoms and population characteristics, vaccination, and medication.
 
-We wrote a manuscript, our data and anaysis procedure are available at below.
+We wrote a manuscript, our data and analysis procedure are available at below.
 
 Questionnaire Data
 =======================
@@ -70,21 +70,21 @@ You may clone our repository, which contains our data, results, and plots:
    git clone https://github.com/zhanghaoyang0/covid_survey.git
    cd covid_survey
 
-Or you can just download our data and performed the below analysis. If you do so, pleasue change the path in the code. 
+Or you can just download our data and performed the below analysis. If you do so, pleasure change the path in the code. 
 
 Load data and clean:
 
 .. code-block:: python
 
-   ## questionaire data
+   ## questionnaire data
    df = read.xlsx('data/covid_survey_20230112.xlsx', sheet=1) # questionaire
    names(df) = gsub('/|，|？|“|”', '', names(df)) # remove Chinese punctuations
    names(df) = gsub('?', '', names(df), fixed=T) 
    names(df) = str_replace(names(df), '在感染后是否有出现以下[\U4E00-\U9FFF\U3000-\U303F]+症状:', '')
    names(df) = str_replace(names(df), '[（][\U4E00-\U9FFF\U3000-\U303F|1-9]+[）]', '')
-   ## drop unused items and atypical symptons
+   ## drop unused items and atypical symptoms
    drop_cols = c('提交时间', '答题时间', '喉咙有刀割感', '吞咽时疼痛', '喉咙嘶哑', '喉咙干痒', '性欲减退', '生理期异常', '肾脏部位疼痛', '流泪', '打喷嚏')
-   df[,drop_cols] = NULL # drop atypical symptons
+   df[,drop_cols] = NULL # drop atypical symptoms
    names(df)
    ## replace chinese with english
    dict1 = read.xlsx('data/covid_survey_20230112.xlsx', sheet=2)
@@ -220,9 +220,9 @@ Region:
    china = china%>%group_by(region)%>%dplyr::summarise(geometry=st_union(geometry))
    replace = data.frame(region=china$region, 
    region1 = c('Shanghai', 'Yunnan', 'Neimenggu', 'Beijing', 'Taiwan', 'Jilin', 'Sichuan', 'Tianji', 
-   'Ningxia', 'Anhui', 'Shandong', 'Shānxi', 'Guangdong', 'Guangxi', 'Xinjiang', 'Jiangsu', 'Jiangxi', 'Hebei', 
+   'Ningxia', 'Anhui', 'Shandong', 'Shanxi', 'Guangdong', 'Guangxi', 'Xinjiang', 'Jiangsu', 'Jiangxi', 'Hebei', 
    'Henan', 'Zhejiang', 'Hainan', 'Hubei', 'Hunan', 'Macau', 'Gansu', 'Fujian', 'Tibet', 'Guizhou', 'Liaoning', 
-   'Chongqing', 'Shǎnxi', 'Qinghai', 'Hong Kong', 'Heilongjiang'))
+   'Chongqing', 'Shaanxi', 'Qinghai', 'Hong Kong', 'Heilongjiang'))
    china = china%>%merge(replace, 'region')%>%select(-region)%>%rename(region=region1)
    df = df%>%merge(replace, 'region')%>%select(-region)%>%rename(region=region1)
    print(table(df$region))
@@ -253,17 +253,17 @@ Bar plot for servere of sympytoms:
       }
    }
    df_p = data.frame(matrix(out, ncol=3, byrow=T))
-   df_p = df_p%>%mutate_if(is_numeric,as.numeric)%>%rename(sympton=X1, score=X2, prop=X3)
+   df_p = df_p%>%mutate_if(is_numeric,as.numeric)%>%rename(symptom=X1, score=X2, prop=X3)
    df_p = df_p%>%merge(map, 'score')%>%mutate(score1=factor(score1, levels=c('Severe', 'Moderate', 'Mild', 'Absent')))
-   df_p%>%merge(dict2, by.x='sympton', by.y='item_eng')%>%select(syndrome, sympton, score1, prop) # add syndrome
+   df_p%>%merge(dict2, by.x='symptom', by.y='item_eng')%>%select(syndrome, symptom, score1, prop) # add syndrome
    plots = list()
    for (syndrome in syndromes){
-      df_p1 = df_p%>%filter(sympton%in%symptoms[[syndrome]])
-      df_p1 = df_p1%>%mutate(sympton=gsub(paste0(syndrome, '_'), '', sympton))
-      xlevels = df_p1%>%filter(score1=='Absent')%>%arrange(prop)%>%pull(sympton)
-      df_p1$sympton = factor(df_p1$sympton, levels=xlevels)
-      df_p1 = df_p1%>%rename(item_eng=sympton)%>%merge(dict2, 'item_eng')%>%rename(sympton=item_eng1) # repalce symptoms with their formal names
-      p = ggplot(df_p1, aes(x = sympton, weight = prop, fill = score1))+
+      df_p1 = df_p%>%filter(symptom%in%symptoms[[syndrome]])
+      df_p1 = df_p1%>%mutate(symptom=gsub(paste0(syndrome, '_'), '', symptom))
+      xlevels = df_p1%>%filter(score1=='Absent')%>%arrange(prop)%>%pull(symptom)
+      df_p1$symptom = factor(df_p1$symptom, levels=xlevels)
+      df_p1 = df_p1%>%rename(item_eng=symptom)%>%merge(dict2, 'item_eng')%>%rename(symptom=item_eng1) # replace symptoms with their formal names
+      p = ggplot(df_p1, aes(x = symptom, weight = prop, fill = score1))+
          geom_bar( position = "stack") + 
          xlab('') + ylab('') + labs(fill = 'Severity') +
          theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, color="black"), 
@@ -287,7 +287,7 @@ Bar plot for servere of sympytoms:
 Analysis: clustering of symptoms
 =============================================
 
-Dendrogram for sympytoms clustering: 
+Dendrogram for symptoms clustering: 
 
 .. image:: fig2.png
    :width: 600
