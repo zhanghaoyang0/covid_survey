@@ -9,6 +9,9 @@ We investigated the symptom spectrum of COVID-19 in the participants, and, evalu
 
 We wrote a manuscript, our data and analysis procedure are available at below.
 
+The paper is published in *Journal of Medical Virology*, `link <https://onlinelibrary.wiley.com/doi/10.1002/jmv.28893>`_
+
+
 Questionnaire Data
 =======================
 The questionnaire was open for around 3 weeks, from 22th Dec 2022 to 17th Jan 2023.
