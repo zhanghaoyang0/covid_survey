@@ -1,1 +1,1 @@
-See https://covid-survey.readthedocs.io/en/latest/.
+See https://zhanghaoyang0.uk/project/covid1/.
